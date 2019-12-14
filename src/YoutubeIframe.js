@@ -13,8 +13,8 @@ import { EventEmitter } from "events";
 
 const YoutubeIframe = (
   {
-    height = 300,
-    width = 350,
+    height,
+    width,
     videoId,
     play = false,
     onChangeState,
