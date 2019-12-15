@@ -84,9 +84,6 @@ const YoutubeIframe = (
         webViewRef.current.injectJavaScript(
           PLAYER_FUNCTIONS.seekToScript(seconds, allowSeekAhead),
         );
-        return new Promise(resolve => {
-          eventEmitter.current.once('getAvailablePlaybackRates', resolve);
-        });
       },
     }),
     [],
@@ -166,7 +163,7 @@ const YoutubeIframe = (
   return (
     <View style={{height, width}}>
       <WebView
-        style={[webViewStyle, styles.webView]}
+        style={[styles.webView, webViewStyle]}
         ref={webViewRef}
         originWhitelist={['*']}
         source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}

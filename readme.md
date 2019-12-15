@@ -37,13 +37,39 @@ This package uses react-hooks and therefore will need **react-native `0.59` and 
 
 ## API reference
 
-[Here](./doc)
+[Click here for full reference here](./doc)
+
+list of available APIs -
+
+### props
+
+- videoId
+- playList
+- playListStartIndex
+- play
+- onChangeState
+- onReady
+- onError
+- onPlaybackQualityChange
+- mute
+- volume
+- playbackRate
+- onPlaybackRateChange
+- initialPlayerParams
+
+### Ref functions
+
+- getDuration
+- getCurrentTime
+- isMuted
+- getVolume
+- getPlaybackRate
+- getAvailablePlaybackRates
+- seekTo
 
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## License
 

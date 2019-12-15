@@ -27,33 +27,33 @@
 
 ### props
 
-- height
-- width
-- ref
-- videoId
-- playList,
-- playListStartIndex,
-- play
-- onChangeState
-- onReady
-- onError
-- onPlaybackQualityChange
-- mute
-- volume
-- playbackRate
-- onPlaybackRateChange
-- initialPlayerParams
-- webViewStyle
+- [height](#height)
+- [width](#width)
+- [ref](#ref)
+- [videoId](#videoId)
+- [playList](#playList)
+- [playListStartIndex](#playListStartIndex)
+- [play](#play)
+- [onChangeState](#onChangeState)
+- [onReady](#onReady)
+- [onError](#onError)
+- [onPlaybackQualityChange](#onPlaybackQualityChange)
+- [mute](#mute)
+- [volume](#volume)
+- [playbackRate](#playbackRate)
+- [onPlaybackRateChange](#onPlaybackRateChange)
+- [initialPlayerParams](#initialPlayerParams)
+- [webViewStyle](#webViewStyle)
 
 ### Ref functions
 
-- getDuration
-- getCurrentTime
-- isMuted
-- getVolume
-- getPlaybackRate
-- getAvailablePlaybackRates
-- seekTo
+- [getDuration](#getDuration)
+- [getCurrentTime](#getCurrentTime)
+- [isMuted](#isMuted)
+- [getVolume](#getVolume)
+- [getPlaybackRate](#getPlaybackRate)
+- [getAvailablePlaybackRates](#getAvailablePlaybackRates)
+- [seekTo](#seekTo)
 
 # Reference
 
@@ -124,7 +124,7 @@ Flag to tell the player to play or pause the video.
 Make sure you match this flag `onChangeState` to handle user pausing
 the video from the youtube player UI
 
-> The HTML5 <video> element, in certain mobile browsers (such as Chrome and Safari), only allows playback to take place if it's initiated by a user interaction (such as tapping on the player).
+> **note on autoPlay**: The HTML5 `<video>` element, in certain mobile browsers (such as Chrome and Safari), only allows playback to take place if it's initiated by a user interaction (such as tapping on the player).
 
 ## onChangeState
 
@@ -230,3 +230,83 @@ The `playbackRate` that the API passes to the event listener function will be a 
 ## webViewStyle
 
 A style prop that will be given to the webview
+
+# Ref functions
+
+usage -
+
+```javascript
+import React, {useRef} from 'react';
+const App = () => {
+  const playerRef = useRef();
+  return (
+    <YoutubePlayer height={400} width={400} ref={playerRef} videoId={'AVAc1gYLZK0'} />
+    <Button
+        title="log details"
+        onPress={() => {
+
+          playerRef.current.getCurrentTime().then(currentTime => console.log({currentTime}));
+
+          playerRef.current.getDuration().then(getDuration => console.log({getDuration}));
+
+          playerRef.current.isMuted().then(isMuted => console.log({isMuted}));
+
+          playerRef.current.getVolume().then(getVolume => console.log({getVolume}));
+
+          playerRef.current.getPlaybackRate().then(getPlaybackRate => console.log({getPlaybackRate}));
+
+          playerRef.current.getAvailablePlaybackRates().then(getAvailablePlaybackRates => console.log({getAvailablePlaybackRates}
+          ));
+
+        }}
+      />
+  );
+};
+```
+
+## getDuration
+
+returns a promise that resolves to the total duration of the video
+
+Note that getDuration() will return 0 until the video's metadata is loaded, which normally happens just after the video starts playing.
+
+If the currently playing video is a live event, the getDuration() function will resolve the elapsed time since the live video stream began. Specifically, this is the amount of time that the video has streamed without being reset or interrupted. In addition, this duration is commonly longer than the actual event time since streaming may begin before the event's start time.
+
+## getCurrentTime
+
+returns a promise that resolves to the elapsed time in seconds since the video started playing.
+
+## isMuted
+
+returns a promise that resolves to true if the video is muted, false if not.
+
+## getVolume
+
+returns a promise that resolves to the player's current volume, an integer between 0 and 100. Note that `getVolume()` will return the volume even if the player is muted.
+
+## getPlaybackRate
+
+returns a promise that resolves to the current playback rate of the video.
+
+The default playback rate is 1, which indicates that the video is playing at normal speed. Playback rates may include values like 0.25, 0.5, 1, 1.5, and 2.
+
+## getAvailablePlaybackRates
+
+returns a promise that resolves to a list of available playback rates.
+
+The array of numbers are ordered from slowest to fastest playback speed. Even if the player does not support variable playback speeds, the array should always contain at least one value (1).
+
+# seekTo
+
+`seekTo(seconds:Number, allowSeekAhead:Boolean):Void`
+
+Seeks to a specified time in the video. If the player is paused when the function is called, it will remain paused. If the function is called from another state (playing, video cued, etc.), the player will play the video.
+The seconds parameter identifies the time to which the player should advance.
+
+The player will advance to the closest keyframe before that time unless the player has already downloaded the portion of the video to which the user is seeking.
+
+The `allowSeekAhead` parameter determines whether the player will make a new request to the server if the seconds parameter specifies a time outside of the currently buffered video data.
+
+We recommend that you set this parameter to false while the user drags the mouse along a video progress bar and then set it to true when the user releases the mouse. This approach lets a user scroll to different points of a video without requesting new video streams by scrolling past unbuffered points in the video. When the user releases the mouse button, the player advances to the desired point in the video and requests a new video stream if necessary.
+
+https://developers.google.com/youtube/iframe_api_reference#seekTo
