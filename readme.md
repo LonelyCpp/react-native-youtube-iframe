@@ -35,6 +35,8 @@ This package uses react-hooks and therefore will need **react-native `0.59` and 
 />
 ```
 
+![ios](./doc/demo.gif?raw=true 'ios')
+
 ## API reference
 
 [Click here for full reference here](./doc)
