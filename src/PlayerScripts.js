@@ -33,8 +33,10 @@ player.seekTo(${seconds}, ${allowSeekAhead})
   setPlaybackRate: playbackRate =>
     `player.setPlaybackRate(${playbackRate}); true;`,
   setVolume: volume => `player.setVolume(${volume}); true;`,
-  loadPlaylist: (playList, startIndex) => `
-  player.loadPlaylist({playlist: ${JSON.stringify(playList)},
+  loadPlaylist: (playList, startIndex, play) => `
+  player.${play ? 'loadPlaylist' : 'cuePlaylist'}({playlist: ${JSON.stringify(
+    playList,
+  )},
     index: ${startIndex || 0}}); true;`,
 };
 

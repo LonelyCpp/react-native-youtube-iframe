@@ -126,7 +126,11 @@ const YoutubeIframe = (
             setPlayerReady(true);
             if (Array.isArray(playList)) {
               webViewRef.current.injectJavaScript(
-                PLAYER_FUNCTIONS.loadPlaylist(playList, playListStartIndex),
+                PLAYER_FUNCTIONS.loadPlaylist(
+                  playList,
+                  playListStartIndex,
+                  play,
+                ),
               );
             }
             break;
@@ -155,6 +159,7 @@ const YoutubeIframe = (
       onPlaybackRateChange,
       playListStartIndex,
       playList,
+      play,
     ],
   );
 
