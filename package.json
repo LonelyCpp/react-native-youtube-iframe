@@ -34,5 +34,9 @@
     "react-native-webview": "^7.5.2",
     "react": ">=16.8.0",
     "react-native": ">=0.59"
+  },
+  "devDependencies": {
+    "@react-native-community/eslint-config": "^0.0.5",
+    "eslint": "^6.7.2"
   }
 }
