@@ -31,6 +31,8 @@
 - width
 - ref
 - videoId
+- playList,
+- playListStartIndex,
 - play
 - onChangeState
 - onReady
@@ -41,6 +43,7 @@
 - playbackRate
 - onPlaybackRateChange
 - initialPlayerParams
+- webViewStyle
 
 ### Ref functions
 
@@ -88,9 +91,28 @@ const App = () => {
 
 ## videoId
 
-**REQUIRED, _String_**
+**_String_**
 
 Specifies the YouTube Video ID of the video to be played.
+
+## playList
+
+**_Array<String> | String_**
+
+Specifies the playlist to play. It can be either the playlist ID or a list of video IDs
+
+`playList={'PLbpi6ZahtOH6Blw3RGYpWkSByi_T7Rygb'}`
+
+or
+
+`playList={['QRt7LjqJ45k', 'fHsa9DqmId8']}`
+
+## playListStartIndex
+
+**_Number_**
+
+Starts the playlist from the given index
+**Works only if the playlist is a list of video IDs.**
 
 ## play
 
@@ -200,3 +222,7 @@ The `playbackRate` that the API passes to the event listener function will be a 
 | iv_load_policy     | Number  |         | https://developers.google.com/youtube/player_parameters#iv_load_policy |
 | modestbranding     | boolean | false   | https://developers.google.com/youtube/player_parameters#modestbranding |
 | rel                | boolean | false   | https://developers.google.com/youtube/player_parameters#rel            |
+
+## webViewStyle
+
+A style prop that will be given to the webview

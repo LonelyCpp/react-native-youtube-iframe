@@ -6,7 +6,7 @@ import React, {
   forwardRef,
   useState,
 } from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import WebView from 'react-native-webview';
 import {PLAYER_STATES, PLAYER_ERROR} from './constants';
 import {EventEmitter} from 'events';
@@ -17,6 +17,8 @@ const YoutubeIframe = (
     height,
     width,
     videoId,
+    playList,
+    playListStartIndex,
     play = false,
     onChangeState,
     onReady,
@@ -27,6 +29,7 @@ const YoutubeIframe = (
     playbackRate = 1,
     onPlaybackRateChange,
     initialPlayerParams = {},
+    webViewStyle,
   },
   ref,
 ) => {
@@ -121,6 +124,11 @@ const YoutubeIframe = (
           case 'playerReady':
             onReady();
             setPlayerReady(true);
+            if (Array.isArray(playList)) {
+              webViewRef.current.injectJavaScript(
+                PLAYER_FUNCTIONS.loadPlaylist(playList, playListStartIndex),
+              );
+            }
             break;
           case 'playerQualityChange':
             onPlaybackQualityChange(message.data);
@@ -145,20 +153,27 @@ const YoutubeIframe = (
       onPlaybackQualityChange,
       onError,
       onPlaybackRateChange,
+      playListStartIndex,
+      playList,
     ],
   );
 
   return (
     <View style={{height, width}}>
       <WebView
+        style={[webViewStyle, styles.webView]}
         ref={webViewRef}
         originWhitelist={['*']}
-        source={{html: MAIN_SCRIPT(videoId, initialPlayerParams)}}
+        source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
         allowsInlineMediaPlayback
         onMessage={onWebMessage}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  webView: {backgroundColor: 'transparent'},
+});
 
 export default forwardRef(YoutubeIframe);

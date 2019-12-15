@@ -33,10 +33,14 @@ player.seekTo(${seconds}, ${allowSeekAhead})
   setPlaybackRate: playbackRate =>
     `player.setPlaybackRate(${playbackRate}); true;`,
   setVolume: volume => `player.setVolume(${volume}); true;`,
+  loadPlaylist: (playList, startIndex) => `
+  player.loadPlaylist({playlist: ${JSON.stringify(playList)},
+    index: ${startIndex || 0}}); true;`,
 };
 
 export const MAIN_SCRIPT = (
   videoId,
+  playList,
   {
     loop = false,
     controls = true,
@@ -89,7 +93,7 @@ export const MAIN_SCRIPT = (
         player = new YT.Player('player', {
           height: '1000',
           width: '1000',
-          videoId: '${videoId}',
+          videoId: '${videoId || ''}',
           playerVars: {
             playsinline: 1,
             loop: ${loop ? 1 : 0},
@@ -104,6 +108,8 @@ export const MAIN_SCRIPT = (
             modestbranding: ${modestbranding ? 1 : 0},
             rel: ${rel ? 1 : 0},
             start: ${start},
+            listType:  '${typeof playList === 'string' ? 'playlist' : ''}',
+            list: '${typeof playList === 'string' ? playList : ''}',
           },
           events: {
             'onReady': onPlayerReady,
