@@ -69,6 +69,8 @@ height of the webview container
 
 width of the webview container
 
+> Note: Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
+
 ## ref
 
 Gives access to the player reference. This can be used to access player functions.
@@ -121,6 +123,8 @@ Starts the playlist from the given index
 Flag to tell the player to play or pause the video.
 Make sure you match this flag `onChangeState` to handle user pausing
 the video from the youtube player UI
+
+> The HTML5 <video> element, in certain mobile browsers (such as Chrome and Safari), only allows playback to take place if it's initiated by a user interaction (such as tapping on the player).
 
 ## onChangeState
 
