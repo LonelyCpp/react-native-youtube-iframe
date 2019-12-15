@@ -14,9 +14,11 @@ This package uses react-hooks and therefore will need **react-native `0.59` and 
 
 ## Usage
 
-```jsx
+```JSX
 <YoutubePlayer
   ref={playerRef}
+  height={300}
+  width={400}
   videoId={"AVAc1gYLZK0"}
   play={playing}
   onChangeState={event => console.log(event)}
@@ -35,7 +37,7 @@ This package uses react-hooks and therefore will need **react-native `0.59` and 
 
 ## API reference
 
-coming soon
+[Here](./doc)
 
 ## Contributing
 
