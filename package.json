@@ -1,6 +1,6 @@
 {
   "name": "react-native-youtube-iframe",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple wrapper around the youtube iframe js API for react native",
   "main": "index.js",
   "scripts": {
@@ -31,12 +31,15 @@
   },
   "homepage": "https://lonelycpp.github.io/react-native-youtube-iframe/",
   "peerDependencies": {
-    "react-native-webview": "^7.5.2",
     "react": ">=16.8.0",
-    "react-native": ">=0.59"
+    "react-native": ">=0.59",
+    "react-native-webview": "^7.5.2"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^0.0.5",
     "eslint": "^6.7.2"
+  },
+  "dependencies": {
+    "events": "^3.0.0"
   }
 }
