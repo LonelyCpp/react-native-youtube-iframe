@@ -14,6 +14,14 @@ This package uses react-hooks and therefore will need **react-native `0.59` and 
 
 ## Usage
 
+```js
+import React, {useRef, useState} from 'react';
+import YoutubePlayer from 'react-native-youtube-iframe';
+
+const playerRef = useRef(null);
+const [playing, setPlaying] = useState(true);
+```
+
 ```JSX
 <YoutubePlayer
   ref={playerRef}
