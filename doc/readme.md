@@ -44,6 +44,7 @@
 - [onPlaybackRateChange](#onPlaybackRateChange)
 - [initialPlayerParams](#initialPlayerParams)
 - [webViewStyle](#webViewStyle)
+- [webViewProps](#webViewProps)
 
 ### Ref functions
 
@@ -230,6 +231,10 @@ The `playbackRate` that the API passes to the event listener function will be a 
 ## webViewStyle
 
 A style prop that will be given to the webview
+
+## webViewProps
+
+Props that are supplied to the underlying webview (react-native-webview). A full list of props can be found [here](https://github.com/react-native-community/react-native-webview/blob/master/docs/Reference.md#props-index)
 
 # Ref functions
 
