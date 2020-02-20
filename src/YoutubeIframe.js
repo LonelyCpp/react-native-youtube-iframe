@@ -30,6 +30,7 @@ const YoutubeIframe = (
     onPlaybackRateChange = _playbackRate => {},
     initialPlayerParams = {},
     webViewStyle,
+    webViewProps,
   },
   ref,
 ) => {
@@ -112,7 +113,6 @@ const YoutubeIframe = (
   const onWebMessage = useCallback(
     event => {
       const message = JSON.parse(event.nativeEvent.data);
-      // console.log({message});
       try {
         switch (message.eventType) {
           case 'playerStateChange':
@@ -169,6 +169,7 @@ const YoutubeIframe = (
         source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
         allowsInlineMediaPlayback
         onMessage={onWebMessage}
+        {...webViewProps}
       />
     </View>
   );
