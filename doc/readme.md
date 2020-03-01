@@ -127,6 +127,17 @@ the video from the youtube player UI
 
 > **note on autoPlay**: The HTML5 `<video>` element, in certain mobile browsers (such as Chrome and Safari), only allows playback to take place if it's initiated by a user interaction (such as tapping on the player).
 
+A work around to get the video to autoplay is to add these parameters to alter the user agent of the webview.
+Add the following code to the component to make autoplay for on android. (ios seems to work out of the box)
+
+```JSX
+webViewProps={{
+          userAgent:
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
+          mediaPlaybackRequiresUserAction: false,
+        }}
+```
+
 ## onChangeState
 
 **_function(event: string)_**

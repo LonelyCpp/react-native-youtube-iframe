@@ -167,6 +167,7 @@ const YoutubeIframe = (
         ref={webViewRef}
         originWhitelist={['*']}
         source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
+        mediaPlaybackRequiresUserAction={false}
         allowsInlineMediaPlayback
         onMessage={onWebMessage}
         {...webViewProps}
