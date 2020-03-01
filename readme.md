@@ -1,6 +1,13 @@
 # React Native Youtube iframe
 
-A wrapper of the Youtube IFrame player API build for react native. A fully web based implementation with access to most APIs provided on the web.
+A wrapper of the Youtube IFrame player API build for react native.
+
+✅ Works seamlessly on both ios and android platforms
+✅ Does not rely on the native youtube service on android (prevents unexpected crashes, works on phones without the youtube app)
+✅ Uses the webview player which is known to be more stable compared to the native youtube app
+✅ Access to a vast API provided through the iframe youtube API
+✅ Supports multiple youtube player instances in a single page
+✅ Works on modals and overlay components
 
 ## Prerequisite
 
