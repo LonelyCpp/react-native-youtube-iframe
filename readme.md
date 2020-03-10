@@ -7,6 +7,7 @@ A wrapper of the Youtube IFrame player API build for react native.
 - ✅ Uses the webview player which is known to be more stable compared to the native youtube app
 - ✅ Access to a vast API provided through the iframe youtube API
 - ✅ Supports multiple youtube player instances in a single page
+- ✅ Fetch basic video metadata without API keys (uses oEmbed)
 - ✅ Works on modals and overlay components
 
 ## Prerequisite
@@ -73,6 +74,8 @@ list of available APIs -
 - playbackRate
 - onPlaybackRateChange
 - initialPlayerParams
+- webViewStyle
+- webViewProps
 
 ### Ref functions
 
@@ -83,6 +86,10 @@ list of available APIs -
 - getPlaybackRate
 - getAvailablePlaybackRates
 - seekTo
+
+## methods
+
+- getYoutubeMeta
 
 ## Contributing
 

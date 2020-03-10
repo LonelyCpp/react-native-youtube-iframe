@@ -56,6 +56,10 @@
 - [getAvailablePlaybackRates](#getAvailablePlaybackRates)
 - [seekTo](#seekTo)
 
+### module methods
+
+- [getYoutubeMeta](#getYoutubeMeta)
+
 # Reference
 
 ## height
@@ -312,7 +316,7 @@ returns a promise that resolves to a list of available playback rates.
 
 The array of numbers are ordered from slowest to fastest playback speed. Even if the player does not support variable playback speeds, the array should always contain at least one value (1).
 
-# seekTo
+## seekTo
 
 `seekTo(seconds:Number, allowSeekAhead:Boolean):Void`
 
@@ -326,3 +330,40 @@ The `allowSeekAhead` parameter determines whether the player will make a new req
 We recommend that you set this parameter to false while the user drags the mouse along a video progress bar and then set it to true when the user releases the mouse. This approach lets a user scroll to different points of a video without requesting new video streams by scrolling past unbuffered points in the video. When the user releases the mouse button, the player advances to the desired point in the video and requests a new video stream if necessary.
 
 https://developers.google.com/youtube/iframe_api_reference#seekTo
+
+# Module methods
+
+## getYoutubeMeta
+
+`getYoutubeMeta(videoId: String): Promise<youtubeMeta>`
+
+Fetch metadata of a youtube video using the oEmbed Spec - https://oembed.com/#section7
+
+metadata returned -
+
+| field            | type   | explanation                                        |
+| ---------------- | ------ | -------------------------------------------------- |
+| author_name      | String | The name of the author/owner of the video.         |
+| author_url       | String | youtube channel link of the video                  |
+| height           | Number | The height in pixels required to display the HTML. |
+| html             | String | The HTML required to embed a video player.         |
+| provider_name    | String | The name of the resource provider.                 |
+| provider_url     | String | The url of the resource provider.                  |
+| thumbnail_height | Number | The height of the video thumbnail.                 |
+| thumbnail_url    | String | The url of the resource provider.                  |
+| thumbnail_width  | Number | The width of the video thumbnail.                  |
+| title            | String | youtube video title                                |
+| type             | String | The oEmbed version number.                         |
+| version          | String | The resource type.                                 |
+| width            | Number | The width in pixels required to display the HTML.  |
+
+example -
+
+```javascript
+import {Alert} from 'react-native';
+import {getYoutubeMeta} from 'react-native-youtube-iframe';
+
+getYoutubeMeta('sNhhvQGsMEc').then(meta => {
+  Alert.alert('title of the video : ' + meta.title);
+});
+```
