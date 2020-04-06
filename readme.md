@@ -12,11 +12,16 @@ A wrapper of the Youtube IFrame player API build for react native.
 
 ## Prerequisite
 
-This package uses react-hooks and therefore will need **react-native `0.59` and above**
+This package uses react-hooks and therefore will need **react-native `0.59` or above**
+
+(recommended - react native version - `0.60` or above)
 
 ## Installation
 
 1. First install `react-native-webview`. [Instructions here](https://github.com/react-native-community/react-native-webview/blob/master/docs/Getting-Started.md)
+
+- React Native version **`0.60` and above**, install the latest version of react-native-webview
+- React Native version **below `0.60`**, react-native-webview version `6.11.1` is the last version that supports it.
 
 2. Run - `npm install react-native-youtube-iframe`
 
