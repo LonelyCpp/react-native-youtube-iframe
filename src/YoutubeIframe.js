@@ -29,7 +29,7 @@ const YoutubeIframe = (
     onReady = _event => {},
     playListStartIndex = 0,
     initialPlayerParams = {},
-    forceAndroidAutoplay = false,
+    forceAndroidAutoplay = true,
     onChangeState = _event => {},
     onPlaybackQualityChange = _quality => {},
     onPlaybackRateChange = _playbackRate => {},
@@ -165,17 +165,21 @@ const YoutubeIframe = (
   return (
     <View style={{height, width}}>
       <WebView
-        style={[styles.webView, webViewStyle]}
         ref={webViewRef}
         originWhitelist={['*']}
-        source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
-        mediaPlaybackRequiresUserAction={false}
-        allowsInlineMediaPlayback
         onMessage={onWebMessage}
-        userAgent={Platform.select({
-          android:
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-        })}
+        allowsInlineMediaPlayback
+        style={[styles.webView, webViewStyle]}
+        mediaPlaybackRequiresUserAction={false}
+        allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
+        source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
+        userAgent={
+          forceAndroidAutoplay &&
+          Platform.select({
+            android:
+              'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
+          })
+        }
         {...webViewProps}
       />
     </View>
