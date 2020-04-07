@@ -173,7 +173,9 @@ const YoutubeIframe = (
         allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
         source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
         userAgent={
-          forceAndroidAutoplay && Platform.select({android: CUSTOM_USER_AGENT})
+          forceAndroidAutoplay
+            ? Platform.select({android: CUSTOM_USER_AGENT, ios: ''})
+            : ''
         }
         onShouldStartLoadWithRequest={request => {
           return request.mainDocumentURL === 'about:blank';
