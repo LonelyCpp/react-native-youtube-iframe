@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import WebView from 'react-native-webview';
-import {PLAYER_STATES, PLAYER_ERROR} from './constants';
+import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
 import {MAIN_SCRIPT, PLAYER_FUNCTIONS} from './PlayerScripts';
 
@@ -173,12 +173,11 @@ const YoutubeIframe = (
         allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
         source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
         userAgent={
-          forceAndroidAutoplay &&
-          Platform.select({
-            android:
-              'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-          })
+          forceAndroidAutoplay && Platform.select({android: CUSTOM_USER_AGENT})
         }
+        onShouldStartLoadWithRequest={request => {
+          return request.mainDocumentURL === 'about:blank';
+        }}
         {...webViewProps}
       />
     </View>
