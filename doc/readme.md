@@ -45,6 +45,7 @@
 - [initialPlayerParams](#initialPlayerParams)
 - [webViewStyle](#webViewStyle)
 - [webViewProps](#webViewProps)
+- [forceAndroidAutoplay](#forceAndroidAutoplay)
 
 ### Ref functions
 
@@ -126,21 +127,15 @@ Starts the playlist from the given index
 **_Boolean_**
 
 Flag to tell the player to play or pause the video.
+
 Make sure you match this flag `onChangeState` to handle user pausing
 the video from the youtube player UI
 
 > **note on autoPlay**: The HTML5 `<video>` element, in certain mobile browsers (such as Chrome and Safari), only allows playback to take place if it's initiated by a user interaction (such as tapping on the player).
 
 A work around to get the video to autoplay is to add these parameters to alter the user agent of the webview.
-Add the following code to the component to make autoplay for on android. (ios seems to work out of the box)
 
-```JSX
-webViewProps={{
-          userAgent:
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-          mediaPlaybackRequiresUserAction: false,
-        }}
-```
+use the [forceAndroidAutoplay](#forceAndroidAutoplay) prop if auto play is not working. (usually is affected by older android devices)
 
 ## onChangeState
 
@@ -250,6 +245,12 @@ A style prop that will be given to the webview
 ## webViewProps
 
 Props that are supplied to the underlying webview (react-native-webview). A full list of props can be found [here](https://github.com/react-native-community/react-native-webview/blob/master/docs/Reference.md#props-index)
+
+## forceAndroidAutoplay
+
+Changes user string to make autoplay work on the iframe player for some android devices.
+
+userAgent string - `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';`
 
 # Ref functions
 
