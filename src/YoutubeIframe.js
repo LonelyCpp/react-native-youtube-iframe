@@ -5,9 +5,8 @@ import React, {
   useImperativeHandle,
   forwardRef,
   useState,
-  Platform,
 } from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import WebView from 'react-native-webview';
 import {PLAYER_STATES, PLAYER_ERROR} from './constants';
 import {EventEmitter} from 'events';
@@ -29,7 +28,7 @@ const YoutubeIframe = (
     onReady = _event => {},
     playListStartIndex = 0,
     initialPlayerParams = {},
-    forceAndroidAutoplay = true,
+    forceAndroidAutoplay = false,
     onChangeState = _event => {},
     onPlaybackQualityChange = _quality => {},
     onPlaybackRateChange = _playbackRate => {},
