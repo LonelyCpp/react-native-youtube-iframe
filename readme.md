@@ -61,7 +61,7 @@ const [playing, setPlaying] = useState(true);
 
 ## API reference
 
-[Click here for full reference here](./doc)
+**[Click here for full reference](./doc)**
 
 list of available APIs -
 
