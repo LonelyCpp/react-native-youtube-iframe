@@ -1,5 +1,7 @@
 # React Native Youtube iframe
 
+![npm](https://img.shields.io/npm/v/react-native-youtube-iframe?style=for-the-badge) ![npm](https://img.shields.io/npm/dm/react-native-youtube-iframe?style=for-the-badge)
+
 A wrapper of the Youtube IFrame player API build for react native.
 
 - ✅ Works seamlessly on both ios and android platforms
@@ -49,7 +51,6 @@ const [playing, setPlaying] = useState(true);
   volume={50}
   playbackRate={1}
   playerParams={{
-    preventFullScreen: true,
     cc_lang_pref: "us",
     showClosedCaptions: true
   }}
