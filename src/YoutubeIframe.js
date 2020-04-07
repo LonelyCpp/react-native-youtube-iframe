@@ -6,9 +6,9 @@ import React, {
   forwardRef,
   useState,
 } from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import WebView from 'react-native-webview';
-import {PLAYER_STATES, PLAYER_ERROR} from './constants';
+import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
 import {MAIN_SCRIPT, PLAYER_FUNCTIONS} from './PlayerScripts';
 
@@ -18,19 +18,20 @@ const YoutubeIframe = (
     width,
     videoId,
     playList,
-    playListStartIndex = 0,
     play = false,
-    onChangeState = _event => {},
-    onReady = _event => {},
-    onError = _err => {},
-    onPlaybackQualityChange = _quality => {},
     mute = false,
     volume = 100,
-    playbackRate = 1,
-    onPlaybackRateChange = _playbackRate => {},
-    initialPlayerParams = {},
     webViewStyle,
     webViewProps,
+    playbackRate = 1,
+    onError = _err => {},
+    onReady = _event => {},
+    playListStartIndex = 0,
+    initialPlayerParams = {},
+    forceAndroidAutoplay = false,
+    onChangeState = _event => {},
+    onPlaybackQualityChange = _quality => {},
+    onPlaybackRateChange = _playbackRate => {},
   },
   ref,
 ) => {
@@ -163,13 +164,22 @@ const YoutubeIframe = (
   return (
     <View style={{height, width}}>
       <WebView
-        style={[styles.webView, webViewStyle]}
         ref={webViewRef}
         originWhitelist={['*']}
-        source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
-        mediaPlaybackRequiresUserAction={false}
-        allowsInlineMediaPlayback
         onMessage={onWebMessage}
+        allowsInlineMediaPlayback
+        style={[styles.webView, webViewStyle]}
+        mediaPlaybackRequiresUserAction={false}
+        allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
+        source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
+        userAgent={
+          forceAndroidAutoplay
+            ? Platform.select({android: CUSTOM_USER_AGENT, ios: ''})
+            : ''
+        }
+        onShouldStartLoadWithRequest={request => {
+          return request.mainDocumentURL === 'about:blank';
+        }}
         {...webViewProps}
       />
     </View>
