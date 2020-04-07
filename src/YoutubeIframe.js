@@ -5,6 +5,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
   useState,
+  Platform,
 } from 'react';
 import {View, StyleSheet} from 'react-native';
 import WebView from 'react-native-webview';
@@ -18,19 +19,20 @@ const YoutubeIframe = (
     width,
     videoId,
     playList,
-    playListStartIndex = 0,
     play = false,
-    onChangeState = _event => {},
-    onReady = _event => {},
-    onError = _err => {},
-    onPlaybackQualityChange = _quality => {},
     mute = false,
     volume = 100,
-    playbackRate = 1,
-    onPlaybackRateChange = _playbackRate => {},
-    initialPlayerParams = {},
     webViewStyle,
     webViewProps,
+    playbackRate = 1,
+    onError = _err => {},
+    onReady = _event => {},
+    playListStartIndex = 0,
+    initialPlayerParams = {},
+    forceAndroidAutoplay = false,
+    onChangeState = _event => {},
+    onPlaybackQualityChange = _quality => {},
+    onPlaybackRateChange = _playbackRate => {},
   },
   ref,
 ) => {
@@ -170,6 +172,10 @@ const YoutubeIframe = (
         mediaPlaybackRequiresUserAction={false}
         allowsInlineMediaPlayback
         onMessage={onWebMessage}
+        userAgent={Platform.select({
+          android:
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
+        })}
         {...webViewProps}
       />
     </View>
