@@ -11,7 +11,9 @@ A wrapper of the Youtube IFrame player API build for react native.
 - ✅ Supports multiple youtube player instances in a single page
 - ✅ Fetch basic video metadata without API keys (uses oEmbed)
 - ✅ Works on modals and overlay components
-- ✅ Expo support 
+- ✅ Expo support
+
+![ios](./doc/demo.gif?raw=true 'ios')
 
 ## Prerequisite
 
@@ -21,15 +23,14 @@ This package uses react-hooks and therefore will need **react-native `0.59` or a
 
 ## Installation
 
-1. First install `react-native-webview`. 
+1. First install `react-native-webview`.
 
 - Bare React Native app - [Instructions](https://github.com/react-native-community/react-native-webview/blob/master/docs/Getting-Started.md)
+
   - React Native version **`0.60` and above**, install the latest version of react-native-webview
   - React Native version **below `0.60`**, react-native-webview version `6.11.1` is the last version that supports it.
 
 - Expo Managed App - [Instructions](https://docs.expo.io/versions/latest/sdk/webview/)
-
-
 
 2. Run - `npm install react-native-youtube-iframe`
 
@@ -50,7 +51,7 @@ const [playing, setPlaying] = useState(true);
   width={400}
   videoId={"AVAc1gYLZK0"}
   play={playing}
-  onChangeState={event => console.log(event)}   
+  onChangeState={event => console.log(event)}
   onReady={() => console.log("ready")}
   onError={e => console.log(e)}
   onPlaybackQualityChange={q => console.log(q)}
@@ -62,8 +63,6 @@ const [playing, setPlaying] = useState(true);
   }}
 />
 ```
-
-![ios](./doc/demo.gif?raw=true 'ios')
 
 ## API reference
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import {WebViewProps} from 'react-native-webview';
 import {StyleProp, ViewStyle} from 'react-native';
+import {WebViewProps} from 'react-native-webview';
 
 export interface InitialPlayerParams {
   loop?: boolean;
