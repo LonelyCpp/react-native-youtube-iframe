@@ -46,6 +46,7 @@
 - [webViewStyle](#webViewStyle)
 - [webViewProps](#webViewProps)
 - [forceAndroidAutoplay](#forceAndroidAutoplay)
+- [allowWebViewZoom](#allowWebViewZoom)
 
 ### Ref functions
 
@@ -249,6 +250,10 @@ Props that are supplied to the underlying webview (react-native-webview). A full
 Changes user string to make autoplay work on the iframe player for some android devices.
 
 userAgent string - `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';`
+
+## allowWebViewZoom
+
+Controls whether the embedded webview allows user to zoom in. Defaults to `false`
 
 # Ref functions
 

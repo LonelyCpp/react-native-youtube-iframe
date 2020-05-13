@@ -87,6 +87,7 @@ list of available APIs -
 - initialPlayerParams
 - webViewStyle
 - webViewProps
+- allowWebViewZoom
 
 ### Ref functions
 
