@@ -28,6 +28,7 @@ const YoutubeIframe = (
     onReady = _event => {},
     playListStartIndex = 0,
     initialPlayerParams = {},
+    allowWebViewZoom = false,
     forceAndroidAutoplay = false,
     onChangeState = _event => {},
     onPlaybackQualityChange = _quality => {},
@@ -171,7 +172,7 @@ const YoutubeIframe = (
         style={[styles.webView, webViewStyle]}
         mediaPlaybackRequiresUserAction={false}
         allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
-        source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams)}}
+        source={{html: MAIN_SCRIPT(videoId, playList, initialPlayerParams, allowWebViewZoom)}}
         userAgent={
           forceAndroidAutoplay
             ? Platform.select({android: CUSTOM_USER_AGENT, ios: ''})

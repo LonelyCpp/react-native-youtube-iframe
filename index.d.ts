@@ -100,6 +100,10 @@ export interface YoutubeIframeProps {
    * callback for when the video playback rate changes.
    */
   onPlaybackRateChange?: (event: String) => void;
+  /**
+   * Flag to decide whether or not a user can zoom the video webview.
+   */
+  allowWebViewZoom?: Boolean;
 }
 
 declare const YoutubeIframe: React.SFC<YoutubeIframeProps>;
