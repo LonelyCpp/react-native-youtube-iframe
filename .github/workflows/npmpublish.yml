@@ -7,17 +7,7 @@ on:
   release:
     types: [created]
 
-jobs:
-  eslint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: hallee/eslint-action@master
-        with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
-
   publish-npm:
-    needs: eslint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +15,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
