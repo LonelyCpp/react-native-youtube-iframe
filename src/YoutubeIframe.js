@@ -31,6 +31,7 @@ const YoutubeIframe = (
     allowWebViewZoom = false,
     forceAndroidAutoplay = false,
     onChangeState = _event => {},
+    onFullScreenChange = _status => {},
     onPlaybackQualityChange = _quality => {},
     onPlaybackRateChange = _playbackRate => {},
   },
@@ -117,6 +118,9 @@ const YoutubeIframe = (
       const message = JSON.parse(event.nativeEvent.data);
       try {
         switch (message.eventType) {
+          case 'fullScreenChange':
+            onFullScreenChange(message.data);
+            break;
           case 'playerStateChange':
             onChangeState(PLAYER_STATES[message.data]);
             break;

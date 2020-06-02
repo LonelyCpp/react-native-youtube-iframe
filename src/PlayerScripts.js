@@ -132,6 +132,10 @@ export const MAIN_SCRIPT = (
         });
       }
 
+      function onFullScreenChange() {
+        window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'fullScreenChange', data: !!document.fullscreenElement}))
+      }
+
       function onPlayerError(event) {
         window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'playerError', data: event.data}))
       }
@@ -152,6 +156,14 @@ export const MAIN_SCRIPT = (
       function onPlayerStateChange(event) {
         window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'playerStateChange', data: event.data}))
       }
+
+      document.addEventListener('fullscreenchange', onFullScreenChange)
+
+      document.addEventListener('mozfullscreenchange', onFullScreenChange)
+
+      document.addEventListener('msfullscreenchange', onFullScreenChange)
+
+      document.addEventListener('webkitfullscreenchange', onFullScreenChange)
     </script>
   </body>
 </html>`;
