@@ -98,6 +98,11 @@ export const MAIN_SCRIPT = (
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+      var isFullScreen = false;
+      function onFullScreenChange() {
+        isFullScreen = !isFullScreen;
+        window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'fullScreenChange', data: isFullScreen}));
+      }
 
       var player;
       function onYouTubeIframeAPIReady() {
@@ -130,10 +135,8 @@ export const MAIN_SCRIPT = (
             'onPlaybackRateChange': onPlaybackRateChange,
           }
         });
-      }
 
-      function onFullScreenChange() {
-        window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'fullScreenChange', data: !!document.fullscreenElement}))
+        document.getElementById('player').addEventListener('webkitfullscreenchange', onFullScreenChange);
       }
 
       function onPlayerError(event) {
@@ -156,14 +159,6 @@ export const MAIN_SCRIPT = (
       function onPlayerStateChange(event) {
         window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'playerStateChange', data: event.data}))
       }
-
-      document.addEventListener('fullscreenchange', onFullScreenChange)
-
-      document.addEventListener('mozfullscreenchange', onFullScreenChange)
-
-      document.addEventListener('msfullscreenchange', onFullScreenChange)
-
-      document.addEventListener('webkitfullscreenchange', onFullScreenChange)
     </script>
   </body>
 </html>`;
