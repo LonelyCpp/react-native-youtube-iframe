@@ -98,6 +98,11 @@ export const MAIN_SCRIPT = (
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+      var isFullScreen = false;
+      function onFullScreenChange() {
+        isFullScreen = !isFullScreen;
+        window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'fullScreenChange', data: isFullScreen}));
+      }
 
       var player;
       function onYouTubeIframeAPIReady() {
@@ -130,6 +135,8 @@ export const MAIN_SCRIPT = (
             'onPlaybackRateChange': onPlaybackRateChange,
           }
         });
+
+        document.getElementById('player').addEventListener('webkitfullscreenchange', onFullScreenChange);
       }
 
       function onPlayerError(event) {
