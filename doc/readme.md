@@ -15,7 +15,7 @@
   onPlaybackQualityChange={q => console.log(q)}
   volume={50}
   playbackRate={1}
-  playerParams={{
+  initialPlayerParams={{
     preventFullScreen: true,
     cc_lang_pref: "us",
     showClosedCaptions: true
