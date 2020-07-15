@@ -100,6 +100,10 @@ export interface YoutubeIframeProps {
    * callback for when the video playback rate changes.
    */
   onPlaybackRateChange?: (event: String) => void;
+    /**
+   * callback for when the video player enters or leaves full screen
+   */
+  onFullScreenChange?: (quality: Boolean) => void;
   /**
    * Flag to decide whether or not a user can zoom the video webview.
    */

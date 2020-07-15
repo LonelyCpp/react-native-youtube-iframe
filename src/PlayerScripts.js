@@ -11,6 +11,10 @@ true;
 window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'isMuted', data: player.isMuted()}));
 true;
 `,
+  isFullScreenScript: `
+window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'isFullScreen', data: !!(document.fullscreenElement && document.fullscreenElement.id === 'player')}));
+true;
+`,
   getVolumeScript: `
 window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getVolume', data: player.getVolume()}));
 true;
@@ -130,6 +134,19 @@ export const MAIN_SCRIPT = (
             'onPlaybackRateChange': onPlaybackRateChange,
           }
         });
+
+        // document.addEventListener('fullscreenchange', onFullScreenChange)
+        // document.addEventListener('msfullscreenchange', onFullScreenChange)
+        // document.addEventListener('mozfullscreenchange', onFullScreenChange)
+        document.addEventListener('webkitfullscreenchange', onFullScreenChange)
+      }
+
+      function onFullScreenChange(event) {
+        if (document.fullscreenElement && document.fullscreenElement.id === 'player') {
+          window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'playerFullScreenChange', data: true}))
+        } else {
+          window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'playerFullScreenChange', data: false}))
+        }
       }
 
       function onPlayerError(event) {

@@ -13,6 +13,7 @@
   onReady={() => console.log("ready")}
   onError={e => console.log(e)}
   onPlaybackQualityChange={q => console.log(q)}
+  onFullScreenChange={isFullScreen => console.log(isFullScreen)}
   volume={50}
   playbackRate={1}
   initialPlayerParams={{
@@ -38,6 +39,7 @@
 - [onReady](#onReady)
 - [onError](#onError)
 - [onPlaybackQualityChange](#onPlaybackQualityChange)
+- [onFullScreenChange](#onFullScreenChange)
 - [mute](#mute)
 - [volume](#volume)
 - [playbackRate](#playbackRate)
@@ -53,6 +55,7 @@
 - [getDuration](#getDuration)
 - [getCurrentTime](#getCurrentTime)
 - [isMuted](#isMuted)
+- [isFullScreen](#isFullScreen)
 - [getVolume](#getVolume)
 - [getPlaybackRate](#getPlaybackRate)
 - [getAvailablePlaybackRates](#getAvailablePlaybackRates)
@@ -190,6 +193,12 @@ The data value that the API passes to the event listener function will be a stri
 | hd1080  |
 | highres |
 
+## onFullScreenChange
+
+**_function(isFullScreen: boolean)_**
+
+This event fires whenever the video enters or leaves full screen.
+
 ## mute
 
 **_Boolean_**
@@ -275,6 +284,8 @@ const App = () => {
 
           playerRef.current.isMuted().then(isMuted => console.log({isMuted}));
 
+          playerRef.current.isFullScreen().then(isFullScreen => console.log({isFullScreen}));
+
           playerRef.current.getVolume().then(getVolume => console.log({getVolume}));
 
           playerRef.current.getPlaybackRate().then(getPlaybackRate => console.log({getPlaybackRate}));
@@ -303,6 +314,10 @@ returns a promise that resolves to the elapsed time in seconds since the video s
 ## isMuted
 
 returns a promise that resolves to true if the video is muted, false if not.
+
+## isFullScreen
+
+returns a promise that resolves to true if the video is running in full screen, false if not.
 
 ## getVolume
 

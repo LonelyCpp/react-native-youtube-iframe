@@ -31,6 +31,7 @@ const YoutubeIframe = (
     allowWebViewZoom = false,
     forceAndroidAutoplay = false,
     onChangeState = _event => {},
+    onFullScreenChange = _isFullScreen => {},
     onPlaybackQualityChange = _quality => {},
     onPlaybackRateChange = _playbackRate => {},
   },
@@ -59,6 +60,14 @@ const YoutubeIframe = (
         webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.isMutedScript);
         return new Promise(resolve => {
           eventEmitter.current.once('isMuted', resolve);
+        });
+      },
+      isFullScreen: () => {
+        webViewRef.current.injectJavaScript(
+          PLAYER_FUNCTIONS.isFullScreenScript,
+        );
+        return new Promise(resolve => {
+          eventEmitter.current.once('isFullScreen', resolve);
         });
       },
       getVolume: () => {
@@ -142,6 +151,9 @@ const YoutubeIframe = (
           case 'playbackRateChange':
             onPlaybackRateChange(message.data);
             break;
+          case 'playerFullScreenChange':
+            onFullScreenChange(message.data);
+            break;
           default:
             eventEmitter.current.emit(message.eventType, message.data);
             break;
@@ -156,6 +168,7 @@ const YoutubeIframe = (
       onPlaybackQualityChange,
       onError,
       onPlaybackRateChange,
+      onFullScreenChange,
       playListStartIndex,
       playList,
       play,

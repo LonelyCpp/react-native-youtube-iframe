@@ -55,6 +55,7 @@ const [playing, setPlaying] = useState(true);
   onReady={() => console.log("ready")}
   onError={e => console.log(e)}
   onPlaybackQualityChange={q => console.log(q)}
+  onFullScreenChange={isFullScreen => console.log(isFullScreen)}
   volume={50}
   playbackRate={1}
   initialPlayerParams={{
@@ -80,6 +81,7 @@ list of available APIs -
 - onReady
 - onError
 - onPlaybackQualityChange
+- onFullScreenChange
 - mute
 - volume
 - playbackRate
@@ -94,6 +96,7 @@ list of available APIs -
 - getDuration
 - getCurrentTime
 - isMuted
+- isFullScreen
 - getVolume
 - getPlaybackRate
 - getAvailablePlaybackRates
