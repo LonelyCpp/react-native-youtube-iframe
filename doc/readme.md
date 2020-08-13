@@ -179,6 +179,8 @@ Possible values are:
 
 **_function(status: boolean)_**
 
+**note: android only, see `issue #45` for work on ios support**
+
 This event fires whenever the fullscreen option is clicked in the player.
 
 The data value that the API passes to the event listener function will be a boolean that identifies the new fullscreen status.
