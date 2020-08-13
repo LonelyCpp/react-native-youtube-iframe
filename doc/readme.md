@@ -98,6 +98,25 @@ const App = () => {
 };
 ```
 
+Typescript usage.
+
+```typescript
+import React, {useRef} from 'react';
+import { YoutubeIframeRef } from 'react-native-youtube-iframe';
+const App = () => {
+  const playerRef = useRef<YoutubeIframeRef>(null);
+  return (
+    <YoutubePlayer height={400} width={400} ref={playerRef} videoId={'AVAc1gYLZK0'} />
+    <Button
+        title="get current player time"
+        onPress={() => {
+          playerRef?.current?.getCurrentTime().then(data => console.log({data}));
+        }}
+      />
+  );
+};
+```
+
 ## videoId
 
 **_String_**
