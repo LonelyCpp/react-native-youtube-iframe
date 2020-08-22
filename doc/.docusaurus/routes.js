@@ -3,11 +3,6 @@ import React from 'react';
 import ComponentCreator from '@docusaurus/ComponentCreator';
 export default [
 {
-  path: '/__docusaurus/debug',
-  component: ComponentCreator('/__docusaurus/debug','fdd'),
-  exact: true,
-},
-{
   path: '/',
   component: ComponentCreator('/','3e0'),
   

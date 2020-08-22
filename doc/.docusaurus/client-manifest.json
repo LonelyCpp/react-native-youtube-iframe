@@ -1,0 +1,218 @@
+{
+  "entrypoints": [
+    "main"
+  ],
+  "origins": {
+    "1": [
+      0,
+      2,
+      4,
+      14,
+      1
+    ],
+    "styles": [
+      1,
+      2,
+      4,
+      12,
+      13,
+      14,
+      0
+    ],
+    "@theme/NotFound": [
+      0,
+      1,
+      14,
+      2
+    ],
+    "@site/docs/install.mdx": [
+      3
+    ],
+    "@theme/DocItem": [
+      0,
+      1,
+      4
+    ],
+    "@site/docs/about.mdx": [
+      5
+    ],
+    "@site/docs/basic_usage.mdx": [
+      6
+    ],
+    "@site/docs/props.mdx": [
+      7
+    ],
+    "@site/docs/module_methods.mdx": [
+      8
+    ],
+    "@site/docs/ref_methods.mdx": [
+      9
+    ],
+    "@site/docs/faq.mdx": [
+      10
+    ],
+    "~docs/route-9ee.json": [
+      11
+    ],
+    "main": [
+      0,
+      13,
+      12
+    ],
+    "runtime~main": [
+      0,
+      12,
+      13
+    ],
+    "@theme/DocPage": [
+      0,
+      1,
+      2,
+      14
+    ]
+  },
+  "assets": {
+    "0": {
+      "css": [
+        {
+          "file": "styles.725c49c7.css",
+          "hash": "64b923998a51204e925c",
+          "publicPath": "/styles.725c49c7.css"
+        }
+      ],
+      "js": [
+        {
+          "file": "styles.4408798e.js",
+          "hash": "64b923998a51204e925c",
+          "publicPath": "/styles.4408798e.js"
+        }
+      ]
+    },
+    "1": {
+      "js": [
+        {
+          "file": "1.dbccf720.js",
+          "hash": "168f25606141df15c7d2",
+          "publicPath": "/1.dbccf720.js"
+        }
+      ]
+    },
+    "2": {
+      "js": [
+        {
+          "file": "2.b49daf7b.js",
+          "hash": "9748b8a8c2fc788c3b13",
+          "publicPath": "/2.b49daf7b.js"
+        }
+      ]
+    },
+    "3": {
+      "js": [
+        {
+          "file": "046e2194.ffa02081.js",
+          "hash": "20e71385eb4ff49ae6ec",
+          "publicPath": "/046e2194.ffa02081.js"
+        }
+      ]
+    },
+    "4": {
+      "js": [
+        {
+          "file": "17896441.a1a30d16.js",
+          "hash": "f514b3d952b282a374ad",
+          "publicPath": "/17896441.a1a30d16.js"
+        }
+      ]
+    },
+    "5": {
+      "js": [
+        {
+          "file": "36041992.60434785.js",
+          "hash": "540e46741f8c8b2de19f",
+          "publicPath": "/36041992.60434785.js"
+        }
+      ]
+    },
+    "6": {
+      "js": [
+        {
+          "file": "5472183d.d1f8a9a9.js",
+          "hash": "6f8d747b1079d1f94c67",
+          "publicPath": "/5472183d.d1f8a9a9.js"
+        }
+      ]
+    },
+    "7": {
+      "js": [
+        {
+          "file": "a739022d.4f2e369d.js",
+          "hash": "7e8e4cebe512772c4846",
+          "publicPath": "/a739022d.4f2e369d.js"
+        }
+      ]
+    },
+    "8": {
+      "js": [
+        {
+          "file": "bb15a153.63f4f5de.js",
+          "hash": "b648303f73b8b9c9d8a6",
+          "publicPath": "/bb15a153.63f4f5de.js"
+        }
+      ]
+    },
+    "9": {
+      "js": [
+        {
+          "file": "e03a1cb7.6a65ab5e.js",
+          "hash": "bcd5f895c915e6f5a00a",
+          "publicPath": "/e03a1cb7.6a65ab5e.js"
+        }
+      ]
+    },
+    "10": {
+      "js": [
+        {
+          "file": "ea313555.b10ab900.js",
+          "hash": "8e0a65c6b7468dab3837",
+          "publicPath": "/ea313555.b10ab900.js"
+        }
+      ]
+    },
+    "11": {
+      "js": [
+        {
+          "file": "ec1ed54d.6ccaad38.js",
+          "hash": "0ae9560dfef1dc811754",
+          "publicPath": "/ec1ed54d.6ccaad38.js"
+        }
+      ]
+    },
+    "12": {
+      "js": [
+        {
+          "file": "main.5bfe9e2d.js",
+          "hash": "d25a01971409c3566d1a",
+          "publicPath": "/main.5bfe9e2d.js"
+        }
+      ]
+    },
+    "13": {
+      "js": [
+        {
+          "file": "runtime~main.d4cca341.js",
+          "hash": "8db6f807b26ec248b1d3",
+          "publicPath": "/runtime~main.d4cca341.js"
+        }
+      ]
+    },
+    "14": {
+      "js": [
+        {
+          "file": "14.495aae0b.js",
+          "hash": "727c6e9bf26849ce4a4a",
+          "publicPath": "/14.495aae0b.js"
+        }
+      ]
+    }
+  }
+}

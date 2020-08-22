@@ -2,8 +2,8 @@ module.exports = {
   title: 'React Native Youtube iframe',
   tagline:
     'A simple, light weight wrapper around the youtube iframe javascript API for react native',
-  url: 'https://lonelycpp.github.io/react-native-youtube-iframe/',
-  baseUrl: '/',
+  url: 'https://lonelycpp.github.io',
+  baseUrl: '/react-native-youtube-iframe/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'LonelyCpp',
