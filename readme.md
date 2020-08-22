@@ -54,6 +54,7 @@ const [playing, setPlaying] = useState(true);
   onChangeState={event => console.log(event)}
   onReady={() => console.log("ready")}
   onError={e => console.log(e)}
+  onFullScreenChange={status => console.log(status)}
   onPlaybackQualityChange={q => console.log(q)}
   volume={50}
   playbackRate={1}
@@ -79,6 +80,7 @@ list of available APIs -
 - onChangeState
 - onReady
 - onError
+- onFullScreenChange
 - onPlaybackQualityChange
 - mute
 - volume

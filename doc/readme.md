@@ -12,6 +12,7 @@
   onChangeState={event => console.log(event)}
   onReady={() => console.log("ready")}
   onError={e => console.log(e)}
+  onFullScreenChange={status => console.log(status)}
   onPlaybackQualityChange={q => console.log(q)}
   volume={50}
   playbackRate={1}
@@ -37,6 +38,7 @@
 - [onChangeState](#onChangeState)
 - [onReady](#onReady)
 - [onError](#onError)
+- [onFullScreenChange](#onFullScreenChange)
 - [onPlaybackQualityChange](#onPlaybackQualityChange)
 - [mute](#mute)
 - [volume](#volume)
@@ -191,6 +193,16 @@ Possible values are:
 | HTML5_error       | The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.                                                                                                                 |
 | video_not_found   | The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.                                                                                                   |
 | embed_not_allowed | The owner of the requested video does not allow it to be played in embedded players.                                                                                                                                                 |
+
+## onFullScreenChange
+
+**_function(status: boolean)_**
+
+**note: android only, see `issue #45` for work on ios support**
+
+This event fires whenever the fullscreen option is clicked in the player.
+
+The data value that the API passes to the event listener function will be a boolean that identifies the new fullscreen status.
 
 ## onPlaybackQualityChange
 
