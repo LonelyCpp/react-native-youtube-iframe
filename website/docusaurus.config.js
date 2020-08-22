@@ -29,13 +29,12 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
+          path: '../docs',
           routeBasePath: '/',
-          // It is recommended to set document id as docs home page (`docs/` path).
           homePageId: 'about',
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
           editUrl:
-            'https://github.com/LonelyCpp/react-native-youtube-iframe/edit/master/doc/',
+            'https://github.com/LonelyCpp/react-native-youtube-iframe/edit/master/docs/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
