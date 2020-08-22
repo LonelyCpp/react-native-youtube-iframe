@@ -2,6 +2,16 @@ import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {WebViewProps} from 'react-native-webview';
 
+export interface YoutubeIframeRef {
+  getDuration: () => Promise<number>;
+  getCurrentTime: () => Promise<number>;
+  isMuted: () => Promise<boolean>;
+  getVolume: () => Promise<number>;
+  getPlaybackRate: () => Promise<number>;
+  getAvailablePlaybackRates: () => Promise<number[]>;
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
+}
+
 export interface InitialPlayerParams {
   loop?: boolean;
   controls?: boolean;
@@ -108,6 +118,10 @@ export interface YoutubeIframeProps {
    * Flag to decide whether or not a user can zoom the video webview.
    */
   allowWebViewZoom?: Boolean;
+  /**
+   * Set this React Ref to use ref functions such as getDuration.
+   */
+  ref?: React.MutableRefObject<YoutubeIframeRef | null>;
 }
 
 declare const YoutubeIframe: React.SFC<YoutubeIframeProps>;

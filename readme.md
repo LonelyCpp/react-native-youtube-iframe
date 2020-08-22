@@ -58,7 +58,7 @@ const [playing, setPlaying] = useState(true);
   onPlaybackQualityChange={q => console.log(q)}
   volume={50}
   playbackRate={1}
-  playerParams={{
+  initialPlayerParams={{
     cc_lang_pref: "us",
     showClosedCaptions: true
   }}

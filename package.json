@@ -31,9 +31,9 @@
   },
   "homepage": "https://lonelycpp.github.io/react-native-youtube-iframe/",
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-native": ">=0.59",
-    "react-native-webview": "^7.5.2"
+    "react": ">=16.8.6",
+    "react-native": ">=0.60",
+    "react-native-webview": ">=7.0.0"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^1.1.0",
