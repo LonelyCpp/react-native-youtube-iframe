@@ -1,7 +1,7 @@
 module.exports = {
   someSidebar: {
     About: ['about', 'install', 'basic-usage'],
-    documentation: [
+    Documentation: [
       'component-props',
       'component-ref-methods',
       'module-methods',

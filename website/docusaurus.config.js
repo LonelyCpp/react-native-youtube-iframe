@@ -23,6 +23,9 @@ module.exports = {
         },
       ],
     },
+    googleAnalytics: {
+      trackingID: 'UA-165995640-2',
+    },
   },
   presets: [
     [
@@ -33,8 +36,6 @@ module.exports = {
           routeBasePath: '/',
           homePageId: 'about',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/LonelyCpp/react-native-youtube-iframe/edit/master/docs/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

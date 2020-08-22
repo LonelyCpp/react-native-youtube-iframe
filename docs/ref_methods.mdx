@@ -57,7 +57,7 @@ const App = () => {
 
 <Type>function(): Promise[Number]</Type>
 
-returns a promise that resolves to the total duration of the video
+returns a promise that resolves to the total duration of the video.
 
 If the currently playing video is a live event, the getDuration() function will resolve the elapsed time since the live video stream began. Specifically, this is the amount of time that the video has streamed without being reset or interrupted. In addition, this duration is commonly longer than the actual event time since streaming may begin before the event's start time.
 
@@ -114,8 +114,6 @@ The array of numbers are ordered from slowest to fastest playback speed. Even if
 ### `seekTo`
 
 <Type>function(seconds:Number, allowSeekAhead:Boolean):Void</Type>
-
-`seekTo(seconds:Number, allowSeekAhead:Boolean):Void`
 
 Seeks to a specified time in the video. If the player is paused when the function is called, it will remain paused. If the function is called from another state (playing, video cued, etc.), the player will play the video.
 The seconds parameter identifies the time to which the player should advance.
