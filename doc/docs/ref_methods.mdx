@@ -1,0 +1,125 @@
+---
+id: component-ref-methods
+title: Player Functions
+---
+
+export const Type = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: '#25c2a0',
+      borderRadius: '20px',
+      color: '#fff',
+      padding: '0.2em 0.4em 0.2em 0.4em',
+      fontSize: '0.8em',
+    }}>
+    {children}
+  </span>
+);
+
+### Basic usage
+
+```jsx
+import React, {useRef} from 'react';
+import YoutubePlayer, {YoutubeIframeRef} from "react-native-youtube-iframe";
+
+const App = () => {
+
+  const playerRef = useRef();
+
+  // typescript
+  // const playerRef = useRef<YoutubeIframeRef>(null);
+
+  return (
+    <YoutubePlayer
+        ref={playerRef}
+        height={400}
+        width={400}
+        videoId={'AVAc1gYLZK0'}
+      />
+
+    <Button
+        title="log details"
+        onPress={() => {
+          playerRef.current?.getCurrentTime().then(
+            currentTime => console.log({currentTime})
+          );
+
+          playerRef.current?.getDuration().then(
+            getDuration => console.log({getDuration})
+          );
+        }}
+      />
+  );
+};
+```
+
+### `getDuration`
+
+<Type>function(): Promise[Number]</Type>
+
+returns a promise that resolves to the total duration of the video
+
+If the currently playing video is a live event, the getDuration() function will resolve the elapsed time since the live video stream began. Specifically, this is the amount of time that the video has streamed without being reset or interrupted. In addition, this duration is commonly longer than the actual event time since streaming may begin before the event's start time.
+
+:::note
+getDuration() will return 0 until the video's metadata is loaded, which normally happens just after the video starts playing.
+:::
+
+---
+
+### `getCurrentTime`
+
+<Type>function(): Promise[Number]</Type>
+
+returns a promise that resolves to the elapsed time in seconds since the video started playing.
+
+---
+
+### `isMuted`
+
+<Type>function(): Promise[Boolean]</Type>
+
+returns a promise that resolves to true if the video is muted, false if not.
+
+---
+
+### `getVolume`
+
+<Type>function(): Promise[Number]</Type>
+
+returns a promise that resolves to the player's current volume, an integer between 0 and 100. Note that `getVolume()` will return the volume even if the player is muted.
+
+---
+
+### `getPlaybackRate`
+
+<Type>function(): Promise[Number]</Type>
+
+returns a promise that resolves to the current playback rate of the video.
+
+The default playback rate is 1, which indicates that the video is playing at normal speed. Playback rates may include values like 0.25, 0.5, 1, 1.5, and 2.
+
+---
+
+### `getAvailablePlaybackRates`
+
+<Type>function(): Promise[Array[Number]]</Type>
+
+returns a promise that resolves to a list of available playback rates.
+
+The array of numbers are ordered from slowest to fastest playback speed. Even if the player does not support variable playback speeds, the array should always contain at least one value (1).
+
+---
+
+### `seekTo`
+
+<Type>function(seconds:Number, allowSeekAhead:Boolean):Void</Type>
+
+`seekTo(seconds:Number, allowSeekAhead:Boolean):Void`
+
+Seeks to a specified time in the video. If the player is paused when the function is called, it will remain paused. If the function is called from another state (playing, video cued, etc.), the player will play the video.
+The seconds parameter identifies the time to which the player should advance.
+
+The player will advance to the closest keyframe before that time unless the player has already downloaded the portion of the video to which the user is seeking.
+
+https://developers.google.com/youtube/iframe_api_reference#seekTo

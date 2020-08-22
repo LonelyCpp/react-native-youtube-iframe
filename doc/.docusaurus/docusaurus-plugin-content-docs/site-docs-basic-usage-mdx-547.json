@@ -1,0 +1,19 @@
+{
+  "unversionedId": "basic-usage",
+  "id": "basic-usage",
+  "isDocsHomePage": false,
+  "title": "Basic Usage",
+  "description": "This snippet renders a Youtube video with a button that can play or pause the video. When the player has finished playing it, an alert is triggered",
+  "source": "@site/docs/basic_usage.mdx",
+  "permalink": "/basic-usage",
+  "editUrl": "https://github.com/LonelyCpp/react-native-youtube-iframe/edit/master/doc/docs/basic_usage.mdx",
+  "sidebar": "someSidebar",
+  "previous": {
+    "title": "Installation",
+    "permalink": "/install"
+  },
+  "next": {
+    "title": "Props",
+    "permalink": "/component-props"
+  }
+}

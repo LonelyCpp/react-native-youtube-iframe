@@ -1,0 +1,59 @@
+{
+  "docsSidebars": {
+    "someSidebar": [
+      {
+        "collapsed": true,
+        "type": "category",
+        "label": "About",
+        "items": [
+          {
+            "type": "link",
+            "label": "React Native Youtube iframe",
+            "href": "/"
+          },
+          {
+            "type": "link",
+            "label": "Installation",
+            "href": "/install"
+          },
+          {
+            "type": "link",
+            "label": "Basic Usage",
+            "href": "/basic-usage"
+          }
+        ]
+      },
+      {
+        "collapsed": true,
+        "type": "category",
+        "label": "documentation",
+        "items": [
+          {
+            "type": "link",
+            "label": "Props",
+            "href": "/component-props"
+          },
+          {
+            "type": "link",
+            "label": "Player Functions",
+            "href": "/component-ref-methods"
+          },
+          {
+            "type": "link",
+            "label": "Module Methods",
+            "href": "/module-methods"
+          }
+        ]
+      }
+    ]
+  },
+  "permalinkToSidebar": {
+    "/": "someSidebar",
+    "/basic-usage": "someSidebar",
+    "/component-props": "someSidebar",
+    "/component-ref-methods": "someSidebar",
+    "/install": "someSidebar",
+    "/module-methods": "someSidebar"
+  },
+  "version": null
+}

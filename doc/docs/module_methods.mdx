@@ -1,0 +1,52 @@
+---
+id: module-methods
+title: Module Methods
+---
+
+export const Type = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: '#25c2a0',
+      borderRadius: '20px',
+      color: '#fff',
+      padding: '0.2em 0.4em 0.2em 0.4em',
+      fontSize: '0.8em',
+    }}>
+    {children}
+  </span>
+);
+
+### `getYoutubeMeta`
+
+<Type>getYoutubeMeta(videoId: String): Promise[youtubeMeta]</Type>
+
+Fetch metadata of a youtube video using the oEmbed Spec - https://oembed.com/#section7
+
+metadata returned -
+
+| field            | type   | explanation                                        |
+| ---------------- | ------ | -------------------------------------------------- |
+| author_name      | String | The name of the author/owner of the video.         |
+| author_url       | String | youtube channel link of the video                  |
+| height           | Number | The height in pixels required to display the HTML. |
+| html             | String | The HTML required to embed a video player.         |
+| provider_name    | String | The name of the resource provider.                 |
+| provider_url     | String | The url of the resource provider.                  |
+| thumbnail_height | Number | The height of the video thumbnail.                 |
+| thumbnail_url    | String | The url of the resource provider.                  |
+| thumbnail_width  | Number | The width of the video thumbnail.                  |
+| title            | String | youtube video title                                |
+| type             | String | The oEmbed version number.                         |
+| version          | String | The resource type.                                 |
+| width            | Number | The width in pixels required to display the HTML.  |
+
+example -
+
+```javascript
+import {Alert} from 'react-native';
+import {getYoutubeMeta} from 'react-native-youtube-iframe';
+
+getYoutubeMeta('sNhhvQGsMEc').then(meta => {
+  Alert.alert('title of the video : ' + meta.title);
+});
+```

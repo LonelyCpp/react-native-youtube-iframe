@@ -1,0 +1,15 @@
+{
+  "unversionedId": "about",
+  "id": "about",
+  "isDocsHomePage": true,
+  "title": "React Native Youtube iframe",
+  "description": "npm npm",
+  "source": "@site/docs/about.mdx",
+  "permalink": "/",
+  "editUrl": "https://github.com/LonelyCpp/react-native-youtube-iframe/edit/master/doc/docs/about.mdx",
+  "sidebar": "someSidebar",
+  "next": {
+    "title": "Installation",
+    "permalink": "/install"
+  }
+}

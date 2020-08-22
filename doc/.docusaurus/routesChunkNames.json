@@ -1,0 +1,37 @@
+{
+  "/__docusaurus/debug-fdd": {
+    "component": "component---theme-debugd-45-c28"
+  },
+  "/-3e0": {
+    "component": "component---theme-doc-page-1-be-9be",
+    "docsMetadata": "docsMetadata---ec-1-ddf"
+  },
+  "/-350": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---360-ec2"
+  },
+  "/basic-usage-ddc": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---basic-usage-547-d19"
+  },
+  "/component-props-30a": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---component-propsa-73-8b2"
+  },
+  "/component-ref-methods-ef1": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---component-ref-methodse-03-09a"
+  },
+  "/faq-142": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---faqea-3-da7"
+  },
+  "/install-4a4": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---install-046-9a3"
+  },
+  "/module-methods-666": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---module-methodsbb-1-ade"
+  }
+}

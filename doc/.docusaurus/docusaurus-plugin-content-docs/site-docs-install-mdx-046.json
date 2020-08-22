@@ -1,0 +1,19 @@
+{
+  "unversionedId": "install",
+  "id": "install",
+  "isDocsHomePage": false,
+  "title": "Installation",
+  "description": "This package uses react-hooks and therefore will need",
+  "source": "@site/docs/install.mdx",
+  "permalink": "/install",
+  "editUrl": "https://github.com/LonelyCpp/react-native-youtube-iframe/edit/master/doc/docs/install.mdx",
+  "sidebar": "someSidebar",
+  "previous": {
+    "title": "React Native Youtube iframe",
+    "permalink": "/"
+  },
+  "next": {
+    "title": "Basic Usage",
+    "permalink": "/basic-usage"
+  }
+}

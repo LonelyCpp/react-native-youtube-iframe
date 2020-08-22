@@ -1,0 +1,282 @@
+---
+id: component-props
+title: Props
+---
+
+export const Type = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: '#25c2a0',
+      borderRadius: '20px',
+      color: '#fff',
+      padding: '0.2em 0.4em 0.2em 0.4em',
+      fontSize: '0.8em',
+    }}>
+    {children}
+  </span>
+);
+
+export const Important = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: '#ff0000',
+      borderRadius: '20px',
+      color: '#fff',
+      padding: '0.2em 0.4em 0.3em 0.4em',
+      fontSize: '0.8em',
+    }}>
+    {children}
+  </span>
+);
+
+### `height`
+
+<Type>Number</Type> <Important>Required</Important>
+
+height of the webview container
+
+:::note
+Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
+:::
+
+---
+
+### `width`
+
+<Type>Number</Type>
+
+width of the webview container
+
+:::tip
+The player will grow to fit the width of its parent, unless the parent has specified `alignItems` or `justifyContent` (depending on flex direction) in which case a width is required.
+:::
+
+:::note
+Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
+:::
+
+---
+
+### `videoId`
+
+<Type>String</Type>
+
+Specifies the YouTube Video ID of the video to be played.
+
+---
+
+### `playList`
+
+<Type>String</Type> <Type>Array[String]</Type>
+
+Specifies the playlist to play. It can be either the playlist ID or a list of video IDs
+
+`playList={'PLbpi6ZahtOH6Blw3RGYpWkSByi_T7Rygb'}`
+
+or
+
+`playList={['QRt7LjqJ45k', 'fHsa9DqmId8']}`
+
+---
+
+### `playListStartIndex`
+
+<Type>Number</Type>
+
+Starts the playlist from the given index
+
+:::caution
+Works only if the playlist is a list of video IDs
+:::
+
+---
+
+### `play`
+
+<Type>Boolean</Type>
+
+Flag to tell the player to play or pause the video.
+
+Make sure you match this flag `onChangeState` to handle user pausing
+the video from the youtube player UI
+
+:::note autoPlay
+The HTML5 `<video>` element, in certain mobile browsers (such as Chrome and Safari), only allows playback to take place if it's initiated by a user interaction (such as tapping on the player).
+
+However, the webview provides APIs to overcome this and will allow auto play in most cases. Use the [forceAndroidAutoplay](#forceandroidautoplay) prop if auto play still doesn't work. (usually is affected by older android devices)
+:::
+
+---
+
+### `ref`
+
+<Type>YoutubeIframeRef</Type>
+
+Gives access to the player reference. This can be used to access player functions.
+
+[Player Functions Documentation](component-ref-methods)
+
+---
+
+### `onChangeState`
+
+<Type>function(event: string)</Type>
+
+This event fires whenever the player's state changes. The callback is fired with an event (string) that corresponds to the new player state. Possible values are:
+
+| events    | description                                                 |
+| --------- | ----------------------------------------------------------- |
+| unstarted | fired before the first video is loaded                      |
+| video cue | next video cue                                              |
+| buffering | current video is in playing state but stopped for buffering |
+| playing   | current video is playing                                    |
+| paused    | current video is paused                                     |
+| ended     | video has finished playing the video                        |
+
+---
+
+### `onReady`
+
+<Type>function(event: string)</Type>
+
+This event fires when the player has finished loading and is ready to begin receiving API calls. Your application should implement this function if you want to automatically execute certain operations, such as playing the video or displaying information about the video, as soon as the player is ready.
+
+---
+
+### `onError`
+
+<Type>function(error: string)</Type>
+
+This event fires if an error occurs in the player. The API will pass an error string to the event listener function.
+Possible values are:
+
+| errors            | reason                                                                                                                                                                                                                               |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| invalid_parameter | The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks. |
+| HTML5_error       | The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.                                                                                                                 |
+| video_not_found   | The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.                                                                                                   |
+| embed_not_allowed | The owner of the requested video does not allow it to be played in embedded players.                                                                                                                                                 |
+
+---
+
+### `onFullScreenChange`
+
+<Type>function(status: string)</Type>
+
+This event fires whenever the player goes in or out of fullscreen mode with a boolean that identifies the new fullscreen status
+
+:::caution
+android only, see [issue #45](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/45) for work on ios support
+:::
+
+---
+
+### `onPlaybackQualityChange`
+
+<Type>function(quality: string)</Type>
+
+This event fires whenever the video playback quality changes. It might signal a change in the viewer's playback environment.
+
+The data value that the API passes to the event listener function will be a string that identifies the new playback quality. Possible values are:
+
+| Quality |
+| ------- |
+| small   |
+| medium  |
+| large   |
+| hd720   |
+| hd1080  |
+| highres |
+
+---
+
+### `mute`
+
+<Type>Boolean</Type>
+
+Flag to tell the player to mute the video.
+
+---
+
+### `volume`
+
+<Type>Number</Type>
+
+Sets the volume. Accepts an integer between `0` and `100`.
+
+---
+
+### `playbackRate`
+
+<Type>Number</Type>
+
+This sets the suggested playback rate for the current video. If the playback rate changes, it will only change for the video that is already cued or being played.
+
+Calling this function does not guarantee that the playback rate will actually change. However, if the playback rate does change, the `onPlaybackRateChange` event will fire, and your code should respond to the event rather than the fact that it called the setPlaybackRate function.
+
+The `getAvailablePlaybackRates` method will return the possible playback rates for the currently playing video. However, if you set the suggestedRate parameter to a non-supported integer or float value, the player will round that value down to the nearest supported value in the direction of 1.
+
+---
+
+### `onPlaybackRateChange`
+
+<Type>function(playbackRate: Number)</Type>
+
+This event fires whenever the video playback rate changes. Your application should respond to the event and should not assume that the playback rate will automatically change when the `playbackRate` value changes. Similarly, your code should not assume that the video playback rate will only change as a result of an explicit call to setPlaybackRate.
+
+The `playbackRate` that the API passes to the event listener function will be a number that identifies the new playback rate. The `getAvailablePlaybackRates` method returns a list of the valid playback rates for the currently cued or playing video.
+
+---
+
+### `initialPlayerParams`
+
+<Type>InitialPlayerParams</Type>
+
+A set of parameters that are initialized when the player mounts.
+
+:::caution
+changing these parameters might cause the player to restart or not change at all till it is remounted
+:::
+
+| property           | type    | default | info                                                                   |
+| ------------------ | ------- | ------- | ---------------------------------------------------------------------- |
+| loop               | boolean | false   | https://developers.google.com/youtube/player_parameters#loop           |
+| controls           | boolean | true    | https://developers.google.com/youtube/player_parameters#controls       |
+| cc_lang_pref       | string  |         | https://developers.google.com/youtube/player_parameters#cc_lang_pref   |
+| showClosedCaptions | boolean | false   | https://developers.google.com/youtube/player_parameters#cc_load_policy |
+| color              | string  | 'red'   | https://developers.google.com/youtube/player_parameters#color          |
+| start              | Number  |         | https://developers.google.com/youtube/player_parameters#start          |
+| end                | Number  |         | https://developers.google.com/youtube/player_parameters#end            |
+| preventFullScreen  | boolean | false   | https://developers.google.com/youtube/player_parameters#fs             |
+| playerLang         | String  |         | https://developers.google.com/youtube/player_parameters#hl             |
+| iv_load_policy     | Number  |         | https://developers.google.com/youtube/player_parameters#iv_load_policy |
+| modestbranding     | boolean | false   | https://developers.google.com/youtube/player_parameters#modestbranding |
+| rel                | boolean | false   | https://developers.google.com/youtube/player_parameters#rel            |
+
+---
+
+### `webViewStyle`
+
+A style prop that will be given to the webview
+
+---
+
+### `webViewProps`
+
+Props that are supplied to the underlying webview (react-native-webview). A full list of props can be found [here](https://github.com/react-native-community/react-native-webview/blob/master/docs/Reference.md#props-index)
+
+---
+
+### `forceAndroidAutoplay`
+
+Changes user string to make autoplay work on the iframe player for some android devices.
+
+:::info user agent string used -
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';
+:::
+
+---
+
+### `allowWebViewZoom`
+
+Controls whether the embedded webview allows user to zoom in. Defaults to `false`
