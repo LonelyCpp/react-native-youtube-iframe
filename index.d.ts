@@ -124,21 +124,23 @@ export interface YoutubeIframeProps {
   ref?: React.MutableRefObject<YoutubeIframeRef | null>;
 }
 
+export interface YoutubeMeta {
+  thumbnail_width: number;
+  type: string;
+  html: string;
+  height: number;
+  author_name: string;
+  width: number;
+  title: string;
+  author_url: string;
+  version: string;
+  thumbnail_height: number;
+  provider_url: string;
+  thumbnail_url: string;
+}
+
 declare const YoutubeIframe: React.SFC<YoutubeIframeProps>;
 
 export default YoutubeIframe;
 
-export function getYoutubeMeta (id: string): {
-  "thumbnail_width": number,
-  "type": string,
-  "html": string,
-  "height": number,
-  "author_name": string,
-  "width": number,
-  "title": string,
-  "author_url": string,
-  "version": string,
-  "thumbnail_height": number,
-  "provider_url": string,
-  "thumbnail_url": string,
-};
+export function getYoutubeMeta(id: string): Promise<YoutubeMeta>;
