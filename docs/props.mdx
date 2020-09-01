@@ -36,7 +36,7 @@ export const Important = ({children, color}) => (
 height of the webview container
 
 :::note
-Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
+Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players are at least 480 pixels wide and 270 pixels tall.
 :::
 
 ---
@@ -52,7 +52,7 @@ The player will grow to fit the width of its parent, unless the parent has speci
 :::
 
 :::note
-Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
+Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players are at least 480 pixels wide and 270 pixels tall.
 :::
 
 ---
@@ -101,9 +101,9 @@ Make sure you match this flag `onChangeState` to handle user pausing
 the video from the youtube player UI
 
 :::note autoPlay
-The HTML5 `<video>` element, in certain mobile browsers (such as Chrome and Safari), only allows playback to take place if it's initiated by a user interaction (such as tapping on the player).
+The HTML5 `<video>` element, in certain mobile browsers (such as Chrome and Safari), only allows playback to take place if it's initiated by user interaction (such as tapping on the player).
 
-However, the webview provides APIs to overcome this and will allow auto play in most cases. Use the [forceAndroidAutoplay](#forceandroidautoplay) prop if auto play still doesn't work. (usually is affected by older android devices)
+However, the webview provides APIs to overcome this and will allow auto play in most cases. Use the [forceAndroidAutoplay](#forceandroidautoplay) prop if autoplay still doesn't work. (usually is affected by older android devices)
 :::
 
 ---
@@ -224,7 +224,7 @@ The `getAvailablePlaybackRates` method will return the possible playback rates f
 
 This event fires whenever the video playback rate changes. Your application should respond to the event and should not assume that the playback rate will automatically change when the `playbackRate` value changes. Similarly, your code should not assume that the video playback rate will only change as a result of an explicit call to setPlaybackRate.
 
-The `playbackRate` that the API passes to the event listener function will be a number that identifies the new playback rate. The `getAvailablePlaybackRates` method returns a list of the valid playback rates for the currently cued or playing video.
+The `playbackRate` that the API passes to the event listener function will be a number that identifies the new playback rate. The `getAvailablePlaybackRates` method returns a list of the valid playback rates for the video currently cued or playing.
 
 ---
 
