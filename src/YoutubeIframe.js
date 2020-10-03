@@ -120,12 +120,12 @@ const YoutubeIframe = (
         return;
       }
 
-      const injectScript = webViewRef.current.injectJavaScript;
-
-      injectScript(playMode[play]);
-      injectScript(soundMode[mute]);
-      injectScript(PLAYER_FUNCTIONS.setVolume(volume));
-      injectScript(PLAYER_FUNCTIONS.setPlaybackRate(playbackRate));
+      [
+        playMode[play],
+        soundMode[mute],
+        PLAYER_FUNCTIONS.setVolume(volume),
+        PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
+      ].forEach(webViewRef.current.injectJavaScript)
     }
     , [play, playerReady, mute, volume, playbackRate]);
 
