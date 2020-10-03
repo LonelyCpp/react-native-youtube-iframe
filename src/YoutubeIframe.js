@@ -12,6 +12,14 @@ import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
 import {MAIN_SCRIPT, PLAYER_FUNCTIONS} from './PlayerScripts';
 
+const getPlayMode = (play) => {
+  if (play){
+    return PLAYER_FUNCTIONS.playVideo;
+  }
+
+  return PLAYER_FUNCTIONS.pauseVideo;
+}
+
 const YoutubeIframe = (
   {
     height,
@@ -106,11 +114,7 @@ const YoutubeIframe = (
 
       const injectScript = webViewRef.current.injectJavaScript;
 
-      if (play) {
-        injectScript(PLAYER_FUNCTIONS.playVideo);
-      } else {
-        injectScript(PLAYER_FUNCTIONS.pauseVideo);
-      }
+      injectScript(getPlayMode(play));
 
       if (mute) {
         injectScript(PLAYER_FUNCTIONS.muteVideo);
