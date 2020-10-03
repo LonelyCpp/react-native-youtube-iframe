@@ -1,3 +1,5 @@
+import {MUTE_MODE, PAUSE_MODE, PLAY_MODE, UNMUTE_MODE} from './constants';
+
 export const PLAYER_FUNCTIONS = {
   durationScript: `
 window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getDuration', data: player.getDuration()}));
@@ -38,6 +40,16 @@ player.seekTo(${seconds}, ${allowSeekAhead})
     playList,
   )},
     index: ${startIndex || 0}}); true;`,
+};
+
+export const playMode = {
+  [PLAY_MODE]: PLAYER_FUNCTIONS.playVideo,
+  [PAUSE_MODE]: PLAYER_FUNCTIONS.pauseVideo
+};
+
+export const soundMode = {
+  [MUTE_MODE]: PLAYER_FUNCTIONS.muteVideo,
+  [UNMUTE_MODE]: PLAYER_FUNCTIONS.unMuteVideo,
 };
 
 export const MAIN_SCRIPT = (

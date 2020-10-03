@@ -10,7 +10,12 @@ import {View, StyleSheet, Platform} from 'react-native';
 import WebView from 'react-native-webview';
 import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
-import {MAIN_SCRIPT, PLAYER_FUNCTIONS} from './PlayerScripts';
+import {
+  MAIN_SCRIPT,
+  PLAYER_FUNCTIONS,
+  playMode,
+  soundMode,
+} from './PlayerScripts';
 
 const YoutubeIframe = (
   {
@@ -94,23 +99,17 @@ const YoutubeIframe = (
   );
 
   useEffect(() => {
-    if (playerReady) {
-      if (play) {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.playVideo);
-      } else {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.pauseVideo);
-      }
-
-      if (mute) {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.muteVideo);
-      } else {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.unMuteVideo);
-      }
-      webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.setVolume(volume));
-      webViewRef.current.injectJavaScript(
-        PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
-      );
+    if (!playerReady) {
+      return;
     }
+
+    [
+      playMode[play],
+      soundMode[mute],
+      PLAYER_FUNCTIONS.setVolume(volume),
+      PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
+    ].forEach(webViewRef.current.injectJavaScript);
+
   }, [play, playerReady, mute, volume, playbackRate]);
 
   const onWebMessage = useCallback(
