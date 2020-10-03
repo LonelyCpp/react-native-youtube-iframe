@@ -1,4 +1,4 @@
-import {MUTE, PAUSE, PLAY, UNMUTE} from './constants';
+import {MUTE_MODE, PAUSE_MODE, PLAY_MODE, UNMUTE_MODE} from './constants';
 
 export const PLAYER_FUNCTIONS = {
   durationScript: `
@@ -43,13 +43,13 @@ player.seekTo(${seconds}, ${allowSeekAhead})
 };
 
 export const playMode = {
-  [PLAY]: PLAYER_FUNCTIONS.playVideo,
-  [PAUSE]: PLAYER_FUNCTIONS.pauseVideo
+  [PLAY_MODE]: PLAYER_FUNCTIONS.playVideo,
+  [PAUSE_MODE]: PLAYER_FUNCTIONS.pauseVideo
 };
 
 export const soundMode = {
-  [MUTE]: PLAYER_FUNCTIONS.muteVideo,
-  [UNMUTE]: PLAYER_FUNCTIONS.unMuteVideo,
+  [MUTE_MODE]: PLAYER_FUNCTIONS.muteVideo,
+  [UNMUTE_MODE]: PLAYER_FUNCTIONS.unMuteVideo,
 };
 
 export const MAIN_SCRIPT = (
