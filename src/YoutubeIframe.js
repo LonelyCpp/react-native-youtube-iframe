@@ -24,16 +24,22 @@ const YoutubeIframe = (
     webViewStyle,
     webViewProps,
     playbackRate = 1,
-    onError = _err => {},
-    onReady = _event => {},
+    onError = _err => {
+    },
+    onReady = _event => {
+    },
     playListStartIndex = 0,
     initialPlayerParams = {},
     allowWebViewZoom = false,
     forceAndroidAutoplay = false,
-    onChangeState = _event => {},
-    onFullScreenChange = _status => {},
-    onPlaybackQualityChange = _quality => {},
-    onPlaybackRateChange = _playbackRate => {},
+    onChangeState = _event => {
+    },
+    onFullScreenChange = _status => {
+    },
+    onPlaybackQualityChange = _quality => {
+    },
+    onPlaybackRateChange = _playbackRate => {
+    },
   },
   ref,
 ) => {
@@ -94,7 +100,10 @@ const YoutubeIframe = (
   );
 
   useEffect(() => {
-    if (playerReady) {
+      if (!playerReady) {
+        return;
+      }
+
       if (play) {
         webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.playVideo);
       } else {
@@ -111,7 +120,7 @@ const YoutubeIframe = (
         PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
       );
     }
-  }, [play, playerReady, mute, volume, playbackRate]);
+    , [play, playerReady, mute, volume, playbackRate]);
 
   const onWebMessage = useCallback(
     event => {
