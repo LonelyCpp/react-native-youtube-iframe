@@ -12,12 +12,20 @@ import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
 import {MAIN_SCRIPT, PLAYER_FUNCTIONS} from './PlayerScripts';
 
-const getPlayMode = (play) => {
-  if (play){
-    return PLAYER_FUNCTIONS.playVideo;
-  }
+const PLAY = true;
+const PAUSE = false;
 
-  return PLAYER_FUNCTIONS.pauseVideo;
+const MUTE = true;
+const UNMUTE = false;
+
+const playMode = {
+  [PLAY]: PLAYER_FUNCTIONS.playVideo,
+  [PAUSE]: PLAYER_FUNCTIONS.pauseVideo
+};
+
+const soundMode = {
+  [MUTE]: PLAYER_FUNCTIONS.muteVideo,
+  [UNMUTE]: PLAYER_FUNCTIONS.unMuteVideo,
 }
 
 const YoutubeIframe = (
@@ -114,17 +122,10 @@ const YoutubeIframe = (
 
       const injectScript = webViewRef.current.injectJavaScript;
 
-      injectScript(getPlayMode(play));
-
-      if (mute) {
-        injectScript(PLAYER_FUNCTIONS.muteVideo);
-      } else {
-        injectScript(PLAYER_FUNCTIONS.unMuteVideo);
-      }
+      injectScript(playMode[play]);
+      injectScript(soundMode[mute]);
       injectScript(PLAYER_FUNCTIONS.setVolume(volume));
-      injectScript(
-        PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
-      );
+      injectScript(PLAYER_FUNCTIONS.setPlaybackRate(playbackRate));
     }
     , [play, playerReady, mute, volume, playbackRate]);
 
@@ -147,7 +148,7 @@ const YoutubeIframe = (
                 PLAYER_FUNCTIONS.loadPlaylist(
                   playList,
                   playListStartIndex,
-                  play,
+                  isPlay,
                 ),
               );
             }
@@ -177,7 +178,7 @@ const YoutubeIframe = (
       onPlaybackRateChange,
       playListStartIndex,
       playList,
-      play,
+      isPlay,
     ],
   );
 
