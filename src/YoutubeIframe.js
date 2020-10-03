@@ -10,23 +10,7 @@ import {View, StyleSheet, Platform} from 'react-native';
 import WebView from 'react-native-webview';
 import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
-import {MAIN_SCRIPT, PLAYER_FUNCTIONS} from './PlayerScripts';
-
-const PLAY = true;
-const PAUSE = false;
-
-const MUTE = true;
-const UNMUTE = false;
-
-const playMode = {
-  [PLAY]: PLAYER_FUNCTIONS.playVideo,
-  [PAUSE]: PLAYER_FUNCTIONS.pauseVideo
-};
-
-const soundMode = {
-  [MUTE]: PLAYER_FUNCTIONS.muteVideo,
-  [UNMUTE]: PLAYER_FUNCTIONS.unMuteVideo,
-}
+import {MAIN_SCRIPT, PLAYER_FUNCTIONS, playMode, soundMode} from './PlayerScripts';
 
 const YoutubeIframe = (
   {
@@ -147,7 +131,7 @@ const YoutubeIframe = (
                 PLAYER_FUNCTIONS.loadPlaylist(
                   playList,
                   playListStartIndex,
-                  isPlay,
+                  play,
                 ),
               );
             }
@@ -177,7 +161,7 @@ const YoutubeIframe = (
       onPlaybackRateChange,
       playListStartIndex,
       playList,
-      isPlay,
+      play,
     ],
   );
 

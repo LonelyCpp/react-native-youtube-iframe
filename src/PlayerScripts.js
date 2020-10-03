@@ -1,3 +1,8 @@
+const PLAY = true;
+const PAUSE = false;
+const MUTE = true;
+const UNMUTE = false;
+
 export const PLAYER_FUNCTIONS = {
   durationScript: `
 window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getDuration', data: player.getDuration()}));
@@ -39,6 +44,16 @@ player.seekTo(${seconds}, ${allowSeekAhead})
   )},
     index: ${startIndex || 0}}); true;`,
 };
+
+export const playMode = {
+  [PLAY]: PLAYER_FUNCTIONS.playVideo,
+  [PAUSE]: PLAYER_FUNCTIONS.pauseVideo
+};
+
+export const soundMode = {
+  [MUTE]: PLAYER_FUNCTIONS.muteVideo,
+  [UNMUTE]: PLAYER_FUNCTIONS.unMuteVideo,
+}
 
 export const MAIN_SCRIPT = (
   videoId,
