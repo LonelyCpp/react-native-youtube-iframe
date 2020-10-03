@@ -1,3 +1,8 @@
+export const PLAY = true;
+export const PAUSE = false;
+export const MUTE = true;
+export const UNMUTE = false;
+
 export const PLAYER_STATES = {
   '-1': 'unstarted',
   '0': 'ended',

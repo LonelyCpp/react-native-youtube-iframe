@@ -1,7 +1,4 @@
-const PLAY = true;
-const PAUSE = false;
-const MUTE = true;
-const UNMUTE = false;
+import {MUTE, PAUSE, PLAY, UNMUTE} from './constants';
 
 export const PLAYER_FUNCTIONS = {
   durationScript: `
@@ -53,7 +50,7 @@ export const playMode = {
 export const soundMode = {
   [MUTE]: PLAYER_FUNCTIONS.muteVideo,
   [UNMUTE]: PLAYER_FUNCTIONS.unMuteVideo,
-}
+};
 
 export const MAIN_SCRIPT = (
   videoId,
