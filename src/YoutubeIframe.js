@@ -104,19 +104,21 @@ const YoutubeIframe = (
         return;
       }
 
+      const injectScript = webViewRef.current.injectJavaScript;
+
       if (play) {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.playVideo);
+        injectScript(PLAYER_FUNCTIONS.playVideo);
       } else {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.pauseVideo);
+        injectScript(PLAYER_FUNCTIONS.pauseVideo);
       }
 
       if (mute) {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.muteVideo);
+        injectScript(PLAYER_FUNCTIONS.muteVideo);
       } else {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.unMuteVideo);
+        injectScript(PLAYER_FUNCTIONS.unMuteVideo);
       }
-      webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.setVolume(volume));
-      webViewRef.current.injectJavaScript(
+      injectScript(PLAYER_FUNCTIONS.setVolume(volume));
+      injectScript(
         PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
       );
     }
