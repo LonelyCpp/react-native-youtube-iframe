@@ -24,22 +24,16 @@ const YoutubeIframe = (
     webViewStyle,
     webViewProps,
     playbackRate = 1,
-    onError = _err => {
-    },
-    onReady = _event => {
-    },
+    onError = _err => {},
+    onReady = _event => {},
     playListStartIndex = 0,
     initialPlayerParams = {},
     allowWebViewZoom = false,
     forceAndroidAutoplay = false,
-    onChangeState = _event => {
-    },
-    onFullScreenChange = _status => {
-    },
-    onPlaybackQualityChange = _quality => {
-    },
-    onPlaybackRateChange = _playbackRate => {
-    },
+    onChangeState = _event => {},
+    onFullScreenChange = _status => {},
+    onPlaybackQualityChange = _quality => {},
+    onPlaybackRateChange = _playbackRate => {},
   },
   ref,
 ) => {
