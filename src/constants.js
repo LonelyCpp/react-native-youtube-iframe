@@ -1,10 +1,19 @@
+export const PLAYER_STATES_NAMES = {
+  UNSTARTED: 'unstarted',
+  ENDED: 'ended',
+  PLAYING: 'playing',
+  PAUSED: 'paused',
+  BUFFERING: 'buffering',
+  VIDEO_CUED: 'video cued',
+};
+
 export const PLAYER_STATES = {
-  '-1': 'unstarted',
-  '0': 'ended',
-  '1': 'playing',
-  '2': 'paused',
-  '3': 'buffering',
-  '5': 'video cued',
+  '-1': PLAYER_STATES_NAMES.UNSTARTED,
+  '0': PLAYER_STATES_NAMES.ENDED,
+  '1': PLAYER_STATES_NAMES.PLAYING,
+  '2': PLAYER_STATES_NAMES.PAUSED,
+  '3': PLAYER_STATES_NAMES.BUFFERING,
+  '5': PLAYER_STATES_NAMES.VIDEO_CUED,
 };
 
 export const PLAYER_ERROR = {
