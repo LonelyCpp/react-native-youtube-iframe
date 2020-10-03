@@ -16,12 +16,19 @@ export const PLAYER_STATES = {
   '5': PLAYER_STATES_NAMES.VIDEO_CUED,
 };
 
+export const PLAYER_ERROR_NAMES = {
+  INVALID_PARAMETER: 'invalid_parameter',
+  HTML5_ERROR: 'HTML5_error',
+  VIDEO_NOT_FOUND: 'video_not_found',
+  EMBED_NOT_ALLOWED: 'embed_not_allowed',
+};
+
 export const PLAYER_ERROR = {
-  '2': 'invalid_parameter',
-  '5': 'HTML5_error',
-  '100': 'video_not_found',
-  '101': 'embed_not_allowed',
-  '150': 'embed_not_allowed',
+  '2': PLAYER_ERROR_NAMES.INVALID_PARAMETER,
+  '5': PLAYER_ERROR_NAMES.HTML5_ERROR,
+  '100': PLAYER_ERROR_NAMES.VIDEO_NOT_FOUND,
+  '101': PLAYER_ERROR_NAMES.EMBED_NOT_ALLOWED,
+  '150': PLAYER_ERROR_NAMES.EMBED_NOT_ALLOWED,
 };
 
 export const CUSTOM_USER_AGENT =
