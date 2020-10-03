@@ -126,8 +126,7 @@ const YoutubeIframe = (
         PLAYER_FUNCTIONS.setVolume(volume),
         PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
       ].forEach(webViewRef.current.injectJavaScript)
-    }
-    , [play, playerReady, mute, volume, playbackRate]);
+    }, [play, playerReady, mute, volume, playbackRate]);
 
   const onWebMessage = useCallback(
     event => {
