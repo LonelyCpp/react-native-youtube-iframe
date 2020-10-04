@@ -1,23 +1,40 @@
+
 export const PLAY_MODE = true;
 export const PAUSE_MODE = false;
 export const MUTE_MODE = true;
 export const UNMUTE_MODE = false;
 
+export const PLAYER_STATES_NAMES = {
+  UNSTARTED: 'unstarted',
+  ENDED: 'ended',
+  PLAYING: 'playing',
+  PAUSED: 'paused',
+  BUFFERING: 'buffering',
+  VIDEO_CUED: 'video cued',
+};
+
 export const PLAYER_STATES = {
-  '-1': 'unstarted',
-  '0': 'ended',
-  '1': 'playing',
-  '2': 'paused',
-  '3': 'buffering',
-  '5': 'video cued',
+  '-1': PLAYER_STATES_NAMES.UNSTARTED,
+  '0': PLAYER_STATES_NAMES.ENDED,
+  '1': PLAYER_STATES_NAMES.PLAYING,
+  '2': PLAYER_STATES_NAMES.PAUSED,
+  '3': PLAYER_STATES_NAMES.BUFFERING,
+  '5': PLAYER_STATES_NAMES.VIDEO_CUED,
+};
+
+export const PLAYER_ERROR_NAMES = {
+  INVALID_PARAMETER: 'invalid_parameter',
+  HTML5_ERROR: 'HTML5_error',
+  VIDEO_NOT_FOUND: 'video_not_found',
+  EMBED_NOT_ALLOWED: 'embed_not_allowed',
 };
 
 export const PLAYER_ERROR = {
-  '2': 'invalid_parameter',
-  '5': 'HTML5_error',
-  '100': 'video_not_found',
-  '101': 'embed_not_allowed',
-  '150': 'embed_not_allowed',
+  '2': PLAYER_ERROR_NAMES.INVALID_PARAMETER,
+  '5': PLAYER_ERROR_NAMES.HTML5_ERROR,
+  '100': PLAYER_ERROR_NAMES.VIDEO_NOT_FOUND,
+  '101': PLAYER_ERROR_NAMES.EMBED_NOT_ALLOWED,
+  '150': PLAYER_ERROR_NAMES.EMBED_NOT_ALLOWED,
 };
 
 export const CUSTOM_USER_AGENT =
