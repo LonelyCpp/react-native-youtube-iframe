@@ -1,3 +1,9 @@
+
+export const PLAY_MODE = true;
+export const PAUSE_MODE = false;
+export const MUTE_MODE = true;
+export const UNMUTE_MODE = false;
+
 export const PLAYER_STATES_NAMES = {
   UNSTARTED: 'unstarted',
   ENDED: 'ended',
