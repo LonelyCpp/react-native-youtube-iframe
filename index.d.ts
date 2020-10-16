@@ -93,7 +93,7 @@ export interface YoutubeIframeProps {
    * Works only if the playlist is a list of video IDs.
    */
   playListStartIndex?: Number;
-  initialPlayerParams: InitialPlayerParams;
+  initialPlayerParams?: InitialPlayerParams;
   /**
    * Changes user string to make autoplay work on the iframe player for some android devices.
    */
