@@ -1,6 +1,10 @@
 import {MUTE_MODE, PAUSE_MODE, PLAY_MODE, UNMUTE_MODE} from './constants';
 
 export const PLAYER_FUNCTIONS = {
+  muteVideo: 'player.mute(); true;',
+  unMuteVideo: 'player.unMute(); true;',
+  playVideo: 'player.playVideo(); true;',
+  pauseVideo: 'player.pauseVideo(); true;',
   durationScript: `
 window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getDuration', data: player.getDuration()}));
 true;
@@ -25,26 +29,31 @@ true;
 window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getAvailablePlaybackRates', data: player.getAvailablePlaybackRates()}));
 true;
 `,
-  seekToScript: (seconds, allowSeekAhead) => `
-player.seekTo(${seconds}, ${allowSeekAhead})
-`,
-  playVideo: 'player.playVideo(); true;',
-  pauseVideo: 'player.pauseVideo(); true;',
-  muteVideo: 'player.mute(); true;',
-  unMuteVideo: 'player.unMute(); true;',
-  setPlaybackRate: playbackRate =>
-    `player.setPlaybackRate(${playbackRate}); true;`,
-  setVolume: volume => `player.setVolume(${volume}); true;`,
-  loadPlaylist: (playList, startIndex, play) => `
-  player.${play ? 'loadPlaylist' : 'cuePlaylist'}({playlist: ${JSON.stringify(
-    playList,
-  )},
-    index: ${startIndex || 0}}); true;`,
+
+  setVolume: volume => {
+    return `player.setVolume(${volume}); true;`;
+  },
+
+  seekToScript: (seconds, allowSeekAhead) => {
+    return `player.seekTo(${seconds}, ${allowSeekAhead}); true;`;
+  },
+
+  setPlaybackRate: playbackRate => {
+    return `player.setPlaybackRate(${playbackRate}); true;`;
+  },
+
+  loadPlaylist: (playList, startIndex, play) => {
+    const index = startIndex || 0;
+    const playlistJson = JSON.stringify(playList);
+    const func = play ? 'loadPlaylist' : 'cuePlaylist';
+
+    return `player.${func}({playlist: ${playlistJson}, index: ${index}); true;`;
+  },
 };
 
 export const playMode = {
   [PLAY_MODE]: PLAYER_FUNCTIONS.playVideo,
-  [PAUSE_MODE]: PLAYER_FUNCTIONS.pauseVideo
+  [PAUSE_MODE]: PLAYER_FUNCTIONS.pauseVideo,
 };
 
 export const soundMode = {
