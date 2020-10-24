@@ -1,24 +1,24 @@
 import React, {
   useRef,
+  useState,
   useEffect,
+  forwardRef,
   useCallback,
   useImperativeHandle,
-  forwardRef,
-  useState,
 } from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import WebView from 'react-native-webview';
 import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
 import {
-  MAIN_SCRIPT,
-  PLAYER_FUNCTIONS,
   playMode,
   soundMode,
+  MAIN_SCRIPT,
+  PLAYER_FUNCTIONS,
 } from './PlayerScripts';
 
-const YoutubeIframe = (
-  {
+const YoutubeIframe = (props, ref) => {
+  const {
     height,
     width,
     videoId,
@@ -39,9 +39,8 @@ const YoutubeIframe = (
     onFullScreenChange = _status => {},
     onPlaybackQualityChange = _quality => {},
     onPlaybackRateChange = _playbackRate => {},
-  },
-  ref,
-) => {
+  } = props;
+
   const webViewRef = useRef(null);
   const eventEmitter = useRef(new EventEmitter());
   const [playerReady, setPlayerReady] = useState(false);
@@ -109,7 +108,6 @@ const YoutubeIframe = (
       PLAYER_FUNCTIONS.setVolume(volume),
       PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
     ].forEach(webViewRef.current.injectJavaScript);
-
   }, [play, playerReady, mute, volume, playbackRate]);
 
   const onWebMessage = useCallback(
@@ -154,14 +152,15 @@ const YoutubeIframe = (
       }
     },
     [
-      onChangeState,
-      onReady,
-      onPlaybackQualityChange,
-      onError,
-      onPlaybackRateChange,
-      playListStartIndex,
-      playList,
       play,
+      onReady,
+      onError,
+      playList,
+      onChangeState,
+      onFullScreenChange,
+      playListStartIndex,
+      onPlaybackRateChange,
+      onPlaybackQualityChange,
     ],
   );
 
