@@ -23,6 +23,7 @@ const YoutubeIframe = (props, ref) => {
     width,
     videoId,
     playList,
+    uiScale = 0.8,
     play = false,
     mute = false,
     volume = 100,
@@ -180,6 +181,7 @@ const YoutubeIframe = (props, ref) => {
             playList,
             initialPlayerParams,
             allowWebViewZoom,
+            uiScale
           ),
         }}
         userAgent={
