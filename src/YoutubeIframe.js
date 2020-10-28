@@ -191,6 +191,7 @@ const YoutubeIframe = (props, ref) => {
           return request.mainDocumentURL === 'about:blank';
         }}
         {...webViewProps}
+        bounces={webViewProps.bounces ?? false}
       />
     </View>
   );
