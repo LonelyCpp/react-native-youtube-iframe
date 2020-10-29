@@ -78,15 +78,14 @@ export const MAIN_SCRIPT = (
     rel,
     start,
   },
-  allowWebViewZoom,
-  uiScale
+  allowWebViewZoom
 ) => `<!DOCTYPE html>
 <html>
   <head>
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=${uiScale}${
-        allowWebViewZoom ? '' : `, maximum-scale=${uiScale}`
+      content="width=device-width, initial-scale=0.8${
+        allowWebViewZoom ? '' : ', maximum-scale=0.8'
       }"
     >
     <style>
