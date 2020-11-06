@@ -29,6 +29,7 @@ const YoutubeIframe = (props, ref) => {
     webViewStyle,
     webViewProps,
     playbackRate = 1,
+    contentScale = 1.0,
     onError = _err => {},
     onReady = _event => {},
     playListStartIndex = 0,
@@ -180,6 +181,7 @@ const YoutubeIframe = (props, ref) => {
             playList,
             initialPlayerParams,
             allowWebViewZoom,
+            contentScale,
           ),
         }}
         userAgent={

@@ -66,6 +66,7 @@ export const MAIN_SCRIPT = (
   playList,
   initialPlayerParams,
   allowWebViewZoom,
+  contentScale,
 ) => {
   const {
     end,
@@ -93,12 +94,13 @@ export const MAIN_SCRIPT = (
   const showClosedCaptions_s = showClosedCaptions ? 1 : 0;
   const list = typeof playList === 'string' ? playList : '';
   const listType = typeof playList === 'string' ? 'playlist' : '';
+  const contentScale_s = typeof contentScale === 'number' ? contentScale : 1.0;
 
-  // scale will either be "initial-scale=0.8"
-  let scale = 'initial-scale=0.8';
+  // scale will either be "initial-scale=1.0"
+  let scale = `initial-scale=${contentScale_s}`;
   if (allowWebViewZoom) {
-    // or "initial-scale=0.8, maximum-scale=0.8"
-    scale += ', maximum-scale=0.8';
+    // or "initial-scale=0.8, maximum-scale=1.0"
+    scale += `, maximum-scale=${contentScale_s}`;
   }
 
   return `

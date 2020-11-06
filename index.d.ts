@@ -122,6 +122,11 @@ export interface YoutubeIframeProps {
    * Set this React Ref to use ref functions such as getDuration.
    */
   ref?: React.MutableRefObject<YoutubeIframeRef | null>;
+  /**
+   * scale factor for initial-scale and maximum-scale in
+   * <meta /> tag on the webpage
+   */
+  contentScale?: Number;
 }
 
 export interface YoutubeMeta {
