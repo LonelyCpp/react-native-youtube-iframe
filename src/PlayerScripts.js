@@ -64,29 +64,50 @@ export const soundMode = {
 export const MAIN_SCRIPT = (
   videoId,
   playList,
-  {
-    loop = false,
-    controls = true,
-    cc_lang_pref, // country code
-    showClosedCaptions,
-    color, // 'red' or 'white'
+  initialPlayerParams,
+  allowWebViewZoom,
+) => {
+  const {
     end,
-    preventFullScreen = false,
+    rel,
+    color,
+    start,
     playerLang,
+    loop = false,
+    cc_lang_pref,
     iv_load_policy,
     modestbranding,
-    rel,
-    start,
-  },
-  allowWebViewZoom
-) => `<!DOCTYPE html>
+    controls = true,
+    showClosedCaptions,
+    preventFullScreen = false,
+  } = initialPlayerParams;
+
+  // _s postfix to refer to "safe"
+  const rel_s = rel ? 1 : 0;
+  const loop_s = loop ? 1 : 0;
+  const videoId_s = videoId || '';
+  const controls_s = controls ? 1 : 0;
+  const cc_lang_pref_s = cc_lang_pref || '';
+  const modestbranding_s = modestbranding ? 1 : 0;
+  const preventFullScreen_s = preventFullScreen ? 0 : 1;
+  const showClosedCaptions_s = showClosedCaptions ? 1 : 0;
+  const list = typeof playList === 'string' ? playList : '';
+  const listType = typeof playList === 'string' ? 'playlist' : '';
+
+  // scale will either be "initial-scale=0.8"
+  let scale = 'initial-scale=0.8';
+  if (allowWebViewZoom) {
+    // or "initial-scale=0.8, maximum-scale=0.8"
+    scale += ', maximum-scale=0.8';
+  }
+
+  return `
+<!DOCTYPE html>
 <html>
   <head>
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=0.8${
-        allowWebViewZoom ? '' : ', maximum-scale=0.8'
-      }"
+      content="width=device-width, ${scale}"
     >
     <style>
       body {
@@ -122,25 +143,25 @@ export const MAIN_SCRIPT = (
       var player;
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-          height: '1000',
           width: '1000',
-          videoId: '${videoId || ''}',
+          height: '1000',
+          videoId: '${videoId_s}',
           playerVars: {
-            playsinline: 1,
-            loop: ${loop ? 1 : 0},
-            controls: ${controls ? 1 : 0},
-            cc_lang_pref: '${cc_lang_pref || ''}',
-            cc_load_policy: ${showClosedCaptions ? 1 : 0},
-            color: ${color},
             end: ${end},
-            fs: ${preventFullScreen ? 0 : 1},
-            hl: ${playerLang},
-            iv_load_policy: ${iv_load_policy},
-            modestbranding: ${modestbranding ? 1 : 0},
-            rel: ${rel ? 1 : 0},
+            rel: ${rel_s},
+            playsinline: 1,
+            loop: ${loop_s},
+            color: ${color},
             start: ${start},
-            listType:  '${typeof playList === 'string' ? 'playlist' : ''}',
-            list: '${typeof playList === 'string' ? playList : ''}',
+            list: '${list}',
+            hl: ${playerLang},
+            listType: '${listType}',
+            controls: ${controls_s},
+            fs: ${preventFullScreen_s},
+            cc_lang_pref: '${cc_lang_pref_s}',
+            iv_load_policy: ${iv_load_policy},
+            modestbranding: ${modestbranding_s},
+            cc_load_policy: ${showClosedCaptions_s},
           },
           events: {
             'onReady': onPlayerReady,
@@ -185,4 +206,6 @@ export const MAIN_SCRIPT = (
       document.addEventListener('webkitfullscreenchange', onFullScreenChange)
     </script>
   </body>
-</html>`;
+</html>
+`;
+};
