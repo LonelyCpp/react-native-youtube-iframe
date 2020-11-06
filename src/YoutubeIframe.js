@@ -179,7 +179,7 @@ const YoutubeIframe = (props, ref) => {
             videoId,
             playList,
             initialPlayerParams,
-            allowWebViewZoom,
+            allowWebViewZoom
           ),
         }}
         userAgent={
