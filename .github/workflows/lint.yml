@@ -1,5 +1,7 @@
 name: run eslint on code
 
+on: [push]
+
 jobs:
   lint:
     runs-on: ubuntu-latest
