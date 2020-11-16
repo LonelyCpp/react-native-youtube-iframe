@@ -1,2 +1,6 @@
 docs/*
 website/*
+.eslintrc.js
+.prettierrc.js
+.github/*
+.vscode/*
