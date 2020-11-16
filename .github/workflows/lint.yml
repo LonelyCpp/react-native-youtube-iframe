@@ -1,0 +1,16 @@
+name: run eslint on code
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: install modules
+        run: yarn
+      - name: run lint
+        run: yarn lint
+        env:
+          CI: true
