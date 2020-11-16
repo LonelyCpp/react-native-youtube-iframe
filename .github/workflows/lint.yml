@@ -1,6 +1,6 @@
 name: run eslint on code
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   lint:
