@@ -4,6 +4,7 @@
   "description": "A simple wrapper around the youtube iframe js API for react native",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint index.js src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
