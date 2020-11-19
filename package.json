@@ -37,7 +37,8 @@
   "peerDependencies": {
     "react": ">=16.8.6",
     "react-native": ">=0.60",
-    "react-native-webview": ">=7.0.0"
+    "react-native-webview": ">=7.0.0",
+    "react-native-web-webview": ">=1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
