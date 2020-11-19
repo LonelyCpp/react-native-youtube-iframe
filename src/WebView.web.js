@@ -1,1 +1,1 @@
-export * from 'react-native-web-webview';
+export {WebView} from 'react-native-web-webview';
