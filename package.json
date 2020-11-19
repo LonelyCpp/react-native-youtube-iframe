@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "index.d.ts",
   "scripts": {
-    "lint": "eslint index.js src",
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && babel src --out-dir dist",
     "prepare": "yarn build"
