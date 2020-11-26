@@ -40,6 +40,7 @@ const YoutubeIframe = (props, ref) => {
     onFullScreenChange = _status => {},
     onPlaybackQualityChange = _quality => {},
     onPlaybackRateChange = _playbackRate => {},
+    keepRatio = true,
   } = props;
 
   const webViewRef = useRef(null);
@@ -182,6 +183,7 @@ const YoutubeIframe = (props, ref) => {
             initialPlayerParams,
             allowWebViewZoom,
             contentScale,
+            keepRatio,
           ),
         }}
         userAgent={

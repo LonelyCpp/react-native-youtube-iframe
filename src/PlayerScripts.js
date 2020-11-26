@@ -67,6 +67,7 @@ export const MAIN_SCRIPT = (
   initialPlayerParams,
   allowWebViewZoom,
   contentScale,
+  keepRatio,
 ) => {
   const {
     end,
@@ -103,6 +104,15 @@ export const MAIN_SCRIPT = (
     scale += `, maximum-scale=${contentScale_s}`;
   }
 
+  const resetRatio = `
+    html, body, .container {
+      height: 100%;
+    } 
+    .container{
+      padding-bottom: 0;
+    }
+  `;
+
   return `
 <!DOCTYPE html>
 <html>
@@ -128,6 +138,7 @@ export const MAIN_SCRIPT = (
           width: 100%;
           height: 100%;
       }
+      ${keepRatio ? '' : resetRatio}
     </style>
   </head>
   <body>
