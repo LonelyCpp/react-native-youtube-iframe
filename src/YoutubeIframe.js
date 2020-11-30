@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
-import WebView from 'react-native-webview';
+import {WebView} from './WebView';
 import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
 import {

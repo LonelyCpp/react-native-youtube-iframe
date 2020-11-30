@@ -2,10 +2,13 @@
   "name": "react-native-youtube-iframe",
   "version": "1.4.0",
   "description": "A simple wrapper around the youtube iframe js API for react native",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "lint": "eslint index.js src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && babel src --out-dir dist",
+    "prepare": "yarn build"
   },
   "repository": {
     "type": "git",
@@ -34,11 +37,15 @@
   "peerDependencies": {
     "react": ">=16.8.6",
     "react-native": ">=0.60",
-    "react-native-webview": ">=7.0.0"
+    "react-native-webview": ">=7.0.0",
+    "react-native-web-webview": ">=1.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
     "@react-native-community/eslint-config": "^2.0.0",
-    "eslint": "^7.7.0"
+    "eslint": "^7.7.0",
+    "metro-react-native-babel-preset": "^0.64.0"
   },
   "dependencies": {
     "events": "^3.2.0"
