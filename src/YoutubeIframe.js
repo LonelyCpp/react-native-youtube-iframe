@@ -168,22 +168,11 @@ const YoutubeIframe = (props, ref) => {
   return (
     <View style={{height, width}}>
       <WebView
-        ref={webViewRef}
         originWhitelist={['*']}
-        onMessage={onWebMessage}
         allowsInlineMediaPlayback
         style={[styles.webView, webViewStyle]}
         mediaPlaybackRequiresUserAction={false}
         allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
-        source={{
-          html: MAIN_SCRIPT(
-            videoId,
-            playList,
-            initialPlayerParams,
-            allowWebViewZoom,
-            contentScale,
-          ),
-        }}
         userAgent={
           forceAndroidAutoplay
             ? Platform.select({android: CUSTOM_USER_AGENT, ios: ''})
@@ -193,7 +182,27 @@ const YoutubeIframe = (props, ref) => {
           return request.mainDocumentURL === 'about:blank';
         }}
         bounces={false}
+        // props above this are override-able
+
+        // --
         {...webViewProps}
+        // --
+
+        //add props that should not be allowed to be overridden below
+        ref={webViewRef}
+        onMessage={onWebMessage}
+        source={{
+          // partially allow source to be overridden
+          ...webViewProps.source,
+          method: 'GET',
+          html: MAIN_SCRIPT(
+            videoId,
+            playList,
+            initialPlayerParams,
+            allowWebViewZoom,
+            contentScale,
+          ),
+        }}
       />
     </View>
   );
