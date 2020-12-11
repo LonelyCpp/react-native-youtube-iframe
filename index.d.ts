@@ -33,17 +33,17 @@ export interface YoutubeIframeProps {
    *
    * Note: Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
    */
-  height: Number;
+  height: number;
   /**
    * width of the webview container
    *
    * Note: Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
    */
-  width?: Number;
+  width?: number;
   /**
    * Specifies the YouTube Video ID of the video to be played.
    */
-  videoId: String;
+  videoId: string;
   /**
    * Specifies the playlist to play. It can be either the playlist ID or a list of video IDs
    *
@@ -53,20 +53,20 @@ export interface YoutubeIframeProps {
    * @example
    * playList={['QRt7LjqJ45k', 'fHsa9DqmId8']}
    */
-  playList?: Array<String> | String;
+  playList?: Array<string> | string;
   /**
    * Flag to tell the player to play or pause the video.
    */
-  play?: Boolean;
+  play?: boolean;
 
   /**
    * Flag to tell the player to mute the video.
    */
-  mute?: Boolean;
+  mute?: boolean;
   /**
    * Sets the volume. Accepts an integer between `0` and `100`.
    */
-  volume?: Number;
+  volume?: number;
   /**
    * A style prop that will be given to the webview
    */
@@ -78,7 +78,7 @@ export interface YoutubeIframeProps {
   /**
    * This sets the suggested playback rate for the current video. If the playback rate changes, it will only change for the video that is already cued or being played.
    */
-  playbackRate?: Number;
+  playbackRate?: number;
   /**
    * This event fires if an error occurs in the player. The API will pass an error string to the event listener function.
    */
@@ -92,32 +92,32 @@ export interface YoutubeIframeProps {
    *
    * Works only if the playlist is a list of video IDs.
    */
-  playListStartIndex?: Number;
+  playListStartIndex?: number;
   initialPlayerParams?: InitialPlayerParams;
   /**
    * Changes user string to make autoplay work on the iframe player for some android devices.
    */
-  forceAndroidAutoplay?: Boolean;
+  forceAndroidAutoplay?: boolean;
   /**
    * callback for when the player's state changes.
    */
-  onChangeState?: (event: String) => void;
+  onChangeState?: (event: string) => void;
   /**
    * callback for when the fullscreen option is clicked in the player. It signals the new fullscreen state of the player.
    */
-  onFullScreenChange?: (status: Boolean) => void;
+  onFullScreenChange?: (status: boolean) => void;
   /**
    * callback for when the video playback quality changes. It might signal a change in the viewer's playback environment.
    */
-  onPlaybackQualityChange?: (quality: String) => void;
+  onPlaybackQualityChange?: (quality: string) => void;
   /**
    * callback for when the video playback rate changes.
    */
-  onPlaybackRateChange?: (event: String) => void;
+  onPlaybackRateChange?: (event: string) => void;
   /**
    * Flag to decide whether or not a user can zoom the video webview.
    */
-  allowWebViewZoom?: Boolean;
+  allowWebViewZoom?: boolean;
   /**
    * Set this React Ref to use ref functions such as getDuration.
    */
@@ -126,7 +126,7 @@ export interface YoutubeIframeProps {
    * scale factor for initial-scale and maximum-scale in
    * <meta /> tag on the webpage
    */
-  contentScale?: Number;
+  contentScale?: number;
 }
 
 export interface YoutubeMeta {
