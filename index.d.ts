@@ -4,6 +4,7 @@ import {WebViewProps} from 'react-native-webview';
 
 export interface YoutubeIframeRef {
   getDuration: () => Promise<number>;
+  getVideoUrl: () => Promise<string>;
   getCurrentTime: () => Promise<number>;
   isMuted: () => Promise<boolean>;
   getVolume: () => Promise<number>;

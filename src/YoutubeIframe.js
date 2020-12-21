@@ -49,6 +49,12 @@ const YoutubeIframe = (props, ref) => {
   useImperativeHandle(
     ref,
     () => ({
+      getVideoUrl: () => {
+        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.getVideoUrlScript);
+        return new Promise(resolve => {
+          eventEmitter.current.once('getVideoUrl', resolve);
+        });
+      },
       getDuration: () => {
         webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.durationScript);
         return new Promise(resolve => {

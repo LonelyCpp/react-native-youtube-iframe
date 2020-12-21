@@ -5,6 +5,10 @@ export const PLAYER_FUNCTIONS = {
   unMuteVideo: 'player.unMute(); true;',
   playVideo: 'player.playVideo(); true;',
   pauseVideo: 'player.pauseVideo(); true;',
+  getVideoUrlScript: `
+window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getVideoUrl', data: player.getVideoUrl()}));
+true;
+  `,
   durationScript: `
 window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getDuration', data: player.getDuration()}));
 true;
