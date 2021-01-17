@@ -95,6 +95,9 @@ export const MAIN_SCRIPT = (
   const list = typeof playList === 'string' ? playList : '';
   const listType = typeof playList === 'string' ? 'playlist' : '';
   const contentScale_s = typeof contentScale === 'number' ? contentScale : 1.0;
+  const playlist = Array.isArray(playList)
+    ? `playlist: "${playList.join(',')}",`
+    : '';
 
   // scale will either be "initial-scale=1.0"
   let scale = `initial-scale=${contentScale_s}`;
@@ -149,6 +152,7 @@ export const MAIN_SCRIPT = (
           height: '1000',
           videoId: '${videoId_s}',
           playerVars: {
+            ${playlist}
             end: ${end},
             rel: ${rel_s},
             playsinline: 1,
