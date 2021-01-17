@@ -98,7 +98,7 @@ export const MAIN_SCRIPT = (
 
   // scale will either be "initial-scale=1.0"
   let scale = `initial-scale=${contentScale_s}`;
-  if (allowWebViewZoom) {
+  if (!allowWebViewZoom) {
     // or "initial-scale=0.8, maximum-scale=1.0"
     scale += `, maximum-scale=${contentScale_s}`;
   }
