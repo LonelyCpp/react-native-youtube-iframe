@@ -27,8 +27,8 @@
     </div>
 
     <script>
-      const parsed = new URL(window.location.href);
-      const data = parsed.searchParams.get('data');
+      const parsedUrl = new URL(window.location.href);
+      const UrlQueryData = parsedUrl.searchParams.get('data');
       const {
         end,
         list,
@@ -47,10 +47,13 @@
         iv_load_policy,
         preventFullScreen_s,
         showClosedCaptions_s,
-      } = JSON.parse(data);
+      } = JSON.parse(UrlQueryData);
+
+      function sendMessageToRN(msg) {
+        window.ReactNativeWebView.postMessage(JSON.stringify(msg));
+      }
 
       var tag = document.createElement('script');
-
       tag.src = 'https://www.youtube.com/iframe_api';
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -81,63 +84,51 @@
           },
           events: {
             onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
             onError: onPlayerError,
-            onPlaybackQualityChange: onPlaybackQualityChange,
+            onStateChange: onPlayerStateChange,
             onPlaybackRateChange: onPlaybackRateChange,
+            onPlaybackQualityChange: onPlaybackQualityChange,
           },
         });
       }
 
       function onPlayerError(event) {
-        window.ReactNativeWebView.postMessage(
-          JSON.stringify({eventType: 'playerError', data: event.data}),
-        );
+        sendMessageToRN({eventType: 'playerError', data: event.data});
       }
 
       function onPlaybackRateChange(event) {
-        window.ReactNativeWebView.postMessage(
-          JSON.stringify({eventType: 'playbackRateChange', data: event.data}),
-        );
+        sendMessageToRN({eventType: 'playbackRateChange', data: event.data});
       }
 
       function onPlaybackQualityChange(event) {
-        window.ReactNativeWebView.postMessage(
-          JSON.stringify({eventType: 'playerQualityChange', data: event.data}),
-        );
+        sendMessageToRN({eventType: 'playerQualityChange', data: event.data});
       }
 
       function onPlayerReady(event) {
-        window.ReactNativeWebView.postMessage(
-          JSON.stringify({eventType: 'playerReady'}),
-        );
+        sendMessageToRN({eventType: 'playerReady'});
       }
 
-      var done = false;
       function onPlayerStateChange(event) {
-        window.ReactNativeWebView.postMessage(
-          JSON.stringify({eventType: 'playerStateChange', data: event.data}),
-        );
+        sendMessageToRN({eventType: 'playerStateChange', data: event.data});
       }
 
       var isFullScreen = false;
       function onFullScreenChange() {
         isFullScreen =
           document.fullscreenElement ||
+          document.msFullscreenElement ||
           document.mozFullScreenElement ||
-          document.webkitFullscreenElement ||
-          document.msFullscreenElement;
-        window.ReactNativeWebView.postMessage(
-          JSON.stringify({
-            eventType: 'fullScreenChange',
-            data: Boolean(isFullScreen),
-          }),
-        );
+          document.webkitFullscreenElement;
+
+        sendMessageToRN({
+          eventType: 'fullScreenChange',
+          data: Boolean(isFullScreen),
+        });
       }
 
       document.addEventListener('fullscreenchange', onFullScreenChange);
-      document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('msfullscreenchange', onFullScreenChange);
+      document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
     </script>
   </body>
