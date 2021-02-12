@@ -31,6 +31,7 @@ const YoutubeIframe = (props, ref) => {
     volume = 100,
     webViewStyle,
     webViewProps,
+    useLocalHTML,
     baseUrlOverride,
     playbackRate = 1,
     contentScale = 1.0,
@@ -175,7 +176,19 @@ const YoutubeIframe = (props, ref) => {
     ],
   );
 
-  const uri = useMemo(() => {
+  const source = useMemo(() => {
+    if (useLocalHTML) {
+      return {
+        html: MAIN_SCRIPT(
+          videoId,
+          playList,
+          initialPlayerParams,
+          allowWebViewZoom,
+          contentScale,
+        ).htmlString,
+      };
+    }
+
     const base = baseUrlOverride || defaultBaseUrl;
     const data = MAIN_SCRIPT(
       videoId,
@@ -185,10 +198,11 @@ const YoutubeIframe = (props, ref) => {
       contentScale,
     ).urlEncodedJSON;
 
-    return base + '?data=' + data;
+    return {uri: base + '?data=' + data};
   }, [
     videoId,
     playList,
+    useLocalHTML,
     contentScale,
     baseUrlOverride,
     allowWebViewZoom,
@@ -198,6 +212,7 @@ const YoutubeIframe = (props, ref) => {
   return (
     <View style={{height, width}}>
       <WebView
+        originWhitelist={['*']}
         allowsInlineMediaPlayback
         style={[styles.webView, webViewStyle]}
         mediaPlaybackRequiresUserAction={false}
@@ -222,7 +237,7 @@ const YoutubeIframe = (props, ref) => {
         // --
 
         //add props that should not be allowed to be overridden below
-        source={{uri}}
+        source={source}
         ref={webViewRef}
         onMessage={onWebMessage}
       />
