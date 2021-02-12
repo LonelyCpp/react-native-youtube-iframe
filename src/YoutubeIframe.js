@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
-import {WebView} from './WebView';
+import {WebView} from './WebView.native';
 import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
 import {
@@ -197,18 +197,7 @@ const YoutubeIframe = (props, ref) => {
         //add props that should not be allowed to be overridden below
         ref={webViewRef}
         onMessage={onWebMessage}
-        source={{
-          method: 'GET',
-          uri:
-            'https://lonelycpp.github.io/test/index.html' +
-            MAIN_SCRIPT(
-              videoId,
-              playList,
-              initialPlayerParams,
-              allowWebViewZoom,
-              contentScale,
-            ).urlEncodedJSON,
-        }}
+        source={{uri: 'https://reactnative.dev/'}}
       />
     </View>
   );
