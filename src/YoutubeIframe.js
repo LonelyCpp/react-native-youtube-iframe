@@ -200,7 +200,7 @@ const YoutubeIframe = (props, ref) => {
         source={{
           method: 'GET',
           uri:
-            'http://127.0.0.1:5500/iframe.html?data=' +
+            'https://lonelycpp.github.io/test/index.html' +
             MAIN_SCRIPT(
               videoId,
               playList,
