@@ -5,9 +5,10 @@ import React, {
   forwardRef,
   useCallback,
   useImperativeHandle,
+  useMemo,
 } from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
-import {WebView} from './WebView.native';
+import {WebView} from './WebView';
 import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
 import {
@@ -16,6 +17,8 @@ import {
   MAIN_SCRIPT,
   PLAYER_FUNCTIONS,
 } from './PlayerScripts';
+
+const defaultBaseUrl = 'https://lonelycpp.github.io/test/index.html';
 
 const YoutubeIframe = (props, ref) => {
   const {
@@ -28,6 +31,7 @@ const YoutubeIframe = (props, ref) => {
     volume = 100,
     webViewStyle,
     webViewProps,
+    baseUrlOverride,
     playbackRate = 1,
     contentScale = 1.0,
     onError = _err => {},
@@ -171,10 +175,29 @@ const YoutubeIframe = (props, ref) => {
     ],
   );
 
+  const uri = useMemo(() => {
+    const base = baseUrlOverride || defaultBaseUrl;
+    const data = MAIN_SCRIPT(
+      videoId,
+      playList,
+      initialPlayerParams,
+      allowWebViewZoom,
+      contentScale,
+    ).urlEncodedJSON;
+
+    return base + '?data=' + data;
+  }, [
+    videoId,
+    playList,
+    contentScale,
+    baseUrlOverride,
+    allowWebViewZoom,
+    initialPlayerParams,
+  ]);
+
   return (
     <View style={{height, width}}>
       <WebView
-        originWhitelist={['*']}
         allowsInlineMediaPlayback
         style={[styles.webView, webViewStyle]}
         mediaPlaybackRequiresUserAction={false}
@@ -185,7 +208,11 @@ const YoutubeIframe = (props, ref) => {
             : ''
         }
         onShouldStartLoadWithRequest={request => {
-          return request.mainDocumentURL === 'about:blank';
+          console.log({request});
+          return request.mainDocumentURL.startsWith(
+            baseUrlOverride || defaultBaseUrl,
+          );
+          // return request.mainDocumentURL === 'about:blank';
         }}
         bounces={false}
         // props above this are override-able
@@ -195,9 +222,9 @@ const YoutubeIframe = (props, ref) => {
         // --
 
         //add props that should not be allowed to be overridden below
+        source={{uri}}
         ref={webViewRef}
         onMessage={onWebMessage}
-        source={{uri: 'https://reactnative.dev/'}}
       />
     </View>
   );
