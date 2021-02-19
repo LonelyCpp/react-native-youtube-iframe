@@ -6,7 +6,7 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {WebView} from './WebView';
 import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
 import {EventEmitter} from 'events';
@@ -45,6 +45,10 @@ const YoutubeIframe = (props, ref) => {
   const webViewRef = useRef(null);
   const eventEmitter = useRef(new EventEmitter());
   const [playerReady, setPlayerReady] = useState(false);
+  const handleLongPRess=(e)=>{
+    e,preventDefault();
+    return null;
+  }
 
   useImperativeHandle(
     ref,
@@ -172,7 +176,7 @@ const YoutubeIframe = (props, ref) => {
   );
 
   return (
-    <View style={{height, width}}>
+    <TouchableOpacity style={{height, width}} onLongPress={handleLongPRess}>
       <WebView
         originWhitelist={['*']}
         allowsInlineMediaPlayback
@@ -210,7 +214,7 @@ const YoutubeIframe = (props, ref) => {
           ),
         }}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
