@@ -6,10 +6,10 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from 'react';
-import {TouchableOpacity, StyleSheet, Platform} from 'react-native';
-import {WebView} from './WebView';
-import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
-import {EventEmitter} from 'events';
+import { View, TouchableOpacity, Animated, StyleSheet, Platform, PanResponder } from 'react-native';
+import { WebView } from './WebView';
+import { PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT } from './constants';
+import { EventEmitter } from 'events';
 import {
   playMode,
   soundMode,
@@ -17,7 +17,11 @@ import {
   PLAYER_FUNCTIONS,
 } from './PlayerScripts';
 
+
 const YoutubeIframe = (props, ref) => {
+  let _panResponder = {
+    panHandlers: {}
+  };
   const {
     height,
     width,
@@ -30,25 +34,24 @@ const YoutubeIframe = (props, ref) => {
     webViewProps,
     playbackRate = 1,
     contentScale = 1.0,
-    onError = _err => {},
-    onReady = _event => {},
+    onError = _err => { },
+    onReady = _event => { },
     playListStartIndex = 0,
     initialPlayerParams = {},
     allowWebViewZoom = false,
     forceAndroidAutoplay = false,
-    onChangeState = _event => {},
-    onFullScreenChange = _status => {},
-    onPlaybackQualityChange = _quality => {},
-    onPlaybackRateChange = _playbackRate => {},
+    onChangeState = _event => { },
+    onFullScreenChange = _status => { },
+    onPlaybackQualityChange = _quality => { },
+    onPlaybackRateChange = _playbackRate => { },
+    allowOnlyPlayPauseOption = false,
   } = props;
 
+
+  const [playpauseonly, setPlayPause] = useState(play);
   const webViewRef = useRef(null);
   const eventEmitter = useRef(new EventEmitter());
   const [playerReady, setPlayerReady] = useState(false);
-  const handleLongPRess=(e)=>{
-    e,preventDefault();
-    return null;
-  }
 
   useImperativeHandle(
     ref,
@@ -114,12 +117,12 @@ const YoutubeIframe = (props, ref) => {
     }
 
     [
-      playMode[play],
+      playMode[play || playpauseonly],
       soundMode[mute],
       PLAYER_FUNCTIONS.setVolume(volume),
       PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
     ].forEach(webViewRef.current.injectJavaScript);
-  }, [play, playerReady, mute, volume, playbackRate]);
+  }, [play, playpauseonly, playerReady, mute, volume, playbackRate]);
 
   const onWebMessage = useCallback(
     event => {
@@ -163,6 +166,7 @@ const YoutubeIframe = (props, ref) => {
       }
     },
     [
+      playpauseonly,
       play,
       onReady,
       onError,
@@ -175,51 +179,70 @@ const YoutubeIframe = (props, ref) => {
     ],
   );
 
+
+  const onPlayPauseClick = () => {
+    setPlayPause(!playpauseonly);
+  }
   return (
-    <TouchableOpacity style={{height, width}} onLongPress={handleLongPRess}>
-      <WebView
-        originWhitelist={['*']}
-        allowsInlineMediaPlayback
-        style={[styles.webView, webViewStyle]}
-        mediaPlaybackRequiresUserAction={false}
-        allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
-        userAgent={
-          forceAndroidAutoplay
-            ? Platform.select({android: CUSTOM_USER_AGENT, ios: ''})
-            : ''
-        }
-        onShouldStartLoadWithRequest={request => {
-          return request.mainDocumentURL === 'about:blank';
-        }}
-        bounces={false}
-        // props above this are override-able
+    <View>
+      {allowOnlyPlayPauseOption &&
+        <TouchableOpacity
+          style={{
+            zIndex: 1,
+            position: "absolute",
+            bottom: 0,
+            height: height,
+            width: '100%',
+          }}
+          onPress={onPlayPauseClick}
+          onLongPress={onPlayPauseClick}>
+        </TouchableOpacity>}
+      <View style={{ height, width }}>
+        <WebView
+          originWhitelist={['*']}
+          allowsInlineMediaPlayback
+          style={[styles.webView, webViewStyle]}
+          mediaPlaybackRequiresUserAction={false}
+          allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
+          userAgent={
+            forceAndroidAutoplay
+              ? Platform.select({ android: CUSTOM_USER_AGENT, ios: '' })
+              : ''
+          }
+          onShouldStartLoadWithRequest={request => {
+            return request.mainDocumentURL === 'about:blank';
+          }}
+          bounces={false}
+          // props above this are override-able
 
-        // --
-        {...webViewProps}
-        // --
+          // --
+          {...webViewProps}
+          // --
 
-        //add props that should not be allowed to be overridden below
-        ref={webViewRef}
-        onMessage={onWebMessage}
-        source={{
-          // partially allow source to be overridden
-          ...webViewProps?.source,
-          method: 'GET',
-          html: MAIN_SCRIPT(
-            videoId,
-            playList,
-            initialPlayerParams,
-            allowWebViewZoom,
-            contentScale,
-          ),
-        }}
-      />
-    </TouchableOpacity>
+          //add props that should not be allowed to be overridden below
+          ref={webViewRef}
+          onMessage={onWebMessage}
+          source={{
+            // partially allow source to be overridden
+            ...webViewProps?.source,
+            method: 'GET',
+            html: MAIN_SCRIPT(
+              videoId,
+              playList,
+              initialPlayerParams,
+              allowWebViewZoom,
+              contentScale,
+            ),
+          }}
+        />
+      </View>
+
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  webView: {backgroundColor: 'transparent'},
+  webView: { backgroundColor: 'transparent' },
 });
 
 export default forwardRef(YoutubeIframe);
