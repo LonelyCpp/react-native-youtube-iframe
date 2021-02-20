@@ -6,7 +6,7 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from 'react';
-import { View, TouchableOpacity, Animated, StyleSheet, Platform, PanResponder } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { WebView } from './WebView';
 import { PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT } from './constants';
 import { EventEmitter } from 'events';
@@ -19,9 +19,6 @@ import {
 
 
 const YoutubeIframe = (props, ref) => {
-  let _panResponder = {
-    panHandlers: {}
-  };
   const {
     height,
     width,
