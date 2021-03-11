@@ -8,7 +8,7 @@
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf ./dist && babel src --out-dir dist",
-    "prepare": "yarn build"
+    "prepare": "rimraf ./dist && babel src --out-dir dist"
   },
   "repository": {
     "type": "git",

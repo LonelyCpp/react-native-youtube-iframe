@@ -110,7 +110,29 @@ export const MAIN_SCRIPT = (
     scale += `, maximum-scale=${contentScale_s}`;
   }
 
-  return `
+  const safeData = {
+    end,
+    list,
+    start,
+    color,
+    rel_s,
+    loop_s,
+    listType,
+    playlist,
+    videoId_s,
+    controls_s,
+    playerLang,
+    iv_load_policy,
+    contentScale_s,
+    cc_lang_pref_s,
+    modestbranding_s,
+    preventFullScreen_s,
+    showClosedCaptions_s,
+  };
+
+  const urlEncodedJSON = encodeURI(JSON.stringify(safeData));
+
+  const htmlString = `
 <!DOCTYPE html>
 <html>
   <head>
@@ -218,4 +240,6 @@ export const MAIN_SCRIPT = (
   </body>
 </html>
 `;
+
+  return {htmlString, urlEncodedJSON};
 };

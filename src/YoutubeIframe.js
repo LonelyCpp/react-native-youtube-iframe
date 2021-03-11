@@ -5,6 +5,7 @@ import React, {
   forwardRef,
   useCallback,
   useImperativeHandle,
+  useMemo,
 } from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {WebView} from './WebView';
@@ -17,6 +18,8 @@ import {
   PLAYER_FUNCTIONS,
 } from './PlayerScripts';
 
+const defaultBaseUrl = 'https://lonelycpp.github.io/test/index.html';
+
 const YoutubeIframe = (props, ref) => {
   const {
     height,
@@ -28,6 +31,8 @@ const YoutubeIframe = (props, ref) => {
     volume = 100,
     webViewStyle,
     webViewProps,
+    useLocalHTML,
+    baseUrlOverride,
     playbackRate = 1,
     contentScale = 1.0,
     onError = _err => {},
@@ -171,6 +176,39 @@ const YoutubeIframe = (props, ref) => {
     ],
   );
 
+  const source = useMemo(() => {
+    if (useLocalHTML) {
+      return {
+        html: MAIN_SCRIPT(
+          videoId,
+          playList,
+          initialPlayerParams,
+          allowWebViewZoom,
+          contentScale,
+        ).htmlString,
+      };
+    }
+
+    const base = baseUrlOverride || defaultBaseUrl;
+    const data = MAIN_SCRIPT(
+      videoId,
+      playList,
+      initialPlayerParams,
+      allowWebViewZoom,
+      contentScale,
+    ).urlEncodedJSON;
+
+    return {uri: base + '?data=' + data};
+  }, [
+    videoId,
+    playList,
+    useLocalHTML,
+    contentScale,
+    baseUrlOverride,
+    allowWebViewZoom,
+    initialPlayerParams,
+  ]);
+
   return (
     <View style={{height, width}}>
       <WebView
@@ -185,7 +223,11 @@ const YoutubeIframe = (props, ref) => {
             : ''
         }
         onShouldStartLoadWithRequest={request => {
-          return request.mainDocumentURL === 'about:blank';
+          console.log({request});
+          return request.mainDocumentURL.startsWith(
+            baseUrlOverride || defaultBaseUrl,
+          );
+          // return request.mainDocumentURL === 'about:blank';
         }}
         bounces={false}
         // props above this are override-able
@@ -195,20 +237,9 @@ const YoutubeIframe = (props, ref) => {
         // --
 
         //add props that should not be allowed to be overridden below
+        source={source}
         ref={webViewRef}
         onMessage={onWebMessage}
-        source={{
-          // partially allow source to be overridden
-          ...webViewProps?.source,
-          method: 'GET',
-          html: MAIN_SCRIPT(
-            videoId,
-            playList,
-            initialPlayerParams,
-            allowWebViewZoom,
-            contentScale,
-          ),
-        }}
       />
     </View>
   );
