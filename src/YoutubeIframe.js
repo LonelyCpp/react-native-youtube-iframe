@@ -18,7 +18,8 @@ import {
   PLAYER_FUNCTIONS,
 } from './PlayerScripts';
 
-const defaultBaseUrl = 'https://lonelycpp.github.io/test/index.html';
+const defaultBaseUrl =
+  'https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html';
 
 const YoutubeIframe = (props, ref) => {
   const {
