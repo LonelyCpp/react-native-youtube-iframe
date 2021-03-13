@@ -269,6 +269,8 @@ Props that are supplied to the underlying webview (react-native-webview). A full
 
 ### `forceAndroidAutoplay`
 
+<Type>Boolean</Type>
+
 Changes user string to make autoplay work on the iframe player for some android devices.
 
 :::info user agent string used -
@@ -279,14 +281,28 @@ Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like 
 
 ### `allowWebViewZoom`
 
+<Type>Boolean</Type>
+
 Controls whether the embedded webview allows user to zoom in. Defaults to `false`
 
 ---
 
 ### `contentScale`
 
+<Type>Number</Type>
+
 scale factor for initial-scale and maximum-scale in `<meta />` tag on the webpage. Defaults to `1.0`
 
 :::info zoom -
 enabling the `allowWebViewZoom` disabled the maximum-scale attribute in the webpage
 :::
+
+---
+
+### `baseUrlOverride`
+
+<Type>String</Type>
+
+A link that serves the iframe code. If you want to host the code on your own domain, get the source from [here](https://github.com/LonelyCpp/react-native-youtube-iframe/blob/master/iframe.html).
+
+Default link - https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html
