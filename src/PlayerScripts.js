@@ -125,6 +125,7 @@ export const MAIN_SCRIPT = (
     iv_load_policy,
     contentScale_s,
     cc_lang_pref_s,
+    allowWebViewZoom,
     modestbranding_s,
     preventFullScreen_s,
     showClosedCaptions_s,

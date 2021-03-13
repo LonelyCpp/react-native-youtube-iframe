@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width," />
     <style>
       body {
         margin: 0;
@@ -43,6 +43,7 @@
         controls_s,
         cc_lang_pref_s,
         contentScale_s,
+        allowWebViewZoom,
         modestbranding_s,
         iv_load_policy,
         preventFullScreen_s,
@@ -52,6 +53,18 @@
       function sendMessageToRN(msg) {
         window.ReactNativeWebView.postMessage(JSON.stringify(msg));
       }
+
+      let metaString = '';
+      if (contentScale_s) {
+        metaString += `initial-scale=${contentScale_s}`;
+      }
+
+      if (!allowWebViewZoom) {
+        metaString += `maximum-scale=${contentScale_s}`;
+      }
+
+      const viewport = document.querySelector('meta[name=viewport]');
+      viewport.setAttribute('content', 'width=device-width,' + metaString);
 
       var tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
