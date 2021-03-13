@@ -178,26 +178,20 @@ const YoutubeIframe = (props, ref) => {
   );
 
   const source = useMemo(() => {
-    if (useLocalHTML) {
-      return {
-        html: MAIN_SCRIPT(
-          videoId,
-          playList,
-          initialPlayerParams,
-          allowWebViewZoom,
-          contentScale,
-        ).htmlString,
-      };
-    }
-
-    const base = baseUrlOverride || defaultBaseUrl;
-    const data = MAIN_SCRIPT(
+    const ytScript = MAIN_SCRIPT(
       videoId,
       playList,
       initialPlayerParams,
       allowWebViewZoom,
       contentScale,
-    ).urlEncodedJSON;
+    );
+
+    if (useLocalHTML) {
+      return {html: ytScript.htmlString};
+    }
+
+    const base = baseUrlOverride || defaultBaseUrl;
+    const data = ytScript.urlEncodedJSON;
 
     return {uri: base + '?data=' + data};
   }, [
