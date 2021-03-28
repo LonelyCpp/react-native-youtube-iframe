@@ -9,6 +9,10 @@ module.exports = {
   organizationName: 'LonelyCpp',
   projectName: 'react-native-youtube-iframe',
   themeConfig: {
+    sidebarCollapsible: false,
+    colorMode: {
+      defaultMode: 'dark',
+    },
     navbar: {
       title: 'React Native Youtube-iframe',
       logo: {
@@ -34,7 +38,6 @@ module.exports = {
         docs: {
           path: '../docs',
           routeBasePath: '/',
-          homePageId: 'about',
           sidebarPath: require.resolve('./sidebars.js'),
         },
         theme: {

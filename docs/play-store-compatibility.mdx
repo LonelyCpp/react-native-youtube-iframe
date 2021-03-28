@@ -1,0 +1,13 @@
+---
+id: play-store-compatibility
+title: Google Play Store
+---
+
+Google is very strict about apps on the play store that have youtube content on it. It absolutely does not allow background play in any form. Make sure that your app complies with [youtube's terms of service](https://developers.google.com/youtube/terms/api-services-terms-of-service).
+
+A few users have faced app rejections and the best way to avoid any issues is to make sure that the video stops when your app. ([#72](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/72), [#105](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/105)).
+
+- goes to the background
+- the video is no longer on the screen
+
+Use the [AppState](https://reactnative.dev/docs/appstate) api to stop the video when the app is not "active" and use navigational hooks to stop the video when a user navigates away from the screen.

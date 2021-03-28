@@ -118,6 +118,24 @@ Gives access to the player reference. This can be used to access player function
 
 ---
 
+### `baseUrlOverride`
+
+<Type>String</Type>
+
+A link that serves the iframe code. If you want to host the code on your own domain, get the source from [here](https://github.com/LonelyCpp/react-native-youtube-iframe/blob/master/iframe.html).
+
+Default link - https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html
+
+---
+
+### `useLocalHTML`
+
+<Type>Boolean</Type>
+
+use locally generated html to render on the webview
+
+---
+
 ### `onChangeState`
 
 <Type>function(event: string)</Type>
@@ -296,13 +314,3 @@ scale factor for initial-scale and maximum-scale in `<meta />` tag on the webpag
 :::info zoom -
 enabling the `allowWebViewZoom` disabled the maximum-scale attribute in the webpage
 :::
-
----
-
-### `baseUrlOverride`
-
-<Type>String</Type>
-
-A link that serves the iframe code. If you want to host the code on your own domain, get the source from [here](https://github.com/LonelyCpp/react-native-youtube-iframe/blob/master/iframe.html).
-
-Default link - https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html

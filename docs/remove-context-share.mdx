@@ -1,0 +1,45 @@
+---
+id: remove-context-share
+title: Remove Context Menu
+---
+
+---
+
+### Removing context menu on long-press:
+
+Use react-native's [Pressable API](https://reactnative.dev/docs/pressable) or any of the touchables to intercept long presses.
+
+example : (by [@vijay122](https://github.com/LonelyCpp/react-native-youtube-iframe/pull/111/files))
+
+```jsx
+<Pressable
+  onLongPress={() => {
+    // handle or ignore
+  }}>
+  <YoutubePlayer (...) />
+</Pressable>
+```
+
+### Removing context menu on kebab menu (prevent share):
+
+It is not possible to change to UI of the player. You can however achieve this by placing an absolutely positioned view on the player (either fully covering the player or just tall enough to cover the title) to prevent the webview from receiving user touches. This will not remove the logo or three dots, but will make it un-interactable.
+
+example:
+
+```jsx
+<View>
+  <YoutubePlayer height={300} videoId={'XSqi5s3rfqk'} />
+  <TouchableOpacity
+    // TouchableOpacity to "steal" taps
+    // absolutely positioned to the top
+    // height must be adjusted to
+    // just cover the top 3 dots
+    style={{
+      top: 0,
+      height: 50,
+      width: '100%',
+      position: 'absolute',
+    }}
+  />
+</View>
+```
