@@ -7,16 +7,25 @@ title: Remove Context Menu
 
 ### Removing context menu on long-press:
 
-Use react-native's [Pressable API](https://reactnative.dev/docs/pressable) or any of the touchables to intercept long presses.
+Wrap the `<YoutubePlayer />` in a View that has `pointerEvents="none"` to disable app touch-events to the player.
 
-example : (by [@vijay122](https://github.com/LonelyCpp/react-native-youtube-iframe/pull/111/files))
+Then react-native's [Pressable API](https://reactnative.dev/docs/pressable) or any of the touchables to intercept presses.
+
+example:
 
 ```jsx
 <Pressable
+  onPress={() => {
+    // handle or ignore
+  }}
   onLongPress={() => {
     // handle or ignore
   }}>
-  <YoutubePlayer (...) />
+
+  <View pointerEvents="none">
+    <YoutubePlayer (...) />
+  </View>
+
 </Pressable>
 ```
 
