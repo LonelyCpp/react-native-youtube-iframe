@@ -27,6 +27,9 @@
     </div>
 
     <script>
+      const randomPlayerId = 'player' + Date.now();
+      document.getElementById('player').id = randomPlayerId;
+
       const parsedUrl = new URL(window.location.href);
       const UrlQueryData = parsedUrl.searchParams.get('data');
       const {
@@ -73,7 +76,7 @@
 
       var player;
       function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
+        player = new YT.Player(randomPlayerId, {
           width: '1000',
           height: '1000',
           videoId: videoId_s,
