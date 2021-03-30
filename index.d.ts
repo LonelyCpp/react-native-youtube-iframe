@@ -128,6 +128,17 @@ export interface YoutubeIframeProps {
    * <meta /> tag on the webpage
    */
   contentScale?: number;
+  /**
+   * force use locally generated HTML string. defaults to `false`
+   */
+  useLocalHTML?: boolean;
+  /**
+   * url that fetches a webpage compatible with youtube iframe interface
+   *
+   * * defaults to : https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html
+   * * for code check "iframe.html" in package repo
+   */
+  baseUrlOverride?: string;
 }
 
 export interface YoutubeMeta {

@@ -1,0 +1,12 @@
+---
+id: self-host-remote-source
+title: Self Host Static HTML page that handles the player
+---
+
+Prior to `v2.0.0`, this package would generate HTML required for the youtube iframe and serve it as raw HTML string.
+This meant that the base URL would be `'about:blank'` and leading to a number of videos showing a "embed not allowed" error message.
+
+To mitigate this - the webpage had to be uploaded on to a trustable remote source (github pages).
+The source code of the [static HTML](https://github.com/LonelyCpp/react-native-youtube-iframe/blob/master/iframe.html) is minified and uploaded as a part of the documentation website [here](https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html).
+
+For whatever reason, if you would like to host this page on your own web server - the [static HTML](https://github.com/LonelyCpp/react-native-youtube-iframe/blob/master/iframe.html) source can be hosted as it is. _(not recommended since manual update will be required)_
