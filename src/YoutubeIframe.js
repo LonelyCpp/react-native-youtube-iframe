@@ -222,7 +222,6 @@ const YoutubeIframe = (props, ref) => {
             : ''
         }
         onShouldStartLoadWithRequest={request => {
-          console.log({request});
           return request.mainDocumentURL.startsWith(
             baseUrlOverride || defaultBaseUrl,
           );
