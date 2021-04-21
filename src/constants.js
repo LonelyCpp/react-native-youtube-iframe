@@ -38,3 +38,6 @@ export const PLAYER_ERROR = {
 
 export const CUSTOM_USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';
+
+export const DEFAULT_BASE_URL =
+  'https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html';

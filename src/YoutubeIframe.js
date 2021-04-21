@@ -9,7 +9,12 @@ import React, {
 } from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {WebView} from './WebView';
-import {PLAYER_STATES, PLAYER_ERROR, CUSTOM_USER_AGENT} from './constants';
+import {
+  PLAYER_ERROR,
+  PLAYER_STATES,
+  DEFAULT_BASE_URL,
+  CUSTOM_USER_AGENT,
+} from './constants';
 import {EventEmitter} from 'events';
 import {
   playMode,
@@ -17,9 +22,6 @@ import {
   MAIN_SCRIPT,
   PLAYER_FUNCTIONS,
 } from './PlayerScripts';
-
-const defaultBaseUrl =
-  'https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html';
 
 const YoutubeIframe = (props, ref) => {
   const {
@@ -125,8 +127,9 @@ const YoutubeIframe = (props, ref) => {
 
   const onWebMessage = useCallback(
     event => {
-      const message = JSON.parse(event.nativeEvent.data);
       try {
+        const message = JSON.parse(event.nativeEvent.data);
+
         switch (message.eventType) {
           case 'fullScreenChange':
             onFullScreenChange(message.data);
@@ -177,6 +180,20 @@ const YoutubeIframe = (props, ref) => {
     ],
   );
 
+  const onShouldStartLoadWithRequest = useCallback(
+    request => {
+      try {
+        const url = request.mainDocumentURL || request.url;
+        return url.startsWith(baseUrlOverride || DEFAULT_BASE_URL);
+      } catch (error) {
+        // defaults to true in case of error
+        // returning false stops the video from loading
+        return true;
+      }
+    },
+    [baseUrlOverride],
+  );
+
   const source = useMemo(() => {
     const ytScript = MAIN_SCRIPT(
       videoId,
@@ -194,7 +211,7 @@ const YoutubeIframe = (props, ref) => {
       return res;
     }
 
-    const base = baseUrlOverride || defaultBaseUrl;
+    const base = baseUrlOverride || DEFAULT_BASE_URL;
     const data = ytScript.urlEncodedJSON;
 
     return {uri: base + '?data=' + data};
@@ -211,23 +228,18 @@ const YoutubeIframe = (props, ref) => {
   return (
     <View style={{height, width}}>
       <WebView
+        bounces={false}
         originWhitelist={['*']}
         allowsInlineMediaPlayback
         style={[styles.webView, webViewStyle]}
         mediaPlaybackRequiresUserAction={false}
+        onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         allowsFullscreenVideo={!initialPlayerParams?.preventFullScreen}
         userAgent={
           forceAndroidAutoplay
             ? Platform.select({android: CUSTOM_USER_AGENT, ios: ''})
             : ''
         }
-        onShouldStartLoadWithRequest={request => {
-          return request.mainDocumentURL.startsWith(
-            baseUrlOverride || defaultBaseUrl,
-          );
-          // return request.mainDocumentURL === 'about:blank';
-        }}
-        bounces={false}
         // props above this are override-able
 
         // --
