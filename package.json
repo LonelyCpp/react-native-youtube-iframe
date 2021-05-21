@@ -2,13 +2,16 @@
   "name": "react-native-youtube-iframe",
   "version": "2.0.1",
   "description": "A simple wrapper around the youtube iframe js API for react native",
-  "main": "dist/index.js",
+  "main": "src/index.js",
+  "files": [
+    "src/"
+  ],
   "types": "index.d.ts",
   "scripts": {
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf ./dist && babel src --out-dir dist",
-    "prepare": "rimraf ./dist && babel src --out-dir dist"
+    "build": "rimraf ./dist && babel src -d dist",
+    "prepare": "rimraf ./dist && babel src -d dist"
   },
   "repository": {
     "type": "git",
