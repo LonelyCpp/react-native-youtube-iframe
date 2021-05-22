@@ -96,12 +96,11 @@ export const MAIN_SCRIPT = (
   const modestbranding_s = modestbranding ? 1 : 0;
   const preventFullScreen_s = preventFullScreen ? 0 : 1;
   const showClosedCaptions_s = showClosedCaptions ? 1 : 0;
-  const list = typeof playList === 'string' ? playList : '';
-  const listType = typeof playList === 'string' ? 'playlist' : '';
   const contentScale_s = typeof contentScale === 'number' ? contentScale : 1.0;
-  const playlist = Array.isArray(playList)
-    ? `playlist: "${playList.join(',')}",`
-    : '';
+
+  const list = typeof playList === 'string' ? playList : undefined;
+  const listType = typeof playList === 'string' ? 'playlist' : undefined;
+  const playlist = Array.isArray(playList) ? playList.join(',') : undefined;
 
   // scale will either be "initial-scale=1.0"
   let scale = `initial-scale=${contentScale_s}`;
@@ -131,7 +130,13 @@ export const MAIN_SCRIPT = (
     showClosedCaptions_s,
   };
 
+  console.log({safeData});
+
   const urlEncodedJSON = encodeURI(JSON.stringify(safeData));
+
+  const listParam = list ? `list: '${list}',` : '';
+  const listTypeParam = listType ? `listType: '${list}',` : '';
+  const playlistParam = playList ? `playlist: '${playList}',` : '';
 
   const htmlString = `
 <!DOCTYPE html>
@@ -179,16 +184,17 @@ export const MAIN_SCRIPT = (
           height: '1000',
           videoId: '${videoId_s}',
           playerVars: {
-            ${playlist}
+            ${listParam}
+            ${listTypeParam}
+            ${playlistParam}
+
             end: ${end},
             rel: ${rel_s},
             playsinline: 1,
             loop: ${loop_s},
             color: ${color},
             start: ${start},
-            list: '${list}',
             hl: ${playerLang},
-            listType: '${listType}',
             controls: ${controls_s},
             fs: ${preventFullScreen_s},
             cc_lang_pref: '${cc_lang_pref_s}',
@@ -242,5 +248,6 @@ export const MAIN_SCRIPT = (
 </html>
 `;
 
+  console.log(htmlString);
   return {htmlString, urlEncodedJSON};
 };
