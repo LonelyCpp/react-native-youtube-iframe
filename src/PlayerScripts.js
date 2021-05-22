@@ -130,8 +130,6 @@ export const MAIN_SCRIPT = (
     showClosedCaptions_s,
   };
 
-  console.log({safeData});
-
   const urlEncodedJSON = encodeURI(JSON.stringify(safeData));
 
   const listParam = list ? `list: '${list}',` : '';
@@ -248,6 +246,5 @@ export const MAIN_SCRIPT = (
 </html>
 `;
 
-  console.log(htmlString);
   return {htmlString, urlEncodedJSON};
 };
