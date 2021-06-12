@@ -1,0 +1,85 @@
+---
+id: navigation-crash
+title: Crash when used with react-navigation
+---
+
+The YoutubePlayer causes a crash immediately on navigating to another screen, and also sometimes when navigating to the screen that contains the component.
+
+:::info
+This will happen if you have any webviews inside a screen.
+
+This is not exclusive to the youtube player.
+:::
+
+## Solutions
+
+:::tip Pick one that fits your need
+Don't try to implement ALL of them.
+:::
+
+### 1. Tweak react-navigation config
+
+#### use a transition animations that only involves translations. ([documentation](https://reactnavigation.org/docs/stack-navigator/#pre-made-configs))
+
+```jsx
+<Stack.Screen
+  component={ScreenWithWebview}
+  options={{
+    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+  }}
+/>
+```
+
+#### disable transition animations on screens that have the youtube player. ([documentation](https://reactnavigation.org/docs/stack-navigator/#animationenabled))
+
+```jsx
+<Stack.Screen
+  component={ScreenWithWebview}
+  options={{
+    animationEnabled: false,
+  }}
+/>
+```
+
+### 2. Tweak webview props
+
+#### change webview opacity to `0.99` ([issue comment](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/110#issuecomment-779848787))
+
+```jsx
+<YoutubePlayer
+  webViewStyle={{opacity: 0.99}}
+  //
+  {...otherProps}
+/>
+```
+
+#### set `renderToHardwareTextureAndroid` ([issue comment](https://github.com/react-native-webview/react-native-webview/issues/811#issuecomment-748611465))
+
+```jsx
+<YoutubePlayer
+  webViewProps={{
+    renderToHardwareTextureAndroid: true,
+  }}
+  //
+  {...otherProps}
+/>
+```
+
+#### tweak `androidLayerType` ([issue comment](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/110#issuecomment-786603325))
+
+```jsx
+<YoutubePlayer
+  webViewProps={{
+    androidLayerType:
+      Platform.OS === 'android' && Platform.Version <= 22 ? 'hardware' : 'none',
+  }}
+  //
+  {...otherProps}
+/>
+```
+
+### github threads to follow
+
+- [issue #110](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/110)
+- [issue #101](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/101)
+- [rn-webview issue #811](https://github.com/react-native-webview/react-native-webview/issues/811)
