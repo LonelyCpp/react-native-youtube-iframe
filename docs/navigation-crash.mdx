@@ -3,7 +3,9 @@ id: navigation-crash
 title: Crash when used with react-navigation
 ---
 
-The YoutubePlayer causes a crash immediately on navigating to another screen, and also sometimes when navigating to the screen that contains the component.
+- The YoutubePlayer causes a crash immediately on navigating to another screen, and also sometimes when navigating to the screen that contains the component.
+- crashes are observed only on android
+- only some android versions have this issue (likely tied to google chrome version)
 
 :::info
 This will happen if you have any webviews inside a screen.
@@ -78,8 +80,14 @@ Don't try to implement ALL of them.
 />
 ```
 
-### github threads to follow
+## github threads to follow
 
 - [issue #110](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/110)
 - [issue #101](https://github.com/LonelyCpp/react-native-youtube-iframe/issues/101)
 - [rn-webview issue #811](https://github.com/react-native-webview/react-native-webview/issues/811)
+
+## should the library handle this?
+
+no.
+
+All these are workarounds, and it's the responsibility of core libraries to fix the root cause.
