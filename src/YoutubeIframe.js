@@ -184,7 +184,10 @@ const YoutubeIframe = (props, ref) => {
     request => {
       try {
         const url = request.mainDocumentURL || request.url;
-        return url.startsWith(baseUrlOverride || DEFAULT_BASE_URL);
+        const iosFirstLoad = Platform.OS === 'ios' && url === 'about:blank';
+        const shouldLoad =
+          iosFirstLoad || url.startsWith(baseUrlOverride || DEFAULT_BASE_URL);
+        return shouldLoad;
       } catch (error) {
         // defaults to true in case of error
         // returning false stops the video from loading
