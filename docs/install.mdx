@@ -19,4 +19,17 @@ This package uses react-hooks and therefore will need
 
 - Expo App - [Instructions](https://docs.expo.io/versions/latest/sdk/webview/)
 
-2. Run - `npm install react-native-youtube-iframe`
+2. Install
+
+:::info yarn - recommended
+
+`yarn add react-native-youtube-iframe`
+:::
+
+:::danger npm
+
+`npm install react-native-youtube-iframe`
+
+npm has some issues with peer dependencies where it tries to install all peer dependencies by default. If your project does not use react 17, it might case install failures. To get around this, use
+
+`npm install react-native-youtube-iframe --legacy-peer-deps`
