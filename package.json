@@ -36,7 +36,9 @@
   "homepage": "https://lonelycpp.github.io/react-native-youtube-iframe/",
   "peerDependencies": {
     "react": ">=16.8.6",
-    "react-native": ">=0.60"
+    "react-native": ">=0.60",
+    "react-native-web-webview": ">=1.0.2",
+    "react-native-webview": ">=7.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
