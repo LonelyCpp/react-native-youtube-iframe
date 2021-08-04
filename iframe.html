@@ -59,7 +59,7 @@
 
       let metaString = '';
       if (contentScale_s) {
-        metaString += `initial-scale=${contentScale_s}`;
+        metaString += `initial-scale=${contentScale_s}, `;
       }
 
       if (!allowWebViewZoom) {
@@ -67,7 +67,7 @@
       }
 
       const viewport = document.querySelector('meta[name=viewport]');
-      viewport.setAttribute('content', 'width=device-width,' + metaString);
+      viewport.setAttribute('content', 'width=device-width, ' + metaString);
 
       var tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
