@@ -52,7 +52,7 @@ const YoutubeIframe = (props, ref) => {
 
   const webViewRef = useRef(null);
   const eventEmitter = useRef(new EventEmitter());
-  const [playerReady, setPlayerReady] = useState(false);
+  const [playerReady, setPlayerReady] = useState(0);
 
   useImperativeHandle(
     ref,
@@ -113,7 +113,8 @@ const YoutubeIframe = (props, ref) => {
   );
 
   useEffect(() => {
-    if (!playerReady) {
+    if (playerReady < 1) {
+      // no instance of player is ready
       return;
     }
 
@@ -139,7 +140,7 @@ const YoutubeIframe = (props, ref) => {
             break;
           case 'playerReady':
             onReady();
-            setPlayerReady(true);
+            setPlayerReady(prev => prev + 1);
             if (Array.isArray(playList)) {
               webViewRef.current.injectJavaScript(
                 PLAYER_FUNCTIONS.loadPlaylist(
