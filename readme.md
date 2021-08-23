@@ -21,7 +21,9 @@ A wrapper of the Youtube IFrame player API build for react native.
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome!
+
+Read the [contributing guide](./CONTRIBUTING.md) for project setup and other info
 
 ## License
 
