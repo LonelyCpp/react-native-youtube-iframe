@@ -53,6 +53,12 @@ true;
 
     return `player.${func}({playlist: ${playlistJson}, index: ${index}); true;`;
   },
+
+  loadVideoById: (videoId, play) => {
+    const func = play ? 'loadVideoById' : 'cueVideoById';
+
+    return `player.${func}({videoId: ${JSON.stringify(videoId)}}); true;`;
+  },
 };
 
 export const playMode = {
