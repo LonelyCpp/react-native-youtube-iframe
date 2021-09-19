@@ -6,7 +6,6 @@ import React, {
   useImperativeHandle,
   useMemo,
   useRef,
-  useState,
 } from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {
@@ -21,18 +20,8 @@ import {
   playMode,
   soundMode,
 } from './PlayerScripts';
+import {deepComparePlayList} from './utils';
 import {WebView} from './WebView';
-
-const deepComparePlayList = (lastPlayList, playList) => {
-  return (
-    typeof lastPlayList === typeof playList &&
-    (Array.isArray(lastPlayList)
-      ? lastPlayList.join('')
-      : lastPlayList === Array.isArray(playList)
-      ? playList.join('')
-      : playList)
-  );
-};
 
 const YoutubeIframe = (props, ref) => {
   const {
@@ -61,13 +50,13 @@ const YoutubeIframe = (props, ref) => {
     onPlaybackRateChange = _playbackRate => {},
   } = props;
 
+  const playerReady = useRef(false);
   const lastVideoIdRef = useRef(videoId);
   const lastPlayListRef = useRef(playList);
   const initialPlayerParamsRef = useRef(initialPlayerParams || {});
 
   const webViewRef = useRef(null);
   const eventEmitter = useRef(new EventEmitter());
-  const [playerReady, setPlayerReady] = useState(0);
 
   useImperativeHandle(
     ref,
@@ -128,7 +117,7 @@ const YoutubeIframe = (props, ref) => {
   );
 
   useEffect(() => {
-    if (playerReady < 1) {
+    if (!playerReady.current) {
       // no instance of player is ready
       return;
     }
@@ -139,10 +128,10 @@ const YoutubeIframe = (props, ref) => {
       PLAYER_FUNCTIONS.setVolume(volume),
       PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
     ].forEach(webViewRef.current.injectJavaScript);
-  }, [play, playerReady, mute, volume, playbackRate]);
+  }, [play, mute, volume, playbackRate]);
 
   useEffect(() => {
-    if (playerReady < 1 || lastVideoIdRef.current === videoId) {
+    if (!playerReady.current || lastVideoIdRef.current === videoId) {
       // no instance of player is ready
       // or videoId has not changed
       return;
@@ -153,10 +142,10 @@ const YoutubeIframe = (props, ref) => {
     webViewRef.current.injectJavaScript(
       PLAYER_FUNCTIONS.loadVideoById(videoId, play),
     );
-  }, [videoId, play, playerReady]);
+  }, [videoId, play]);
 
   useEffect(() => {
-    if (playerReady < 1) {
+    if (!playerReady.current < 1) {
       // no instance of player is ready
       return;
     }
@@ -172,7 +161,7 @@ const YoutubeIframe = (props, ref) => {
     webViewRef.current.injectJavaScript(
       PLAYER_FUNCTIONS.loadPlaylist(playList, playListStartIndex, play),
     );
-  }, [playList, play, playListStartIndex, playerReady]);
+  }, [playList, play, playListStartIndex]);
 
   const onWebMessage = useCallback(
     event => {
@@ -188,7 +177,7 @@ const YoutubeIframe = (props, ref) => {
             break;
           case 'playerReady':
             onReady();
-            setPlayerReady(prev => prev + 1);
+            playerReady.current = true;
             break;
           case 'playerQualityChange':
             onPlaybackQualityChange(message.data);
@@ -204,7 +193,7 @@ const YoutubeIframe = (props, ref) => {
             break;
         }
       } catch (error) {
-        console.warn(error);
+        console.warn('[rn-youtube-iframe]', error);
       }
     },
     [
@@ -280,7 +269,7 @@ const YoutubeIframe = (props, ref) => {
         {...webViewProps}
         // --
 
-        //add props that should not be allowed to be overridden below
+        // add props that should not be allowed to be overridden below
         source={source}
         ref={webViewRef}
         onMessage={onWebMessage}
