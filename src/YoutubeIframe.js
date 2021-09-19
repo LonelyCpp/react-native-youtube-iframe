@@ -1,27 +1,27 @@
-import {EventEmitter} from 'events';
 import React, {
+  useRef,
+  useMemo,
+  useEffect,
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
-  useMemo,
-  useRef,
 } from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
+import {EventEmitter} from 'events';
+import {WebView} from './WebView';
 import {
-  CUSTOM_USER_AGENT,
-  DEFAULT_BASE_URL,
   PLAYER_ERROR,
   PLAYER_STATES,
+  DEFAULT_BASE_URL,
+  CUSTOM_USER_AGENT,
 } from './constants';
 import {
-  MAIN_SCRIPT,
-  PLAYER_FUNCTIONS,
   playMode,
   soundMode,
+  MAIN_SCRIPT,
+  PLAYER_FUNCTIONS,
 } from './PlayerScripts';
 import {deepComparePlayList} from './utils';
-import {WebView} from './WebView';
 
 const YoutubeIframe = (props, ref) => {
   const {
@@ -145,7 +145,7 @@ const YoutubeIframe = (props, ref) => {
   }, [videoId, play]);
 
   useEffect(() => {
-    if (!playerReady.current < 1) {
+    if (!playerReady.current) {
       // no instance of player is ready
       return;
     }
