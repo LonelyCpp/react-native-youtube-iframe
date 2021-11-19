@@ -1,6 +1,7 @@
 import React, {
   useRef,
   useMemo,
+  useState,
   useEffect,
   forwardRef,
   useCallback,
@@ -50,7 +51,7 @@ const YoutubeIframe = (props, ref) => {
     onPlaybackRateChange = _playbackRate => {},
   } = props;
 
-  const playerReady = useRef(false);
+  const [playerReady, setPlayerReady] = useState(false);
   const lastVideoIdRef = useRef(videoId);
   const lastPlayListRef = useRef(playList);
   const initialPlayerParamsRef = useRef(initialPlayerParams || {});
@@ -117,7 +118,7 @@ const YoutubeIframe = (props, ref) => {
   );
 
   useEffect(() => {
-    if (!playerReady.current) {
+    if (!playerReady) {
       // no instance of player is ready
       return;
     }
@@ -128,10 +129,10 @@ const YoutubeIframe = (props, ref) => {
       PLAYER_FUNCTIONS.setVolume(volume),
       PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
     ].forEach(webViewRef.current.injectJavaScript);
-  }, [play, mute, volume, playbackRate]);
+  }, [play, mute, volume, playbackRate, playerReady]);
 
   useEffect(() => {
-    if (!playerReady.current || lastVideoIdRef.current === videoId) {
+    if (!playerReady || lastVideoIdRef.current === videoId) {
       // no instance of player is ready
       // or videoId has not changed
       return;
@@ -142,10 +143,10 @@ const YoutubeIframe = (props, ref) => {
     webViewRef.current.injectJavaScript(
       PLAYER_FUNCTIONS.loadVideoById(videoId, play),
     );
-  }, [videoId, play]);
+  }, [videoId, play, playerReady]);
 
   useEffect(() => {
-    if (!playerReady.current) {
+    if (!playerReady) {
       // no instance of player is ready
       return;
     }
@@ -161,7 +162,7 @@ const YoutubeIframe = (props, ref) => {
     webViewRef.current.injectJavaScript(
       PLAYER_FUNCTIONS.loadPlaylist(playList, playListStartIndex, play),
     );
-  }, [playList, play, playListStartIndex]);
+  }, [playList, play, playListStartIndex, playerReady]);
 
   const onWebMessage = useCallback(
     event => {
@@ -177,7 +178,7 @@ const YoutubeIframe = (props, ref) => {
             break;
           case 'playerReady':
             onReady();
-            playerReady.current = true;
+            setPlayerReady(true);
             break;
           case 'playerQualityChange':
             onPlaybackQualityChange(message.data);
