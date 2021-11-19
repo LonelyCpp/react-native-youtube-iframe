@@ -48,10 +48,16 @@ true;
 
   loadPlaylist: (playList, startIndex, play) => {
     const index = startIndex || 0;
-    const playlistJson = JSON.stringify(playList);
     const func = play ? 'loadPlaylist' : 'cuePlaylist';
 
-    return `player.${func}({playlist: ${playlistJson}, index: ${index}); true;`;
+    const list = typeof playList === 'string' ? `"${playList}"` : 'undefined';
+    const listType =
+      typeof playList === 'string' ? `"${playlist}"` : 'undefined';
+    const playlist = Array.isArray(playList)
+      ? `"${playList.join(',')}"`
+      : 'undefined';
+
+    return `player.${func}({listType: ${listType}, list: ${list}, playlist: ${playlist}, index: ${index}}); true;`;
   },
 
   loadVideoById: (videoId, play) => {
