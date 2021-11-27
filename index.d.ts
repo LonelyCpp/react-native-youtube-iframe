@@ -60,7 +60,7 @@ export interface YoutubeIframeProps {
   /**
    * Specifies the YouTube Video ID of the video to be played.
    */
-  videoId: string;
+  videoId?: string;
   /**
    * Specifies the playlist to play. It can be either the playlist ID or a list of video IDs
    *
