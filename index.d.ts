@@ -58,6 +58,10 @@ export interface YoutubeIframeProps {
    */
   width?: number;
   /**
+   * A style prop that will be given to the view that contains the webview
+   */
+  viewContainerStyle?: StyleProp<ViewStyle>;
+  /**
    * Specifies the YouTube Video ID of the video to be played.
    */
   videoId?: string;
