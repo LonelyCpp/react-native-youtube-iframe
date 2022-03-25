@@ -58,10 +58,6 @@ export interface YoutubeIframeProps {
    */
   width?: number;
   /**
-   * A style prop that will be given to the view that contains the webview
-   */
-  viewContainerStyle?: StyleProp<ViewStyle>;
-  /**
    * Specifies the YouTube Video ID of the video to be played.
    */
   videoId?: string;
@@ -88,6 +84,10 @@ export interface YoutubeIframeProps {
    * Sets the volume. Accepts an integer between `0` and `100`.
    */
   volume?: number;
+  /**
+   * A style prop that will be given to the view that contains the webview
+   */
+  viewContainerStyle?: StyleProp<ViewStyle>;
   /**
    * A style prop that will be given to the webview
    */
