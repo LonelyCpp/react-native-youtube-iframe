@@ -25,6 +25,10 @@ Pull requests are welcome!
 
 Read the [contributing guide](./CONTRIBUTING.md) for project setup and other info
 
+## Showcase
+
+- [Billboard Player](https://github.com/krtk-dev/billboard-player)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
