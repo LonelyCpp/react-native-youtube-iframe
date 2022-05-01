@@ -115,9 +115,7 @@ const YoutubeIframe = (props, ref) => {
         );
       },
       playVideo: () => {
-        webViewRef.current.injectJavaScript(
-          PLAYER_FUNCTIONS.playVideoScript(),
-        );
+        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.playVideoScript());
       },
       pauseVideo: () => {
         webViewRef.current.injectJavaScript(
@@ -125,9 +123,7 @@ const YoutubeIframe = (props, ref) => {
         );
       },
       stopVideo: () => {
-        webViewRef.current.injectJavaScript(
-          PLAYER_FUNCTIONS.stopVideoScript(),
-        );
+        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.stopVideoScript());
       },
     }),
     [],

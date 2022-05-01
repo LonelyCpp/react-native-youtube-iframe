@@ -39,15 +39,15 @@ true;
   },
 
   playVideoScript: () => {
-    return `player.playVideo(); true;`;
+    return 'player.playVideo(); true;';
   },
 
   pauseVideoScript: () => {
-    return `player.pauseVideo(); true;`;
+    return 'player.pauseVideo(); true;';
   },
 
   stopVideoScript: () => {
-    return `player.stopVideo(); true;`;
+    return 'player.stopVideo(); true;';
   },
 
   seekToScript: (seconds, allowSeekAhead) => {
