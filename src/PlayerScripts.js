@@ -217,7 +217,7 @@ export const MAIN_SCRIPT = (
             color: ${color},
             start: ${start},
             hl: ${playerLang},
-            controls: 0,
+            controls: ${controls_s},
             fs: ${preventFullScreen_s},
             cc_lang_pref: '${cc_lang_pref_s}',
             iv_load_policy: ${iv_load_policy},
