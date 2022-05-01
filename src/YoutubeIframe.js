@@ -1,27 +1,28 @@
-import React, {
-  useRef,
-  useMemo,
-  useState,
-  useEffect,
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
-import {EventEmitter} from 'events';
-import {WebView} from './WebView';
 import {
+  CUSTOM_USER_AGENT,
+  DEFAULT_BASE_URL,
   PLAYER_ERROR,
   PLAYER_STATES,
-  DEFAULT_BASE_URL,
-  CUSTOM_USER_AGENT,
 } from './constants';
 import {
-  playMode,
-  soundMode,
   MAIN_SCRIPT,
   PLAYER_FUNCTIONS,
+  playMode,
+  soundMode,
 } from './PlayerScripts';
+import {Platform, StyleSheet, View} from 'react-native';
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
+import {EventEmitter} from 'events';
+import {WebView} from './WebView';
 import {deepComparePlayList} from './utils';
 
 const YoutubeIframe = (props, ref) => {
@@ -111,6 +112,21 @@ const YoutubeIframe = (props, ref) => {
       seekTo: (seconds, allowSeekAhead) => {
         webViewRef.current.injectJavaScript(
           PLAYER_FUNCTIONS.seekToScript(seconds, allowSeekAhead),
+        );
+      },
+      playVideo: () => {
+        webViewRef.current.injectJavaScript(
+          PLAYER_FUNCTIONS.playVideoScript(),
+        );
+      },
+      pauseVideo: () => {
+        webViewRef.current.injectJavaScript(
+          PLAYER_FUNCTIONS.pauseVideoScript(),
+        );
+      },
+      stopVideo: () => {
+        webViewRef.current.injectJavaScript(
+          PLAYER_FUNCTIONS.stopVideoScript(),
         );
       },
     }),

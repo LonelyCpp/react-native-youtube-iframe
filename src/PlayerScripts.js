@@ -38,6 +38,18 @@ true;
     return `player.setVolume(${volume}); true;`;
   },
 
+  playVideoScript: () => {
+    return `player.playVideo(); true;`;
+  },
+
+  pauseVideoScript: () => {
+    return `player.pauseVideo(); true;`;
+  },
+
+  stopVideoScript: () => {
+    return `player.stopVideo(); true;`;
+  },
+
   seekToScript: (seconds, allowSeekAhead) => {
     return `player.seekTo(${seconds}, ${allowSeekAhead}); true;`;
   },
@@ -205,7 +217,7 @@ export const MAIN_SCRIPT = (
             color: ${color},
             start: ${start},
             hl: ${playerLang},
-            controls: ${controls_s},
+            controls: 0,
             fs: ${preventFullScreen_s},
             cc_lang_pref: '${cc_lang_pref_s}',
             iv_load_policy: ${iv_load_policy},
