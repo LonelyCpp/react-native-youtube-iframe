@@ -27,6 +27,9 @@ export interface YoutubeIframeRef {
   getPlaybackRate: () => Promise<number>;
   getAvailablePlaybackRates: () => Promise<number[]>;
   seekTo: (seconds: number, allowSeekAhead: boolean) => void;
+  playVideo: () => void;
+  pauseVideo: () => void;
+  stopVideo: () => void;
 }
 
 export interface InitialPlayerParams {
