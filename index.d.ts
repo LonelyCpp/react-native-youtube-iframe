@@ -118,7 +118,7 @@ export interface YoutubeIframeProps {
   /**
    * callback for when the player's state changes.
    */
-  onChangeState?: (event: string) => void;
+  onChangeState?: (event: PLAYER_STATES) => void;
   /**
    * callback for when the fullscreen option is clicked in the player. It signals the new fullscreen state of the player.
    */
