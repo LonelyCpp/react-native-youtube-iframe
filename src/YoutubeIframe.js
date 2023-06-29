@@ -219,7 +219,7 @@ const YoutubeIframe = (props, ref) => {
           const isYouTubeLink = url.startsWith('https://www.youtube.com/');
           if (isYouTubeLink) {
             Linking.openURL(url).catch(error => {
-              console.error('Error opening URL:', error);
+              console.warn('Error opening URL:', error);
             });
             return false;
           }
