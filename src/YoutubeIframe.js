@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useImperativeHandle,
 } from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Linking, Platform, StyleSheet, View} from 'react-native';
 import {EventEmitter} from 'events';
 import {WebView} from './WebView';
 import {
@@ -211,10 +211,20 @@ const YoutubeIframe = (props, ref) => {
     request => {
       try {
         const url = request.mainDocumentURL || request.url;
-        const iosFirstLoad = Platform.OS === 'ios' && url === 'about:blank';
-        const shouldLoad =
-          iosFirstLoad || url.startsWith(baseUrlOverride || DEFAULT_BASE_URL);
-        return shouldLoad;
+        if (Platform.OS === 'ios') {
+          const iosFirstLoad = url === 'about:blank';
+          if (iosFirstLoad) {
+            return true;
+          }
+          const isYouTubeLink = url.startsWith('https://www.youtube.com/');
+          if (isYouTubeLink) {
+            Linking.openURL(url).catch(error => {
+              console.warn('Error opening URL:', error);
+            });
+            return false;
+          }
+        }
+        return url.startsWith(baseUrlOverride || DEFAULT_BASE_URL);
       } catch (error) {
         // defaults to true in case of error
         // returning false stops the video from loading
