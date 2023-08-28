@@ -40,7 +40,11 @@ export interface InitialPlayerParams {
   preventFullScreen?: boolean;
   playerLang?: String;
   iv_load_policy?: Number;
-  modestbranding?: boolean;
+  /** 
+   * @deprecated - This parameter has no effect since August 15, 2023
+   * https://developers.google.com/youtube/player_parameters#modestbranding
+   */
+  deprecated?: boolean;
   rel?: boolean;
 }
 
