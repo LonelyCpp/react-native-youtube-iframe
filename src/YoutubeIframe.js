@@ -33,6 +33,7 @@ const YoutubeIframe = (props, ref) => {
     play = false,
     mute = false,
     volume = 100,
+    viewContainerStyle,
     webViewStyle,
     webViewProps,
     useLocalHTML,
@@ -258,7 +259,7 @@ const YoutubeIframe = (props, ref) => {
   }, [useLocalHTML, contentScale, baseUrlOverride, allowWebViewZoom]);
 
   return (
-    <View style={{height, width}}>
+    <View style={[{height, width}, viewContainerStyle]}>
       <WebView
         bounces={false}
         originWhitelist={['*']}

@@ -89,6 +89,10 @@ export interface YoutubeIframeProps {
    */
   volume?: number;
   /**
+   * A style prop that will be given to the webview container
+   */
+  viewContainerStyle?: StyleProp<ViewStyle>;
+  /**
    * A style prop that will be given to the webview
    */
   webViewStyle?: StyleProp<ViewStyle>;
