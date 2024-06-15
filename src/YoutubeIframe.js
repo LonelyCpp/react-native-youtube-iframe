@@ -124,13 +124,29 @@ const YoutubeIframe = (props, ref) => {
       return;
     }
 
+    webViewRef.current.postMessage(play ? 'playVideo' : 'pauseVideo');
+  }, [play]);
+
+  useEffect(() => {
+    if (!playerReady) {
+      // no instance of player is ready
+      return;
+    }
+
+    webViewRef.current.postMessage(mute ? 'muteVideo' : 'unMuteVideo');
+  }, [mute]);
+
+  useEffect(() => {
+    if (!playerReady) {
+      // no instance of player is ready
+      return;
+    }
+
     [
-      playMode[play],
-      soundMode[mute],
       PLAYER_FUNCTIONS.setVolume(volume),
       PLAYER_FUNCTIONS.setPlaybackRate(playbackRate),
     ].forEach(webViewRef.current.injectJavaScript);
-  }, [play, mute, volume, playbackRate, playerReady]);
+  }, [volume, playbackRate, playerReady]);
 
   useEffect(() => {
     if (!playerReady || lastVideoIdRef.current === videoId) {

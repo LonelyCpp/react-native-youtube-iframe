@@ -146,6 +146,28 @@
       document.addEventListener('msfullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
+
+      window.addEventListener('message', function (event) {
+        const {data} = event;
+
+        switch (data) {
+          case 'playVideo':
+            player.playVideo();
+            break;
+
+          case 'pauseVideo':
+            player.pauseVideo();
+            break;
+
+          case 'muteVideo':
+            player.mute();
+            break;
+
+          case 'unMuteVideo':
+            player.unMute();
+            break;
+        }
+      });
     </script>
   </body>
 </html>
