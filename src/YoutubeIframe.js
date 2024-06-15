@@ -16,12 +16,7 @@ import {
   DEFAULT_BASE_URL,
   CUSTOM_USER_AGENT,
 } from './constants';
-import {
-  playMode,
-  soundMode,
-  MAIN_SCRIPT,
-  PLAYER_FUNCTIONS,
-} from './PlayerScripts';
+import {MAIN_SCRIPT, PLAYER_FUNCTIONS} from './PlayerScripts';
 import {deepComparePlayList} from './utils';
 
 const YoutubeIframe = (props, ref) => {
@@ -125,7 +120,7 @@ const YoutubeIframe = (props, ref) => {
     }
 
     webViewRef.current.postMessage(play ? 'playVideo' : 'pauseVideo');
-  }, [play]);
+  }, [play, playerReady]);
 
   useEffect(() => {
     if (!playerReady) {
@@ -134,7 +129,7 @@ const YoutubeIframe = (props, ref) => {
     }
 
     webViewRef.current.postMessage(mute ? 'muteVideo' : 'unMuteVideo');
-  }, [mute]);
+  }, [mute, playerReady]);
 
   useEffect(() => {
     if (!playerReady) {
