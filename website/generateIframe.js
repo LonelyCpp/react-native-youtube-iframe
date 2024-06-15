@@ -13,4 +13,4 @@ const minified = minify(iframeContent, {
   removeTagWhitespace: true,
 });
 
-fs.writeFileSync('./static/iframe.html', minified);
+fs.writeFileSync('./static/iframe_v2.html', minified);
