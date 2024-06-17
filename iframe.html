@@ -150,22 +150,28 @@
       window.addEventListener('message', function (event) {
         const {data} = event;
 
-        switch (data) {
-          case 'playVideo':
-            player.playVideo();
-            break;
+        try {
+          const parsedData = JSON.parse(data);
 
-          case 'pauseVideo':
-            player.pauseVideo();
-            break;
+          switch (parsedData.eventName) {
+            case 'playVideo':
+              player.playVideo();
+              break;
 
-          case 'muteVideo':
-            player.mute();
-            break;
+            case 'pauseVideo':
+              player.pauseVideo();
+              break;
 
-          case 'unMuteVideo':
-            player.unMute();
-            break;
+            case 'muteVideo':
+              player.mute();
+              break;
+
+            case 'unMuteVideo':
+              player.unMute();
+              break;
+          }
+        } catch (error) {
+          console.error('Error parsing data', event, error);
         }
       });
     </script>

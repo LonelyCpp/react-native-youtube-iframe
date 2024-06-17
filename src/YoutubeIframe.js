@@ -55,6 +55,11 @@ const YoutubeIframe = (props, ref) => {
   const webViewRef = useRef(null);
   const eventEmitter = useRef(new EventEmitter());
 
+  const sendPostMessage = useCallback((eventName, meta) => {
+    const message = JSON.stringify({eventName, meta});
+    webViewRef.current.postMessage(message);
+  }, []);
+
   useImperativeHandle(
     ref,
     () => ({
@@ -119,8 +124,12 @@ const YoutubeIframe = (props, ref) => {
       return;
     }
 
-    webViewRef.current.postMessage(play ? 'playVideo' : 'pauseVideo');
-  }, [play, playerReady]);
+    if (play) {
+      sendPostMessage('playVideo', {});
+    } else {
+      sendPostMessage('pauseVideo', {});
+    }
+  }, [play, playerReady, sendPostMessage]);
 
   useEffect(() => {
     if (!playerReady) {
@@ -128,8 +137,12 @@ const YoutubeIframe = (props, ref) => {
       return;
     }
 
-    webViewRef.current.postMessage(mute ? 'muteVideo' : 'unMuteVideo');
-  }, [mute, playerReady]);
+    if (mute) {
+      sendPostMessage('muteVideo', {});
+    } else {
+      sendPostMessage('unMuteVideo', {});
+    }
+  }, [mute, playerReady, sendPostMessage]);
 
   useEffect(() => {
     if (!playerReady) {
