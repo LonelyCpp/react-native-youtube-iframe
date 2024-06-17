@@ -152,8 +152,9 @@
 
         try {
           const parsedData = JSON.parse(data);
+          const {eventName, meta} = parsedData;
 
-          switch (parsedData.eventName) {
+          switch (eventName) {
             case 'playVideo':
               player.playVideo();
               break;
@@ -168,6 +169,14 @@
 
             case 'unMuteVideo':
               player.unMute();
+              break;
+
+            case 'setVolume':
+              player.setVolume(meta.volume);
+              break;
+
+            case 'setPlaybackRate':
+              player.setPlaybackRate(meta.playbackRate);
               break;
           }
         } catch (error) {
