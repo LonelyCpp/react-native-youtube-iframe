@@ -121,6 +121,11 @@ const YoutubeIframe = (props, ref) => {
           PLAYER_FUNCTIONS.seekToScript(seconds, allowSeekAhead),
         );
       },
+      setHeight: (height) => {
+        webViewRef.current.injectJavaScript(
+          PLAYER_FUNCTIONS.setHeight(height),
+        );
+      },
     }),
     [],
   );
