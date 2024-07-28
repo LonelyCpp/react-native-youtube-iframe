@@ -138,7 +138,7 @@ export interface YoutubeIframeProps {
   /**
    * callback for when the video playback rate changes.
    */
-  onPlaybackRateChange?: (event: string) => void;
+  onPlaybackRateChange?: (playbackRate: number) => void;
   /**
    * Flag to decide whether or not a user can zoom the video webview.
    */
