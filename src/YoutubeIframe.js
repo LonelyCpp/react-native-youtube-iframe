@@ -45,6 +45,7 @@ const YoutubeIframe = (props, ref) => {
     onFullScreenChange = _status => {},
     onPlaybackQualityChange = _quality => {},
     onPlaybackRateChange = _playbackRate => {},
+    headers,
   } = props;
 
   const [playerReady, setPlayerReady] = useState(false);
@@ -272,7 +273,7 @@ const YoutubeIframe = (props, ref) => {
     const base = baseUrlOverride || DEFAULT_BASE_URL;
     const data = ytScript.urlEncodedJSON;
 
-    return {uri: base + '?data=' + data};
+    return {uri: base + '?data=' + data, headers};
   }, [useLocalHTML, contentScale, baseUrlOverride, allowWebViewZoom]);
 
   return (
