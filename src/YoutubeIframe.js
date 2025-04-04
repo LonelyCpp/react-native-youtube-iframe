@@ -29,6 +29,7 @@ const YoutubeIframe = (props, ref) => {
     mute = false,
     volume = 100,
     viewContainerStyle,
+    webViewRef,
     webViewStyle,
     webViewProps,
     useLocalHTML,
@@ -52,8 +53,10 @@ const YoutubeIframe = (props, ref) => {
   const lastPlayListRef = useRef(playList);
   const initialPlayerParamsRef = useRef(initialPlayerParams || {});
 
-  const webViewRef = useRef(null);
+  const internalWebViewRef = useRef(null);
   const eventEmitter = useRef(new EventEmitter());
+
+  webViewRef ||= internalWebViewRef;
 
   const sendPostMessage = useCallback(
     (eventName, meta) => {
