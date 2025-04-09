@@ -56,7 +56,7 @@ const YoutubeIframe = (props, ref) => {
   const internalWebViewRef = useRef(null);
   const eventEmitter = useRef(new EventEmitter());
 
-  webViewRef ||= internalWebViewRef;
+  const wbRef = webViewRef || internalWebViewRef;
 
   const sendPostMessage = useCallback(
     (eventName, meta) => {
@@ -65,7 +65,7 @@ const YoutubeIframe = (props, ref) => {
       }
 
       const message = JSON.stringify({eventName, meta});
-      webViewRef.current.postMessage(message);
+      wbRef.current.postMessage(message);
     },
     [playerReady],
   );
@@ -74,37 +74,37 @@ const YoutubeIframe = (props, ref) => {
     ref,
     () => ({
       getVideoUrl: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.getVideoUrlScript);
+        wbRef.current.injectJavaScript(PLAYER_FUNCTIONS.getVideoUrlScript);
         return new Promise(resolve => {
           eventEmitter.current.once('getVideoUrl', resolve);
         });
       },
       getDuration: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.durationScript);
+        wbRef.current.injectJavaScript(PLAYER_FUNCTIONS.durationScript);
         return new Promise(resolve => {
           eventEmitter.current.once('getDuration', resolve);
         });
       },
       getCurrentTime: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.currentTimeScript);
+        wbRef.current.injectJavaScript(PLAYER_FUNCTIONS.currentTimeScript);
         return new Promise(resolve => {
           eventEmitter.current.once('getCurrentTime', resolve);
         });
       },
       isMuted: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.isMutedScript);
+        wbRef.current.injectJavaScript(PLAYER_FUNCTIONS.isMutedScript);
         return new Promise(resolve => {
           eventEmitter.current.once('isMuted', resolve);
         });
       },
       getVolume: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.getVolumeScript);
+        wbRef.current.injectJavaScript(PLAYER_FUNCTIONS.getVolumeScript);
         return new Promise(resolve => {
           eventEmitter.current.once('getVolume', resolve);
         });
       },
       getPlaybackRate: () => {
-        webViewRef.current.injectJavaScript(
+        wbRef.current.injectJavaScript(
           PLAYER_FUNCTIONS.getPlaybackRateScript,
         );
         return new Promise(resolve => {
@@ -112,7 +112,7 @@ const YoutubeIframe = (props, ref) => {
         });
       },
       getAvailablePlaybackRates: () => {
-        webViewRef.current.injectJavaScript(
+        wbRef.current.injectJavaScript(
           PLAYER_FUNCTIONS.getAvailablePlaybackRatesScript,
         );
         return new Promise(resolve => {
@@ -120,7 +120,7 @@ const YoutubeIframe = (props, ref) => {
         });
       },
       seekTo: (seconds, allowSeekAhead) => {
-        webViewRef.current.injectJavaScript(
+        wbRef.current.injectJavaScript(
           PLAYER_FUNCTIONS.seekToScript(seconds, allowSeekAhead),
         );
       },
@@ -161,7 +161,7 @@ const YoutubeIframe = (props, ref) => {
 
     lastVideoIdRef.current = videoId;
 
-    webViewRef.current.injectJavaScript(
+    wbRef.current.injectJavaScript(
       PLAYER_FUNCTIONS.loadVideoById(videoId, play),
     );
   }, [videoId, play, playerReady]);
@@ -180,7 +180,7 @@ const YoutubeIframe = (props, ref) => {
 
     lastPlayListRef.current = playList;
 
-    webViewRef.current.injectJavaScript(
+    wbRef.current.injectJavaScript(
       PLAYER_FUNCTIONS.loadPlaylist(playList, playListStartIndex, play),
     );
   }, [playList, play, playListStartIndex, playerReady]);
@@ -303,7 +303,7 @@ const YoutubeIframe = (props, ref) => {
 
         // add props that should not be allowed to be overridden below
         source={source}
-        ref={webViewRef}
+        ref={wbRef}
         onMessage={onWebMessage}
       />
     </View>
