@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
-import {WebViewProps} from 'react-native-webview';
+import WebView, {WebViewProps} from 'react-native-webview';
 
 export enum PLAYER_STATES {
   ENDED = 'ended',
@@ -100,6 +100,10 @@ export interface YoutubeIframeProps {
    * Props that are supplied to the underlying webview (react-native-webview). A full list of props can be found [here](https://github.com/react-native-community/react-native-webview/blob/master/docs/Reference.md#props-index)
    */
   webViewProps?: WebViewProps;
+  /**
+   * A React ref object that provides direct access to the underlying WebView instance.
+   */
+  webViewRef?: React.RefObject<WebView>;
   /**
    * This sets the suggested playback rate for the current video. If the playback rate changes, it will only change for the video that is already cued or being played.
    */
