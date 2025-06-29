@@ -2,13 +2,11 @@
   "name": "react-native-youtube-iframe",
   "version": "2.3.0",
   "description": "A simple wrapper around the youtube iframe js API for react native",
-  "main": "dist/index.js",
+  "main": "./lib/commonjs/index.js",
   "types": "index.d.ts",
   "scripts": {
     "lint": "eslint src",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf ./dist && babel src --out-dir dist",
-    "prepare": "rimraf ./dist && babel src --out-dir dist"
+    "prepare": "bob build"
   },
   "repository": {
     "type": "git",
@@ -49,14 +47,34 @@
     }
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@react-native-community/eslint-config": "^2.0.0",
     "eslint": "^7.7.0",
     "metro-react-native-babel-preset": "^0.64.0",
-    "rimraf": "^3.0.2"
+    "react-native-builder-bob": "^0.40.12"
   },
   "dependencies": {
-    "events": "^3.2.0"
-  }
+    "events": "^3.3.0"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": false
+        }
+      ]
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
 }
