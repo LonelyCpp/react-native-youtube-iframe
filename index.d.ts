@@ -1,21 +1,21 @@
-import React from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
-import {WebViewProps} from 'react-native-webview';
+import React from "react";
+import { StyleProp, ViewStyle } from "react-native";
+import { WebViewProps } from "react-native-webview";
 
 export enum PLAYER_STATES {
-  ENDED = 'ended',
-  PAUSED = 'paused',
-  PLAYING = 'playing',
-  UNSTARTED = 'unstarted',
-  BUFFERING = 'buffering',
-  VIDEO_CUED = 'video cued',
+  ENDED = "ended",
+  PAUSED = "paused",
+  PLAYING = "playing",
+  UNSTARTED = "unstarted",
+  BUFFERING = "buffering",
+  VIDEO_CUED = "video cued",
 }
 
 export enum PLAYER_ERRORS {
-  HTML5_ERROR = 'HTML5_error',
-  VIDEO_NOT_FOUND = 'video_not_found',
-  EMBED_NOT_ALLOWED = 'embed_not_allowed',
-  INVALID_PARAMETER = 'invalid_parameter',
+  HTML5_ERROR = "HTML5_error",
+  VIDEO_NOT_FOUND = "video_not_found",
+  EMBED_NOT_ALLOWED = "embed_not_allowed",
+  INVALID_PARAMETER = "invalid_parameter",
 }
 
 export interface YoutubeIframeRef {
@@ -40,7 +40,7 @@ export interface InitialPlayerParams {
   preventFullScreen?: boolean;
   playerLang?: String;
   iv_load_policy?: Number;
-  /** 
+  /**
    * @deprecated - This parameter has no effect since August 15, 2023
    * https://developers.google.com/youtube/player_parameters#modestbranding
    */
@@ -163,6 +163,10 @@ export interface YoutubeIframeProps {
    * * for code check "iframe.html" in package repo
    */
   baseUrlOverride?: string;
+  /**
+   * the headers that will be used in the webview request
+   */
+  headers? : Record<string, string>;
 }
 
 export interface YoutubeMeta {
