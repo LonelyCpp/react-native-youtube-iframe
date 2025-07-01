@@ -57,6 +57,7 @@
   "files": [
     "src",
     "lib",
+    "index.d.ts",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
