@@ -62,7 +62,10 @@ const YoutubeIframe = (props, ref) => {
       }
 
       const message = JSON.stringify({eventName, meta});
-      webViewRef.current.postMessage(message);
+
+      // NOTE: we set cross origin to so that this will work for webView for
+      // website hosted across different origin.
+      webViewRef.current.postMessage(message, '*');
     },
     [playerReady],
   );
@@ -193,6 +196,14 @@ const YoutubeIframe = (props, ref) => {
             break;
           case 'playerStateChange':
             onChangeState(PLAYER_STATES[message.data]);
+            if (message.data === -1) {
+              // unstartred state is -1
+              // We will not normally "change" to this state, but it can happen
+              // if autoplay is not supported.
+              console.warn(
+                '[rn-youtube-iframe] Player unstarted - autoplay may be blocked.',
+              );
+            }
             break;
           case 'playerReady':
             onReady();
