@@ -160,14 +160,9 @@
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
 
-      const userAgent = navigator.userAgent;
-      const isAndroidWebView = userAgent.includes('Android') && userAgent.includes('; wv');
-
-      // NOTE: for Android Webview, postMessage needs to be set on document
-      // instead of window.
+      // NOTE: the 3rd parameter is needed for Android Webview.
       // https://github.com/react-native-webview/react-native-webview/issues/356
-      const listenerDocument = isAndroidWebView ? document : window;
-      listenerDocument.addEventListener('message', function (event) {
+      window.addEventListener('message', function (event) {
         const {data} = event;
 
         try {
@@ -202,7 +197,7 @@
         } catch (error) {
           console.error('Error parsing data', event, error);
         }
-      });
+      }, true);
     </script>
   </body>
 </html>
