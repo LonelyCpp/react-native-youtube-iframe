@@ -42,6 +42,12 @@ true;
     return `player.seekTo(${seconds}, ${allowSeekAhead}); true;`;
   },
 
+  setHeight: height => {
+    return typeof height === 'number' ?
+      `document.querySelector('.container').style.paddingBottom = '${height}px'; true;` :
+      'true ;';
+  },
+
   setPlaybackRate: playbackRate => {
     return `player.setPlaybackRate(${playbackRate}); true;`;
   },
