@@ -5,66 +5,6 @@ export const PLAYER_FUNCTIONS = {
   unMuteVideo: 'player.unMute(); true;',
   playVideo: 'player.playVideo(); true;',
   pauseVideo: 'player.pauseVideo(); true;',
-  getVideoUrlScript: `
-window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getVideoUrl', data: player.getVideoUrl()}));
-true;
-  `,
-  durationScript: `
-window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getDuration', data: player.getDuration()}));
-true;
-`,
-  currentTimeScript: `
-window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getCurrentTime', data: player.getCurrentTime()}));
-true;
-`,
-  isMutedScript: `
-window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'isMuted', data: player.isMuted()}));
-true;
-`,
-  getVolumeScript: `
-window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getVolume', data: player.getVolume()}));
-true;
-`,
-  getPlaybackRateScript: `
-window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getPlaybackRate', data: player.getPlaybackRate()}));
-true;
-`,
-  getAvailablePlaybackRatesScript: `
-window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getAvailablePlaybackRates', data: player.getAvailablePlaybackRates()}));
-true;
-`,
-
-  setVolume: volume => {
-    return `player.setVolume(${volume}); true;`;
-  },
-
-  seekToScript: (seconds, allowSeekAhead) => {
-    return `player.seekTo(${seconds}, ${allowSeekAhead}); true;`;
-  },
-
-  setPlaybackRate: playbackRate => {
-    return `player.setPlaybackRate(${playbackRate}); true;`;
-  },
-
-  loadPlaylist: (playList, startIndex, play) => {
-    const index = startIndex || 0;
-    const func = play ? 'loadPlaylist' : 'cuePlaylist';
-
-    const list = typeof playList === 'string' ? `"${playList}"` : 'undefined';
-    const listType =
-      typeof playList === 'string' ? `"${playlist}"` : 'undefined';
-    const playlist = Array.isArray(playList)
-      ? `"${playList.join(',')}"`
-      : 'undefined';
-
-    return `player.${func}({listType: ${listType}, list: ${list}, playlist: ${playlist}, index: ${index}}); true;`;
-  },
-
-  loadVideoById: (videoId, play) => {
-    const func = play ? 'loadVideoById' : 'cueVideoById';
-
-    return `player.${func}({videoId: ${JSON.stringify(videoId)}}); true;`;
-  },
 };
 
 export const playMode = {
@@ -275,6 +215,66 @@ export const MAIN_SCRIPT = (
 
             case 'unMuteVideo':
               player.unMute();
+              break;
+
+            case 'setVolume':
+              player.setVolume(parsedData.meta.volume);
+              break;
+
+            case 'setPlaybackRate':
+              player.setPlaybackRate(parsedData.meta.playbackRate);
+              break;
+
+            case 'seekTo':
+              player.seekTo(parsedData.meta.seconds, parsedData.meta.allowSeekAhead);
+              break;
+
+            case 'loadVideoById':
+              if (parsedData.meta.play) {
+                player.loadVideoById({videoId: parsedData.meta.videoId});
+              } else {
+                player.cueVideoById({videoId: parsedData.meta.videoId});
+              }
+              break;
+
+            case 'loadPlaylist':
+              const {playList, startIndex, play} = parsedData.meta;
+              const index = startIndex || 0;
+              const func = play ? 'loadPlaylist' : 'cuePlaylist';
+
+              const list = typeof playList === 'string' ? playList : undefined;
+              const listType = typeof playList === 'string' ? 'playlist' : undefined;
+              const playlist = Array.isArray(playList) ? playList.join(',') : undefined;
+
+              player[func]({listType, list, playlist, index});
+              break;
+
+            case 'getVideoUrl':
+              window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getVideoUrl', data: player.getVideoUrl()}));
+              break;
+
+            case 'getDuration':
+              window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getDuration', data: player.getDuration()}));
+              break;
+
+            case 'getCurrentTime':
+              window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getCurrentTime', data: player.getCurrentTime()}));
+              break;
+
+            case 'isMuted':
+              window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'isMuted', data: player.isMuted()}));
+              break;
+
+            case 'getVolume':
+              window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getVolume', data: player.getVolume()}));
+              break;
+
+            case 'getPlaybackRate':
+              window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getPlaybackRate', data: player.getPlaybackRate()}));
+              break;
+
+            case 'getAvailablePlaybackRates':
+              window.ReactNativeWebView.postMessage(JSON.stringify({eventType: 'getAvailablePlaybackRates', data: player.getAvailablePlaybackRates()}));
               break;
           }
         } catch (error) {
