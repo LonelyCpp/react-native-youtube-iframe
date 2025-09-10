@@ -54,7 +54,22 @@
       } = JSON.parse(UrlQueryData);
 
       function sendMessageToRN(msg) {
-        window.ReactNativeWebView.postMessage(JSON.stringify(msg));
+
+        console.log('[youtube-iframe] sending message to RN', msg);
+
+        if (window.ReactNativeWebView) {
+          // React Native WebView
+          window.ReactNativeWebView.postMessage(JSON.stringify(msg));
+        } else if (window.parent) {
+          // This is from expo web iframe.
+          //
+          // We set cross origin to so that this will work on differnet origin.
+          // We don't expect any sensitive data to be sent.
+          window.parent.postMessage(JSON.stringify(msg), '*');
+        } else {
+          console.error('Not running in Iframe, cannot postMessage.');
+          return;
+        }
       }
 
       let metaString = '';
@@ -147,6 +162,8 @@
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
 
+      // NOTE: the 3rd parameter is needed for Android Webview.
+      // https://github.com/react-native-webview/react-native-webview/issues/356
       window.addEventListener('message', function (event) {
         const {data} = event;
 
@@ -178,11 +195,63 @@
             case 'setPlaybackRate':
               player.setPlaybackRate(meta.playbackRate);
               break;
+
+            case 'seekTo':
+              player.seekTo(meta.seconds, meta.allowSeekAhead);
+              break;
+
+            case 'loadVideoById':
+              if (meta.play) {
+                player.loadVideoById({videoId: meta.videoId});
+              } else {
+                player.cueVideoById({videoId: meta.videoId});
+              }
+              break;
+
+            case 'loadPlaylist':
+              const {playList, startIndex, play} = meta;
+              const index = startIndex || 0;
+              const func = play ? 'loadPlaylist' : 'cuePlaylist';
+
+              const list = typeof playList === 'string' ? playList : undefined;
+              const listType = typeof playList === 'string' ? 'playlist' : undefined;
+              const playlist = Array.isArray(playList) ? playList.join(',') : undefined;
+
+              player[func]({listType, list, playlist, index});
+              break;
+
+            case 'getVideoUrl':
+              sendMessageToRN({eventType: 'getVideoUrl', data: player.getVideoUrl()});
+              break;
+
+            case 'getDuration':
+              sendMessageToRN({eventType: 'getDuration', data: player.getDuration()});
+              break;
+
+            case 'getCurrentTime':
+              sendMessageToRN({eventType: 'getCurrentTime', data: player.getCurrentTime()});
+              break;
+
+            case 'isMuted':
+              sendMessageToRN({eventType: 'isMuted', data: player.isMuted()});
+              break;
+
+            case 'getVolume':
+              sendMessageToRN({eventType: 'getVolume', data: player.getVolume()});
+              break;
+
+            case 'getPlaybackRate':
+              sendMessageToRN({eventType: 'getPlaybackRate', data: player.getPlaybackRate()});
+              break;
+
+            case 'getAvailablePlaybackRates':
+              sendMessageToRN({eventType: 'getAvailablePlaybackRates', data: player.getAvailablePlaybackRates()});
+              break;
           }
         } catch (error) {
           console.error('Error parsing data', event, error);
         }
-      });
+      }, true);
     </script>
   </body>
 </html>

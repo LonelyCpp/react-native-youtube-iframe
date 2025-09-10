@@ -16,7 +16,7 @@ import {
   DEFAULT_BASE_URL,
   CUSTOM_USER_AGENT,
 } from './constants';
-import {MAIN_SCRIPT, PLAYER_FUNCTIONS} from './PlayerScripts';
+import {MAIN_SCRIPT} from './PlayerScripts';
 import {deepComparePlayList} from './utils';
 
 const YoutubeIframe = (props, ref) => {
@@ -62,7 +62,10 @@ const YoutubeIframe = (props, ref) => {
       }
 
       const message = JSON.stringify({eventName, meta});
-      webViewRef.current.postMessage(message);
+
+      // NOTE: we set cross origin to so that this will work for webView for
+      // website hosted across different origin.
+      webViewRef.current.postMessage(message, '*');
     },
     [playerReady],
   );
@@ -71,58 +74,52 @@ const YoutubeIframe = (props, ref) => {
     ref,
     () => ({
       getVideoUrl: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.getVideoUrlScript);
+        sendPostMessage('getVideoUrl', {});
         return new Promise(resolve => {
           eventEmitter.current.once('getVideoUrl', resolve);
         });
       },
       getDuration: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.durationScript);
+        sendPostMessage('getDuration', {});
         return new Promise(resolve => {
           eventEmitter.current.once('getDuration', resolve);
         });
       },
       getCurrentTime: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.currentTimeScript);
+        sendPostMessage('getCurrentTime', {});
         return new Promise(resolve => {
           eventEmitter.current.once('getCurrentTime', resolve);
         });
       },
       isMuted: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.isMutedScript);
+        sendPostMessage('isMuted', {});
         return new Promise(resolve => {
           eventEmitter.current.once('isMuted', resolve);
         });
       },
       getVolume: () => {
-        webViewRef.current.injectJavaScript(PLAYER_FUNCTIONS.getVolumeScript);
+        sendPostMessage('getVolume', {});
         return new Promise(resolve => {
           eventEmitter.current.once('getVolume', resolve);
         });
       },
       getPlaybackRate: () => {
-        webViewRef.current.injectJavaScript(
-          PLAYER_FUNCTIONS.getPlaybackRateScript,
-        );
+        sendPostMessage('getPlaybackRate', {});
         return new Promise(resolve => {
           eventEmitter.current.once('getPlaybackRate', resolve);
         });
       },
       getAvailablePlaybackRates: () => {
-        webViewRef.current.injectJavaScript(
-          PLAYER_FUNCTIONS.getAvailablePlaybackRatesScript,
-        );
+        sendPostMessage('getAvailablePlaybackRates', {});
         return new Promise(resolve => {
           eventEmitter.current.once('getAvailablePlaybackRates', resolve);
         });
       },
       seekTo: (seconds, allowSeekAhead) => {
-        webViewRef.current.injectJavaScript(
-          PLAYER_FUNCTIONS.seekToScript(seconds, allowSeekAhead),
-        );
+        sendPostMessage('seekTo', {seconds, allowSeekAhead});
       },
     }),
-    [],
+    [sendPostMessage],
   );
 
   useEffect(() => {
@@ -158,10 +155,8 @@ const YoutubeIframe = (props, ref) => {
 
     lastVideoIdRef.current = videoId;
 
-    webViewRef.current.injectJavaScript(
-      PLAYER_FUNCTIONS.loadVideoById(videoId, play),
-    );
-  }, [videoId, play, playerReady]);
+    sendPostMessage('loadVideoById', {videoId, play});
+  }, [videoId, play, playerReady, sendPostMessage]);
 
   useEffect(() => {
     if (!playerReady) {
@@ -177,10 +172,12 @@ const YoutubeIframe = (props, ref) => {
 
     lastPlayListRef.current = playList;
 
-    webViewRef.current.injectJavaScript(
-      PLAYER_FUNCTIONS.loadPlaylist(playList, playListStartIndex, play),
-    );
-  }, [playList, play, playListStartIndex, playerReady]);
+    sendPostMessage('loadPlaylist', {
+      playList,
+      startIndex: playListStartIndex,
+      play,
+    });
+  }, [playList, play, playListStartIndex, playerReady, sendPostMessage]);
 
   const onWebMessage = useCallback(
     event => {
@@ -193,6 +190,14 @@ const YoutubeIframe = (props, ref) => {
             break;
           case 'playerStateChange':
             onChangeState(PLAYER_STATES[message.data]);
+            if (message.data === -1) {
+              // unstartred state is -1
+              // We will not normally "change" to this state, but it can happen
+              // if autoplay is not supported.
+              console.warn(
+                '[rn-youtube-iframe] Player unstarted - autoplay may be blocked.',
+              );
+            }
             break;
           case 'playerReady':
             onReady();
