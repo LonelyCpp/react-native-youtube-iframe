@@ -189,7 +189,7 @@ export interface YoutubeMeta {
   thumbnail_url: string;
 }
 
-declare const YoutubeIframe: React.VFC<YoutubeIframeProps>;
+declare const YoutubeIframe: React.FC<YoutubeIframeProps>;
 
 export default YoutubeIframe;
 
