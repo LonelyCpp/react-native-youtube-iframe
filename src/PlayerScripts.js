@@ -83,6 +83,7 @@ export const MAIN_SCRIPT = (
   initialPlayerParams,
   allowWebViewZoom,
   contentScale,
+  baseUrl,
 ) => {
   const {
     end,
@@ -94,10 +95,14 @@ export const MAIN_SCRIPT = (
     cc_lang_pref,
     iv_load_policy,
     modestbranding,
+    widget_referrer,
     controls = true,
     showClosedCaptions,
     preventFullScreen = false,
   } = initialPlayerParams;
+
+  const originMatch = baseUrl && baseUrl.match(/^(https?:\/\/[^/?#]+)/);
+  const origin = originMatch ? originMatch[1] : undefined;
 
   // _s postfix to refer to "safe"
   const rel_s = rel ? 1 : 0;
@@ -128,6 +133,7 @@ export const MAIN_SCRIPT = (
     color,
     rel_s,
     loop_s,
+    origin,
     listType,
     playlist,
     videoId_s,
@@ -136,6 +142,7 @@ export const MAIN_SCRIPT = (
     iv_load_policy,
     contentScale_s,
     cc_lang_pref_s,
+    widget_referrer,
     allowWebViewZoom,
     modestbranding_s,
     preventFullScreen_s,
@@ -156,6 +163,7 @@ export const MAIN_SCRIPT = (
       name="viewport"
       content="width=device-width, ${scale}"
     >
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <style>
       body {
         margin: 0;
@@ -211,6 +219,8 @@ export const MAIN_SCRIPT = (
             iv_load_policy: ${iv_load_policy},
             modestbranding: ${modestbranding_s},
             cc_load_policy: ${showClosedCaptions_s},
+            ${origin ? `origin: '${origin}',` : ''}
+            ${widget_referrer ? `widget_referrer: '${widget_referrer}',` : ''}
           },
           events: {
             'onReady': onPlayerReady,
