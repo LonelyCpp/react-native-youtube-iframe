@@ -163,6 +163,7 @@ export default function App() {
     color,
     preventFullScreen,
     rel,
+    widget_referrer: 'youtube-iframe-test-app',
     ...(ccLangPref ? {cc_lang_pref: ccLangPref} : {}),
     ...(startSeconds ? {start: Number(startSeconds)} : {}),
     ...(endSeconds ? {end: Number(endSeconds)} : {}),
@@ -226,7 +227,9 @@ export default function App() {
           allowWebViewZoom={allowWebViewZoom}
           forceAndroidAutoplay={forceAndroidAutoplay}
           useLocalHTML={useLocalHTML}
-          baseUrlOverride={useBaseUrlOverride ? BASE_URL_OVERRIDE : undefined}
+          baseUrlOverride={
+            useBaseUrlOverride && !useLocalHTML ? BASE_URL_OVERRIDE : undefined
+          }
           initialPlayerParams={initialPlayerParams}
           onChangeState={onChangeState}
           onReady={onReady}
