@@ -269,8 +269,9 @@ export const MAIN_SCRIPT = (
 
         try {
           const parsedData = JSON.parse(data);
+          const {eventName, meta} = parsedData;
 
-          switch (parsedData.eventName) {
+          switch (eventName) {
             case 'playVideo':
               player.playVideo();
               break;
@@ -286,11 +287,19 @@ export const MAIN_SCRIPT = (
             case 'unMuteVideo':
               player.unMute();
               break;
+
+            case 'setVolume':
+              player.setVolume(meta.volume);
+              break;
+
+            case 'setPlaybackRate':
+              player.setPlaybackRate(meta.playbackRate);
+              break;
           }
         } catch (error) {
           console.error('Error parsing data', event, error);
         }
-      });
+      }, {capture: true});
     </script>
   </body>
 </html>

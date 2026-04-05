@@ -264,11 +264,7 @@ const YoutubeIframe = (props, ref) => {
     );
 
     if (useLocalHTML) {
-      const res = {html: ytScript.htmlString};
-      if (baseUrlOverride) {
-        res.baseUrl = baseUrlOverride;
-      }
-      return res;
+      return {html: ytScript.htmlString, baseUrl: base};
     }
 
     const data = ytScript.urlEncodedJSON;
