@@ -152,7 +152,7 @@
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
 
-      window.addEventListener('message', function (event) {
+      function postMessageListener(event) {
         const {data} = event;
 
         try {
@@ -187,6 +187,10 @@
         } catch (error) {
           console.error('Error parsing data', event, error);
         }
+      }
+
+      window.addEventListener('message', postMessageListener, {
+        capture: true,
       });
     </script>
   </body>
