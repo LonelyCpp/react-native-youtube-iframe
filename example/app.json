@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "youtube-iframe-example",
+    "slug": "youtube-iframe-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android"],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
