@@ -270,6 +270,13 @@ changing these parameters might cause the player to restart or not change at all
 | iv_load_policy     | Number  |         | https://developers.google.com/youtube/player_parameters#iv_load_policy |
 | modestbranding     | boolean | false   | https://developers.google.com/youtube/player_parameters#modestbranding |
 | rel                | boolean | false   | https://developers.google.com/youtube/player_parameters#rel            |
+| privacyEnhanced    | boolean | false   | embed from `youtube-nocookie.com` (see below)                          |
+
+#### `privacyEnhanced`
+
+When `true`, the player is created with `host: 'https://www.youtube-nocookie.com'`, so the embed is served from YouTube's [privacy-enhanced domain](https://support.google.com/youtube/answer/171780#zippy=%2Cturn-on-privacy-enhanced-mode) instead of the default `www.youtube.com`. In this mode YouTube does not use a viewer's playback of the embed to personalise their browsing experience.
+
+This only takes effect together with [`useLocalHTML`](#uselocalhtml), since the remotely hosted player page does not read the option. Pair it with `baseUrlOverride="https://www.youtube-nocookie.com"` so the document origin matches the embed host.
 
 ---
 
