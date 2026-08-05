@@ -46,6 +46,13 @@ export interface InitialPlayerParams {
    */
   deprecated?: boolean;
   rel?: boolean;
+  /**
+   * Embed the player from YouTube's privacy-enhanced domain
+   * (www.youtube-nocookie.com) instead of www.youtube.com, by passing
+   * `host` to the IFrame API. Only takes effect with `useLocalHTML`,
+   * since the remotely hosted player page does not read this option.
+   */
+  privacyEnhanced?: boolean;
 }
 
 export interface YoutubeIframeProps {

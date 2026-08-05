@@ -97,10 +97,15 @@ export const MAIN_SCRIPT = (
     controls = true,
     showClosedCaptions,
     preventFullScreen = false,
+    privacyEnhanced = false,
   } = initialPlayerParams;
 
   // _s postfix to refer to "safe"
   const rel_s = rel ? 1 : 0;
+  // derived from a boolean so no caller-supplied text reaches the HTML
+  const host_s = privacyEnhanced
+    ? 'https://www.youtube-nocookie.com'
+    : 'https://www.youtube.com';
   const loop_s = loop ? 1 : 0;
   const videoId_s = videoId || '';
   const controls_s = controls ? 1 : 0;
@@ -192,6 +197,7 @@ export const MAIN_SCRIPT = (
         player = new YT.Player('player', {
           width: '1000',
           height: '1000',
+          host: '${host_s}',
           videoId: '${videoId_s}',
           playerVars: {
             ${listParam}
