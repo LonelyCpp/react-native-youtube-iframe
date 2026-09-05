@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>react-native-youtube-iframe — web harness</title>
+    <style>
+      body {
+        font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+        margin: 2rem;
+        background: #111;
+        color: #ddd;
+      }
+      h1 {
+        font-size: 1.2rem;
+      }
+      #summary {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+      #summary.done {
+        color: #4ec9b0;
+      }
+      #summary.failed {
+        color: #f48771;
+      }
+      .result {
+        font-size: 0.9rem;
+        margin: 0.35rem 0;
+        font-family: monospace;
+        white-space: pre-wrap;
+      }
+      .pass {
+        color: #4ec9b0;
+      }
+      .fail {
+        color: #f48771;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>react-native-youtube-iframe web harness</h1>
+    <div id="summary">running…</div>
+    <div id="results"></div>
+    <div id="player" style="display: none"></div>
+
+    <script>
+      // Loads the LIVE iframe source, injects the config + a mocked YT.Player +
+      // ReactNativeWebView bridge, and drives it deterministically (no YouTube
+      // network dependency). Results are rendered as <h3> headings so an agent
+      // (agent-device --platform web) can discover and assert on them.
+
+      const resultsEl = document.getElementById('results');
+      const summaryEl = document.getElementById('summary');
+      const results = [];
+
+      function record(name, pass, detail) {
+        results.push({name, pass});
+        const node = document.createElement('h3');
+        node.className = 'result ' + (pass ? 'pass' : 'fail');
+        node.setAttribute('data-testid', name);
+        node.textContent =
+          (pass ? 'PASS ' : 'FAIL ') + name + (detail ? ' — ' + detail : '');
+        resultsEl.appendChild(node);
+        updateSummary();
+      }
+
+      function updateSummary() {
+        const passed = results.filter(r => r.pass).length;
+        const text = passed + '/' + results.length + ' passed';
+        summaryEl.textContent = text;
+        summaryEl.className = results.every(r => r.pass) ? 'done' : 'failed';
+      }
+
+      const config = {
+        videoId_s: 'dQw4w9WgXcQ',
+        origin: 'http://localhost:8123',
+        widget_referrer: 'web-harness',
+        rel_s: 0,
+        loop_s: 0,
+        controls_s: 1,
+        preventFullScreen_s: 0,
+        showClosedCaptions_s: 0,
+        contentScale_s: 1.0,
+        allowWebViewZoom: false,
+        modestbranding_s: 0,
+      };
+
+      const sentToRN = [];
+      let playerInstance;
+
+      window.ReactNativeWebView = {
+        postMessage: msg => sentToRN.push(msg),
+      };
+
+      window.YT = {
+        Player: class {
+          constructor(nodeId, cfg) {
+            this.config = cfg;
+            this.calls = [];
+            playerInstance = this;
+          }
+          playVideo() {
+            this.calls.push('playVideo');
+          }
+          pauseVideo() {
+            this.calls.push('pauseVideo');
+          }
+          mute() {
+            this.calls.push('mute');
+          }
+          unMute() {
+            this.calls.push('unMute');
+          }
+          setVolume(v) {
+            this.calls.push(['setVolume', v]);
+          }
+          setPlaybackRate(r) {
+            this.calls.push(['setPlaybackRate', r]);
+          }
+        },
+      };
+
+      async function main() {
+        try {
+          const resp = await fetch('iframe_v2.html');
+          let html = await resp.text();
+
+          // Inject the config by replacing the URL query read with a literal.
+          const queryLine = /const UrlQueryData = [^;]+;/;
+          if (!queryLine.test(html)) {
+            record('config injection', false, 'UrlQueryData line not found');
+            return;
+          }
+          html = html.replace(
+            queryLine,
+            'const UrlQueryData = ' + JSON.stringify(JSON.stringify(config)) + ';',
+          );
+
+          // Neutralize the dynamic youtube iframe_api load (we mock YT instead).
+          html = html.replace(
+            /tag\.src = ['"]https:\/\/www\.youtube\.com\/iframe_api['"];/g,
+            'tag.src = null;',
+          );
+
+          // Extract the inline script body (skip HTML wrapper) and run it.
+          const scriptMatch = html.match(/<script>\s*([\s\S]*?)\s*<\/script>/);
+          if (!scriptMatch) {
+            record('script extraction', false, 'no inline <script> found');
+            return;
+          }
+          window.eval(scriptMatch[1]);
+          window.onYouTubeIframeAPIReady();
+          playerInstance.config.events.onReady({target: playerInstance});
+
+          record('playerReady sent', sentToRN.includes(JSON.stringify({eventType: 'playerReady'})));
+
+          record(
+            'origin in playerVars',
+            playerInstance.config.playerVars.origin === 'http://localhost:8123',
+            'origin=' + JSON.stringify(playerInstance.config.playerVars.origin),
+          );
+
+          record(
+            'widget_referrer in playerVars',
+            playerInstance.config.playerVars.widget_referrer === 'web-harness',
+          );
+
+          function send(eventName, meta) {
+            window.dispatchEvent(
+              new MessageEvent('message', {data: JSON.stringify({eventName, meta})}),
+            );
+          }
+
+          send('playVideo', {});
+          record('playVideo handled', playerInstance.calls.includes('playVideo'));
+
+          send('setVolume', {volume: 33});
+          record(
+            'setVolume handled',
+            JSON.stringify(playerInstance.calls).includes('["setVolume",33]'),
+          );
+
+          send('setPlaybackRate', {playbackRate: 1.5});
+          record(
+            'setPlaybackRate handled',
+            JSON.stringify(playerInstance.calls).includes('["setPlaybackRate",1.5]'),
+          );
+
+          sentToRN.length = 0;
+          playerInstance.config.events.onStateChange({data: 1});
+          record(
+            'playerStateChange sent',
+            sentToRN.includes(JSON.stringify({eventType: 'playerStateChange', data: 1})),
+          );
+        } catch (err) {
+          record('harness error', false, String(err && (err.stack || err)));
+        }
+      }
+
+      main();
+    </script>
+  </body>
+</html>

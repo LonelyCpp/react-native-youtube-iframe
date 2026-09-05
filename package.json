@@ -6,7 +6,13 @@
   "types": "index.d.ts",
   "scripts": {
     "lint": "eslint src",
-    "prepare": "bob build"
+    "prepare": "bob build",
+    "test": "jest",
+    "test:unit": "jest --selectProjects unit",
+    "test:component": "jest --selectProjects component",
+    "test:iframe": "jest --selectProjects iframe",
+    "test:watch": "jest --watch",
+    "serve:web": "node test-harness/serve.js"
   },
   "repository": {
     "type": "git",
@@ -47,9 +53,18 @@
     }
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
     "@react-native-community/eslint-config": "^2.0.0",
+    "babel-jest": "^30.5.1",
     "eslint": "^7.7.0",
-    "react-native-builder-bob": "^0.40.12"
+    "html-minifier": "^4.0.0",
+    "jest": "^30.5.1",
+    "jest-environment-jsdom": "^30.5.1",
+    "jest-environment-node": "^30.5.1",
+    "react": "^19.2.0",
+    "react-native-builder-bob": "^0.40.12",
+    "react-test-renderer": "^19.2.0"
   },
   "dependencies": {
     "events": "^3.3.0"
