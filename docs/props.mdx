@@ -124,6 +124,8 @@ Gives access to the player reference. This can be used to access player function
 
 A link that serves the iframe code. If you want to host the code on your own domain, get the source from [here](https://github.com/LonelyCpp/react-native-youtube-iframe/blob/master/iframe.html).
 
+The `origin` YouTube player parameter is automatically derived from this URL to comply with YouTube's [API client identity requirements](https://developers.google.com/youtube/terms/required-minimum-functionality#embedded-player-api-client-identity).
+
 Default link - https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html
 
 ---
@@ -270,6 +272,7 @@ changing these parameters might cause the player to restart or not change at all
 | iv_load_policy     | Number  |         | https://developers.google.com/youtube/player_parameters#iv_load_policy |
 | modestbranding     | boolean | false   | https://developers.google.com/youtube/player_parameters#modestbranding |
 | rel                | boolean | false   | https://developers.google.com/youtube/player_parameters#rel            |
+| widget_referrer    | string  |         | https://developers.google.com/youtube/player_parameters#widget_referrer |
 
 ---
 

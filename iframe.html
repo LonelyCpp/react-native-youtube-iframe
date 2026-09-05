@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width," />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <style>
       body {
         margin: 0;
@@ -51,6 +52,8 @@
         iv_load_policy,
         preventFullScreen_s,
         showClosedCaptions_s,
+        origin,
+        widget_referrer,
       } = JSON.parse(UrlQueryData);
 
       function sendMessageToRN(msg) {
@@ -97,6 +100,8 @@
             iv_load_policy: iv_load_policy,
             modestbranding: modestbranding_s,
             cc_load_policy: showClosedCaptions_s,
+            ...(origin && {origin: origin}),
+            ...(widget_referrer && {widget_referrer: widget_referrer}),
           },
           events: {
             onReady: onPlayerReady,
@@ -147,7 +152,7 @@
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
 
-      window.addEventListener('message', function (event) {
+      function postMessageListener(event) {
         const {data} = event;
 
         try {
@@ -182,6 +187,10 @@
         } catch (error) {
           console.error('Error parsing data', event, error);
         }
+      }
+
+      window.addEventListener('message', postMessageListener, {
+        capture: true,
       });
     </script>
   </body>

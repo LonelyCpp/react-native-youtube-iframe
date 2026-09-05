@@ -40,12 +40,18 @@ export interface InitialPlayerParams {
   preventFullScreen?: boolean;
   playerLang?: String;
   iv_load_policy?: Number;
-  /** 
+  /**
    * @deprecated - This parameter has no effect since August 15, 2023
    * https://developers.google.com/youtube/player_parameters#modestbranding
    */
   deprecated?: boolean;
   rel?: boolean;
+  /**
+   * Identifies the URL that is embedding the player to YouTube for API client identification.
+   * Used in WebView contexts where the Referer header may not be automatically set.
+   * https://developers.google.com/youtube/player_parameters#widget_referrer
+   */
+  widget_referrer?: string;
 }
 
 export interface YoutubeIframeProps {
@@ -159,6 +165,9 @@ export interface YoutubeIframeProps {
   /**
    * url that fetches a webpage compatible with youtube iframe interface
    *
+   * The `origin` YouTube player parameter is automatically derived from this URL
+   * to comply with YouTube's API client identity requirements.
+   *
    * * defaults to : https://lonelycpp.github.io/react-native-youtube-iframe/iframe.html
    * * for code check "iframe.html" in package repo
    */
@@ -180,7 +189,7 @@ export interface YoutubeMeta {
   thumbnail_url: string;
 }
 
-declare const YoutubeIframe: React.VFC<YoutubeIframeProps>;
+declare const YoutubeIframe: React.FC<YoutubeIframeProps>;
 
 export default YoutubeIframe;
 
